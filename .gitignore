@@ -1,0 +1,62 @@
+```gitignore
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+**/dist/
+build/
+**/build/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache/
+
+# Coverage
+coverage/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
+temp/
+
+# Optional package manager files
+# Keep package-lock.json, yarn.lock, and pnpm-lock.yaml in Git
+
+### Apply `.gitignore` to your GitHub project
+
+Run these commands in your terminal:
+
+```bash
+git add .gitignore
+git rm -r --cached --ignore-unmatch node_modules dist build
+git add .
+git commit -m "Add gitignore and exclude dependencies and build files"
+git push
+```
+
+**Important:** If your project has separate frontend and backend folders, this `.gitignore` will exclude `node_modules` and `dist` folders inside those folders too.
+
+**Note:** If Git already tracks files inside nested `node_modules` or `dist` folders, the command above may not remove all of them from Git's tracking. The `.gitignore` will prevent new, untracked matching files from being added.
