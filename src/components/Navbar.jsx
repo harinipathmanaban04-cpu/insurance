@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, ArrowRight, Menu, X, Phone, ShieldCheck } from 'lucide-react';
+import { ChevronDown, ArrowRight, Menu, X, Phone, ShieldCheck, CheckCircle2, Shield } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CATS, PHONE } from '../data/data';
 import { Logo } from './Common';
@@ -50,31 +50,37 @@ export default function Navbar() {
   const navLinkClass = (active) =>
     `relative flex items-center h-[74px] px-2.5 xl:px-3.5 text-[13.5px] xl:text-[14.5px] font-semibold whitespace-nowrap transition-colors duration-200 cursor-pointer ${
       active
-        ? 'text-[#ED1C24] font-bold after:absolute after:bottom-0 after:inset-x-2 after:h-[3px] after:rounded-full after:bg-[#ED1C24]'
-        : 'text-[#1F2937] hover:text-[#ED1C24]'
+        ? 'text-[#F51F2B] font-bold after:absolute after:bottom-0 after:inset-x-2 after:h-[3px] after:rounded-full after:bg-[#F51F2B]'
+        : 'text-[#101C38] hover:text-[#F51F2B]'
     }`;
 
   const isInsuranceActive = pathname.startsWith('/insurance');
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5E7EB] bg-white/95 backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
-      {/* Top Utility Micro-Bar */}
-      <div className="hidden border-b border-[#E5E7EB] bg-[#F7F8FA] px-4 py-1.5 text-xs text-[#5B6472] md:block">
+      {/* Top Utility Micro-Bar (Matches reference design) */}
+      <div className="hidden border-b border-[#E5E7EB] bg-white px-4 py-1.5 text-xs text-[#53627A] md:block">
         <div className="wrap flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="inline-flex items-center gap-1.5 font-medium text-[#171717]">
-              <ShieldCheck size={14} className="text-[#ED1C24]" />
-              Trusted Insurance Company • 50+ IRDAI Approved Partners
+          <div className="flex items-center gap-4 lg:gap-6">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-[#101C38]">
+              <ShieldCheck size={14} className="text-[#F51F2B]" />
+              <span>Trusted Insurance Company</span>
             </span>
-            <span className="text-[#E5E7EB]">|</span>
-            <span className="text-[#5B6472]">Fast & Reliable Policy Issuance & Claim Support</span>
+            <span className="inline-flex items-center gap-1.5 font-semibold text-[#101C38]">
+              <CheckCircle2 size={14} className="text-[#E5B544]" />
+              <span>50+ IRDAI Approved Partners</span>
+            </span>
+            <span className="hidden xl:inline-flex items-center gap-1.5 font-medium text-[#53627A]">
+              <Shield size={13} className="text-[#101C38]/70" />
+              <span>Fast & Reliable Policy Issuance & Claim Support</span>
+            </span>
           </div>
           <div className="flex items-center gap-4">
             <a
               href={`tel:${PHONE.replace(/\s+/g, '')}`}
-              className="inline-flex items-center gap-1.5 font-semibold text-[#171717] hover:text-[#ED1C24] transition-colors"
+              className="inline-flex items-center gap-1.5 font-bold text-[#101C38] hover:text-[#F51F2B] transition-colors"
             >
-              <Phone size={13} className="text-[#ED1C24]" />
+              <Phone size={13} className="text-[#F51F2B]" />
               <span>Toll-Free Helpline: {PHONE}</span>
             </a>
           </div>
@@ -82,24 +88,24 @@ export default function Navbar() {
       </div>
 
       {/* Main Navbar */}
-      <div className="wrap flex h-[74px] items-center justify-between gap-4">
+      <div className="wrap flex h-[74px] items-center justify-between gap-2 sm:gap-4">
         {/* Brand Shield Logo & Name */}
-        <Link to="/" className="flex shrink-0 items-center gap-3 group">
-          <Logo className="h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105" />
-          <div className="leading-tight">
-            <span className="block font-display text-lg sm:text-xl font-black tracking-tight text-[#171717]">
+        <Link to="/" className="flex shrink-0 items-center gap-2 sm:gap-3 group max-w-[calc(100%-56px)] sm:max-w-none">
+          <Logo className="h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105" />
+          <div className="leading-tight min-w-0">
+            <span className="block font-display text-base sm:text-xl font-black tracking-tight text-[#101C38] truncate">
               THE BEST
             </span>
-            <span className="block text-[10px] sm:text-[11px] font-black tracking-[0.16em] text-[#ED1C24]">
+            <span className="block text-[9.5px] sm:text-[11px] font-black tracking-[0.14em] text-[#F51F2B] truncate">
               INSURANCE COMPANY
             </span>
-            <span className="hidden text-[10px] font-medium text-[#5B6472] sm:block">
+            <span className="hidden text-[10px] font-medium text-[#53627A] sm:block truncate">
               Your World. Your People. Our Protection.
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation Links (Properly aligned with no text wrapping) */}
+        {/* Desktop Navigation Links */}
         <nav className="hidden items-center gap-1 xl:gap-2 lg:flex h-[74px]">
           <Link to="/" className={navLinkClass(isActive('/'))}>
             Home
@@ -122,7 +128,7 @@ export default function Navbar() {
               <ChevronDown
                 size={14}
                 className={`transition-transform duration-200 ${
-                  dropdownOpen ? 'rotate-180 text-[#ED1C24]' : ''
+                  dropdownOpen ? 'rotate-180 text-[#F51F2B]' : ''
                 }`}
               />
             </button>
@@ -138,10 +144,10 @@ export default function Navbar() {
                 >
                   <div className="rounded-2xl border border-[#E5E7EB] bg-white p-3.5 shadow-card">
                     <div className="px-2.5 pb-2 mb-2 border-b border-[#E5E7EB] flex items-center justify-between">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#5B6472]">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#53627A]">
                         Insurance Categories
                       </span>
-                      <span className="text-[10px] font-semibold text-[#ED1C24]">
+                      <span className="text-[10px] font-semibold text-[#F51F2B]">
                         4 Plans
                       </span>
                     </div>
@@ -156,24 +162,24 @@ export default function Navbar() {
                             to={c.path}
                             className={`group flex items-center gap-3 rounded-xl p-2.5 transition-all duration-150 ${
                               active
-                                ? 'bg-[#FAF2DE] text-[#171717] ring-1 ring-[#DFB24A]'
-                                : 'hover:bg-[#FAF2DE] text-[#171717]'
+                                ? 'bg-[#FAF2DE] text-[#101C38] ring-1 ring-[#E5B544]'
+                                : 'hover:bg-[#FAF2DE] text-[#101C38]'
                             }`}
                           >
                             <span
                               className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors ${
                                 active
-                                  ? 'bg-[#DFB24A] text-[#171717]'
-                                  : 'bg-[#FAF2DE] text-[#171717] group-hover:bg-[#DFB24A]'
+                                  ? 'bg-[#E5B544] text-[#101C38]'
+                                  : 'bg-[#FAF2DE] text-[#101C38] group-hover:bg-[#E5B544]'
                               }`}
                             >
                               <Icon size={19} />
                             </span>
                             <div className="flex-1 min-w-0">
-                              <span className="block text-sm font-bold text-[#171717] leading-tight">
+                              <span className="block text-sm font-bold text-[#101C38] leading-tight">
                                 {c.nav}
                               </span>
-                              <span className="block text-xs text-[#5B6472] leading-snug mt-0.5 line-clamp-2">
+                              <span className="block text-xs text-[#53627A] leading-snug mt-0.5 line-clamp-2">
                                 {c.short}
                               </span>
                             </div>
@@ -194,25 +200,25 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right CTA Actions: Contact Us outline + Get a Quote Gold button */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
+        {/* Right CTA Actions: Contact Us rounded-full outline + Get a Quote Gold rounded-full button */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <Link
             to="/contact"
-            className="hidden md:inline-flex items-center justify-center rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2 text-xs font-bold text-[#171717] shadow-xs hover:border-[#ED1C24] hover:text-[#ED1C24] hover:bg-[#FFF1F2] transition-all whitespace-nowrap"
+            className="hidden md:inline-flex items-center justify-center rounded-full border border-[#E5E7EB] bg-white px-5 py-2 text-xs font-bold text-[#101C38] shadow-xs hover:border-[#101C38] hover:bg-[#F7F8FA] transition-all whitespace-nowrap"
           >
             Contact Us
           </Link>
 
           <Link
             to="/contact#quote"
-            className="btn-gold hidden sm:inline-flex items-center gap-1.5 !px-4 !py-2 text-xs font-bold shadow-xs whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#E5B544] hover:bg-[#CF9F30] px-5 py-2 text-xs font-bold text-[#101C38] shadow-xs transition-all whitespace-nowrap active:translate-y-0.5"
           >
             <span>Get a Quote</span>
             <ArrowRight size={14} />
           </Link>
 
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#E5E7EB] text-[#171717] hover:bg-[#F7F8FA] lg:hidden focus:outline-none"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#E5E7EB] text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B] lg:hidden focus:outline-none transition-colors"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -230,12 +236,17 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.22, ease: 'easeInOut' }}
-            className="overflow-hidden border-t border-[#E5E7EB] bg-white lg:hidden"
+            className="overflow-hidden border-t border-[#E5E7EB] bg-white lg:hidden max-h-[calc(100vh-74px)] overflow-y-auto"
           >
-            <div className="wrap space-y-1 py-4">
+            <div className="wrap space-y-1.5 py-4">
               <Link
                 to="/"
-                className="block rounded-xl px-4 py-2.5 text-base font-semibold text-[#171717] hover:bg-[#F7F8FA] hover:text-[#ED1C24]"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block rounded-xl px-4 py-2.5 text-base font-semibold transition-colors ${
+                  isActive('/')
+                    ? 'bg-[#FFF1F2] text-[#F51F2B] font-bold'
+                    : 'text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B]'
+                }`}
               >
                 Home
               </Link>
@@ -243,30 +254,45 @@ export default function Navbar() {
               {/* Mobile Insurance Accordion */}
               <div>
                 <button
-                  className="flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-base font-semibold text-[#171717] hover:bg-[#F7F8FA] hover:text-[#ED1C24]"
+                  type="button"
+                  className="flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-base font-semibold text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B] transition-colors"
                   aria-expanded={insuranceAccordion}
                   onClick={() => setInsuranceAccordion(!insuranceAccordion)}
                 >
-                  <span>Insurance Categories</span>
+                  <span className="flex items-center gap-2">
+                    <span>Insurance Categories</span>
+                    <span className="rounded-full bg-[#FFF1F2] text-[#F51F2B] px-2 py-0.5 text-[10px] font-bold">4 Plans</span>
+                  </span>
                   <ChevronDown
                     size={18}
                     className={`transition-transform duration-200 ${
-                      insuranceAccordion ? 'rotate-180 text-[#ED1C24]' : ''
+                      insuranceAccordion ? 'rotate-180 text-[#F51F2B]' : 'text-[#53627A]'
                     }`}
                   />
                 </button>
                 {insuranceAccordion && (
-                  <div className="my-1 space-y-1 rounded-xl bg-[#F7F8FA] p-2 pl-4">
+                  <div className="my-1.5 space-y-1 rounded-xl bg-[#F7F8FA] p-2 pl-3">
                     {CATS.map((c) => {
                       const Icon = c.icon;
+                      const active = pathname === c.path;
                       return (
                         <Link
                           key={c.id}
                           to={c.path}
-                          className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#171717] hover:bg-white hover:text-[#ED1C24]"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                            active
+                              ? 'bg-white text-[#F51F2B] font-bold shadow-xs'
+                              : 'text-[#101C38] hover:bg-white hover:text-[#F51F2B]'
+                          }`}
                         >
-                          <Icon size={16} className="text-[#ED1C24]" />
-                          <span>{c.nav}</span>
+                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#FAF2DE] text-[#101C38]">
+                            <Icon size={16} className="text-[#F51F2B]" />
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <span className="block text-sm font-semibold">{c.nav}</span>
+                            <span className="block text-[11px] text-[#53627A] truncate">{c.short}</span>
+                          </div>
                         </Link>
                       );
                     })}
@@ -278,7 +304,12 @@ export default function Navbar() {
                 <Link
                   key={title}
                   to={path}
-                  className="block rounded-xl px-4 py-2.5 text-base font-semibold text-[#171717] hover:bg-[#F7F8FA] hover:text-[#ED1C24]"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block rounded-xl px-4 py-2.5 text-base font-semibold transition-colors ${
+                    isActive(path)
+                      ? 'bg-[#FFF1F2] text-[#F51F2B] font-bold'
+                      : 'text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B]'
+                  }`}
                 >
                   {title}
                 </Link>
@@ -286,15 +317,29 @@ export default function Navbar() {
 
               <Link
                 to="/contact"
-                className="block rounded-xl px-4 py-2.5 text-base font-semibold text-[#171717] hover:bg-[#F7F8FA] hover:text-[#ED1C24]"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block rounded-xl px-4 py-2.5 text-base font-semibold transition-colors ${
+                  isActive('/contact')
+                    ? 'bg-[#FFF1F2] text-[#F51F2B] font-bold'
+                    : 'text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B]'
+                }`}
               >
                 Contact Us
               </Link>
 
-              <div className="pt-3">
-                <Link to="/contact#quote" className="btn-gold w-full justify-center">
-                  Get a Free Quote
+              <div className="pt-3 pb-1 border-t border-[#E5E7EB] mt-2">
+                <Link
+                  to="/contact#quote"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-full bg-[#E5B544] hover:bg-[#CF9F30] text-[#101C38] w-full justify-center !py-3 text-sm font-bold shadow-sm inline-flex items-center gap-1.5 transition-all"
+                >
+                  <span>Get a Free Quote</span>
+                  <ArrowRight size={15} />
                 </Link>
+                <div className="mt-3 flex items-center justify-center gap-2 text-xs text-[#53627A]">
+                  <Phone size={13} className="text-[#F51F2B]" />
+                  <span>Helpline: {PHONE}</span>
+                </div>
               </div>
             </div>
           </motion.div>

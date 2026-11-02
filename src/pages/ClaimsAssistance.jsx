@@ -50,37 +50,37 @@ export default function ClaimsAssistance() {
     <div className="py-12 sm:py-16 bg-white">
       <div className="wrap max-w-4xl">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-[#FAF2DE] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#171717] border border-[#DFB24A]/50 mb-3">
-            <ShieldCheck size={14} className="text-[#E31B23]" />
+        <div className="text-center mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-[#FAF2DE] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#171717] border border-[#E5B544]/50 mb-3">
+            <ShieldCheck size={14} className="text-[#F51F2B]" />
             <span>24/7 Claim Support Desk</span>
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-[#171717] tracking-tight">
+          <h1 className="font-display text-2xl min-[360px]:text-3xl sm:text-4xl lg:text-5xl font-black text-[#171717] tracking-tight">
             Stress-Free Claim Assistance
           </h1>
-          <p className="mt-3 text-base sm:text-lg text-[#5B6472] max-w-2xl mx-auto">
+          <p className="mt-3 text-sm sm:text-base lg:text-lg text-[#53627A] max-w-2xl mx-auto">
             When accidents or emergencies happen, you don't have to navigate insurance paperwork alone. We stay with you at every step.
           </p>
         </div>
 
         {/* Emergency Helpline Banner */}
-        <div className="card border border-[#DFB24A]/60 bg-[#FAF2DE] p-6 sm:p-8 mb-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
-          <div className="flex items-center gap-4">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#DFB24A] text-[#171717] shadow-xs">
-              <Phone size={24} className="text-[#171717]" />
+        <div className="card border border-[#E5B544]/60 bg-[#FAF2DE] p-4 sm:p-6 md:p-8 mb-10 flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 shadow-xs">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E5B544] text-[#171717] shadow-xs">
+              <Phone size={22} className="text-[#171717]" />
             </span>
             <div>
-              <b className="block text-base font-bold text-[#171717]">
+              <b className="block text-sm sm:text-base font-bold text-[#171717]">
                 Need Immediate Claim Assistance?
               </b>
-              <span className="text-xs sm:text-sm text-[#5B6472]">
+              <span className="text-xs sm:text-sm text-[#53627A]">
                 Call our direct claim helpline for fast intimation support.
               </span>
             </div>
           </div>
           <a
             href={`tel:${PHONE.replace(/\s+/g, '')}`}
-            className="btn-gold text-sm font-bold shadow-xs shrink-0"
+            className="btn-gold text-xs sm:text-sm font-bold shadow-xs shrink-0 w-full sm:w-auto text-center justify-center"
           >
             <span>Call {PHONE}</span>
           </a>
@@ -88,23 +88,23 @@ export default function ClaimsAssistance() {
 
         {/* Steps List */}
         <div className="mb-14">
-          <h2 className="font-display text-2xl font-bold text-[#171717] mb-6">
+          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#171717] mb-6">
             5 Simple Steps to Settle Your Claim
           </h2>
           <div className="space-y-4">
             {steps.map((s, i) => (
               <div
                 key={s.title}
-                className="card flex items-start gap-4 border border-[#E5E7EB] bg-white p-5 shadow-xs hover:border-[#DFB24A] transition-all"
+                className="card flex items-start gap-3.5 sm:gap-4 border border-[#E5E7EB] bg-white p-4 sm:p-5 shadow-xs hover:border-[#E5B544] transition-all"
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#171717] font-display text-sm font-bold text-white">
+                <span className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-[#171717] font-display text-xs sm:text-sm font-bold text-white">
                   {i + 1}
                 </span>
                 <div>
                   <b className="block text-sm sm:text-base font-bold text-[#171717]">
                     {s.title}
                   </b>
-                  <p className="mt-1 text-xs sm:text-sm text-[#5B6472] leading-relaxed">
+                  <p className="mt-1 text-xs sm:text-sm text-[#53627A] leading-relaxed">
                     {s.desc}
                   </p>
                 </div>
@@ -115,7 +115,7 @@ export default function ClaimsAssistance() {
 
         {/* FAQs */}
         <div id="faq" className="scroll-mt-24 mb-12">
-          <h2 className="font-display text-2xl font-bold text-[#171717] mb-6">
+          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#171717] mb-6">
             Frequently Asked Claim Questions
           </h2>
           <FAQ items={faqs} />
@@ -123,10 +123,10 @@ export default function ClaimsAssistance() {
 
         {/* Footer Contact */}
         <div className="text-center border-t border-[#E5E7EB] pt-8">
-          <p className="text-sm text-[#5B6472] mb-4">
+          <p className="text-xs sm:text-sm text-[#53627A] mb-4">
             Have questions regarding an active claim or endorsement?
           </p>
-          <Link to="/contact" className="btn-gold inline-flex items-center gap-2 font-bold">
+          <Link to="/contact" className="btn-gold inline-flex items-center gap-2 font-bold text-xs sm:text-sm">
             <span>Contact Claims Desk</span>
             <ArrowRight size={16} />
           </Link>

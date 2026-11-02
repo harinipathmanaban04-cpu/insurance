@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowRight,
@@ -11,6 +11,10 @@ import {
   Bike,
   Truck,
   Users,
+  Shield,
+  FileCheck,
+  Headphones,
+  ChevronDown,
 } from 'lucide-react';
 import { CATS } from '../data/data';
 import familyConsultationImg from '../assets/family-consultation.jpg';
@@ -20,135 +24,281 @@ export const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
   const [regNo, setRegNo] = useState('');
   const [policyType, setPolicyType] = useState('Car Insurance');
+  const navigate = useNavigate();
+
+  const handleQuoteSubmit = (e) => {
+    e.preventDefault();
+    const query = new URLSearchParams({
+      type: policyType,
+      ...(regNo.trim() ? { reg: regNo.trim() } : {}),
+    }).toString();
+    navigate(`/contact?${query}#quote`);
+  };
 
   return (
-    <section className="relative overflow-hidden bg-[#FFFDF5] border-b border-[#E5E7EB] min-h-[460px] sm:min-h-[490px] lg:min-h-[510px] xl:min-h-[530px] flex items-center">
-      {/* 1. Background Image on Right: Proportional Height, Rich Vibrant Color, No Milky Overlay */}
-      <div className="absolute inset-y-0 right-0 w-full lg:w-[48%] xl:w-[50%] 2xl:w-[48%] z-0 overflow-hidden">
-        <img
-          src={familyConsultationImg}
-          alt="Family consulting with professional insurance advisor"
-          className="h-full w-full object-cover object-[center_top] lg:object-center filter contrast-[1.08] saturate-[1.2] brightness-[1.01]"
-        />
-        {/* Very subtle, minimal edge transition - lightly reduced white color, crisp & vibrant photo */}
-        <div className="hidden lg:block absolute inset-y-0 left-0 w-8 lg:w-12 bg-gradient-to-r from-[#FFFDF5]/20 to-transparent pointer-events-none" />
-      </div>
+    <div className="relative bg-[#FFFCF5]">
+      {/* 1. Main Hero Area (Reduced top gap to upward picture and align sentences cleanly) */}
+      <section className="relative overflow-hidden pt-2.5 sm:pt-3.5 lg:pt-4 pb-10 sm:pb-12 lg:pb-14">
+        {/* Soft Ambient Glows */}
+        <div className="pointer-events-none absolute -left-16 top-0 h-[400px] w-[400px] rounded-full bg-[#FAF2DE]/70 blur-3xl -z-10" />
+        <div className="pointer-events-none absolute right-10 top-20 h-[360px] w-[360px] rounded-full bg-[#FFF1F2]/50 blur-3xl -z-10" />
 
-      {/* 2. Soft Ambient Brand Atmosphere on Left */}
-      <div className="pointer-events-none absolute -left-28 top-0 h-[450px] w-[450px] rounded-full bg-[#FAF2DE]/70 blur-3xl -z-10" />
-      <div className="pointer-events-none absolute left-1/3 bottom-0 h-[350px] w-[350px] rounded-full bg-[#FFF1F2]/50 blur-3xl -z-10" />
+        <div className="wrap relative z-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-8 xl:gap-12 items-center">
+            {/* LEFT COLUMN: ~48% on desktop */}
+            <div className="lg:col-span-6 xl:col-span-6 max-w-xl lg:max-w-none">
+              {/* Top Safety Badge */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45 }}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#FAF2DE] px-3.5 py-1 text-xs font-bold text-[#8C6D1F] border border-[#E5B544]/40 mb-3 sm:mb-3.5 shadow-2xs"
+              >
+                <Shield size={13} className="text-[#8C6D1F]" />
+                <span>Your Safety, Our Priority</span>
+              </motion.div>
 
-      {/* 3. Mobile Backdrop Gradient (< lg screens, lightly reduced white to preserve image depth) */}
-      <div className="lg:hidden absolute inset-0 bg-gradient-to-b from-[#FFFDF5]/85 via-[#FFFDF5]/70 to-[#FFFDF5]/50 z-10 pointer-events-none" />
+              {/* Main Heading: 2 lines matching reference image */}
+              <motion.h1
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                className="font-display font-black tracking-tight flex flex-col text-[26px] min-[360px]:text-[29px] min-[400px]:text-[33px] sm:text-4xl lg:text-[42px] xl:text-[46px] 2xl:text-[50px] leading-[1.12]"
+              >
+                <span className="block text-[#101C38]">Protect Your Family.</span>
+                <span className="block text-[#F51F2B] mt-0.5 sm:mt-1">Secure Every Tomorrow.</span>
+              </motion.h1>
 
-      {/* 4. Main Hero Content on Left: Moved slightly left to cover empty margin and space gracefully */}
-      <div className="wrap relative z-20 py-7 sm:py-9 lg:py-11 w-full">
-        <div className="max-w-xl lg:max-w-[490px] xl:max-w-[530px] lg:-ml-2 xl:-ml-4">
-          {/* Main Heading: 2 Lines (Line 1: #171717, Line 2: #ED1C24) */}
-          <motion.h1
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-2xl sm:text-3xl lg:text-[36px] xl:text-[40px] font-extrabold tracking-tight flex flex-col gap-1"
-          >
-            <span className="block text-[#171717] leading-[1.2]">Protect Your Family.</span>
-            <span className="block text-[#ED1C24] leading-[1.2]">Secure Every Tomorrow.</span>
-          </motion.h1>
+              {/* Description */}
+              <motion.p
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.08 }}
+                className="mt-3.5 sm:mt-4 text-xs min-[360px]:text-[13px] sm:text-sm lg:text-[15px] text-[#53627A] leading-relaxed max-w-[500px]"
+              >
+                From protecting your family's health to securing your vehicles and business, we make insurance simple with trusted partners, expert guidance and reliable support.
+              </motion.p>
 
-          {/* Description */}
-          <motion.p
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.1 }}
-            className="mt-3.5 sm:mt-4 text-xs sm:text-sm lg:text-[14.5px] text-[#5B6472] leading-relaxed max-w-[460px]"
-          >
-            From protecting your family's health to securing your vehicles and business, we make insurance simple with trusted partners, expert guidance and reliable support.
-          </motion.p>
+              {/* Instant Quotation Form */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                className="mt-5 sm:mt-6 w-full max-w-[520px]"
+              >
+                <span className="block text-[11px] font-bold text-[#101C38] uppercase tracking-wider mb-2">
+                  GET AN INSTANT QUOTATION
+                </span>
 
-          {/* Quotation / Instant Lead Bar */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.18 }}
-            className="mt-5 sm:mt-6 max-w-[470px] xl:max-w-[490px]"
-          >
-            <span className="block text-[11px] font-bold text-[#171717] uppercase tracking-wider mb-2">
-              Get an instant quotation
-            </span>
+                <form
+                  onSubmit={handleQuoteSubmit}
+                  className="rounded-2xl border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-3 lg:p-0 flex flex-col lg:flex-row lg:items-stretch gap-2.5 lg:gap-0 overflow-hidden"
+                >
+                  {/* Field 1: Vehicle / Mobile */}
+                  <div className="flex-1 px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] flex items-center">
+                    <Car size={17} className="text-[#101C38]/60 mr-2.5 shrink-0" />
+                    <div className="min-w-0 flex-1">
+                      <label htmlFor="hero-vehicle-input" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A]">
+                        Vehicle No / Mobile
+                      </label>
+                      <input
+                        id="hero-vehicle-input"
+                        type="text"
+                        placeholder="e.g. MH 02 CB 1234"
+                        value={regNo}
+                        onChange={(e) => setRegNo(e.target.value)}
+                        className="w-full text-xs sm:text-[13px] font-semibold text-[#101C38] placeholder:text-[#9CA3AF] focus:outline-none bg-transparent pt-0.5"
+                      />
+                    </div>
+                  </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch rounded-xl border border-[#E5E7EB] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.06)] overflow-hidden">
-              {/* Field 1: Vehicle / Mobile */}
-              <div className="flex-1 px-3.5 py-2.5 sm:py-2.5 border-b sm:border-b-0 sm:border-r border-[#E5E7EB]">
-                <label className="block text-[9.5px] font-bold uppercase tracking-wider text-[#9CA3AF]">
-                  Vehicle No / Mobile
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. MH 02 CB 1234"
-                  value={regNo}
-                  onChange={(e) => setRegNo(e.target.value)}
-                  className="w-full text-xs font-semibold text-[#171717] placeholder:text-[#9CA3AF] focus:outline-none bg-transparent pt-0.5"
+                  {/* Field 2: Insurance Category Selector */}
+                  <div className="px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] lg:min-w-[170px] flex items-center">
+                    <ShieldCheck size={17} className="text-[#101C38]/60 mr-2.5 shrink-0" />
+                    <div className="min-w-0 flex-1">
+                      <label htmlFor="hero-category-select" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A]">
+                        Category
+                      </label>
+                      <select
+                        id="hero-category-select"
+                        value={policyType}
+                        onChange={(e) => setPolicyType(e.target.value)}
+                        className="w-full text-xs sm:text-[13px] font-semibold text-[#101C38] focus:outline-none bg-transparent pt-0.5 cursor-pointer"
+                      >
+                        <option value="Car Insurance">Car Insurance</option>
+                        <option value="Bike Insurance">Bike Insurance</option>
+                        <option value="Commercial Vehicle Insurance">Commercial Vehicle</option>
+                        <option value="Life & Family Insurance">Life & Family</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Red CTA Button */}
+                  <button
+                    type="submit"
+                    className="w-full lg:w-auto inline-flex items-center justify-center gap-1.5 bg-[#F51F2B] hover:bg-[#D61420] text-white font-bold text-xs uppercase tracking-wider py-3.5 lg:py-0 px-6 rounded-xl lg:rounded-none transition-all shadow-sm active:translate-y-0.5 whitespace-nowrap shrink-0"
+                  >
+                    <span>GET A QUOTE</span>
+                    <ArrowRight size={14} />
+                  </button>
+                </form>
+              </motion.div>
+
+              {/* Mobile Dedicated Family Insurance Image (< lg screens: Positioned below quotation form matching reference phone mockup) */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, delay: 0.18 }}
+                className="lg:hidden mt-6 w-full"
+              >
+                <div className="relative overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-card aspect-[16/10] sm:aspect-[16/9]">
+                  <img
+                    src={familyConsultationImg}
+                    alt="Indian family consulting with professional insurance advisor"
+                    className="h-full w-full object-cover object-[center_top] sm:object-center filter contrast-[1.08] saturate-[1.2] brightness-[1.01]"
+                  />
+                </div>
+              </motion.div>
+
+              {/* Trust Indicators: 3 items horizontally aligned on desktop, stacked cleanly on mobile */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mt-5 sm:mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-1 max-w-[530px]"
+              >
+                {/* 1. Talk to an Expert */}
+                <Link
+                  to="/contact"
+                  className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/60 transition-colors group"
+                >
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B] transition-transform group-hover:scale-105">
+                    <Users size={18} />
+                  </span>
+                  <div className="min-w-0">
+                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
+                      Talk to an Expert
+                    </b>
+                    <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
+                      24/7 Support
+                    </span>
+                  </div>
+                </Link>
+
+                {/* 2. 50+ IRDAI Partners */}
+                <div className="flex items-center gap-3 p-2 rounded-xl">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
+                    <ShieldCheck size={18} />
+                  </span>
+                  <div className="min-w-0">
+                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
+                      50+ IRDAI Partners
+                    </b>
+                    <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
+                      Trusted Network
+                    </span>
+                  </div>
+                </div>
+
+                {/* 3. 100% Cashless Claims */}
+                <div className="flex items-center gap-3 p-2 rounded-xl">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
+                    <CheckCircle2 size={18} />
+                  </span>
+                  <div className="min-w-0">
+                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
+                      100% Cashless Claims
+                    </b>
+                    <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
+                      Hassle-free Process
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* RIGHT COLUMN: ~52% on desktop with curved left frame (Clean photo without overlapping sentence) */}
+            <div className="hidden lg:block lg:col-span-6 xl:col-span-6 relative">
+              {/* Curved Asymmetric Image Container matching reference */}
+              <div className="relative h-[480px] xl:h-[520px] 2xl:h-[550px] w-full overflow-hidden rounded-tl-[80px] xl:rounded-tl-[120px] rounded-bl-[80px] xl:rounded-bl-[120px] rounded-r-3xl border-[3.5px] border-[#E5B544]/40 shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-slate-100">
+                <img
+                  src={familyConsultationImg}
+                  alt="Indian family consulting with professional insurance advisor"
+                  className="h-full w-full object-cover object-[center_15%] filter contrast-[1.08] saturate-[1.2] brightness-[1.01]"
                 />
               </div>
-
-              {/* Field 2: Insurance Category Selector */}
-              <div className="px-3.5 py-2.5 sm:py-2.5 border-b sm:border-b-0 sm:border-r border-[#E5E7EB] min-w-[130px] sm:min-w-[155px]">
-                <label className="block text-[9.5px] font-bold uppercase tracking-wider text-[#9CA3AF]">
-                  Category
-                </label>
-                <select
-                  value={policyType}
-                  onChange={(e) => setPolicyType(e.target.value)}
-                  className="w-full text-xs font-semibold text-[#171717] focus:outline-none bg-transparent pt-0.5 cursor-pointer"
-                >
-                  <option value="Car Insurance">Car Insurance</option>
-                  <option value="Bike Insurance">Bike Insurance</option>
-                  <option value="Commercial Vehicle">Commercial Vehicle</option>
-                  <option value="Health & Life Insurance">Health & Life</option>
-                </select>
-              </div>
-
-              {/* Red CTA Button */}
-              <Link
-                to={`/contact?type=${encodeURIComponent(policyType)}#quote`}
-                className="inline-flex items-center justify-center gap-1.5 bg-[#ED1C24] hover:bg-[#D0171E] text-white font-bold text-xs uppercase tracking-wider px-5 py-3 sm:py-0 transition-colors whitespace-nowrap active:bg-[#B91319]"
-              >
-                <span>GET A QUOTE</span>
-                <ArrowRight size={13} />
-              </Link>
             </div>
-          </motion.div>
+          </div>
+        </div>
+      </section>
 
-          {/* Secondary Actions & Trust Indicators */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="mt-5 flex flex-wrap items-center gap-3.5 sm:gap-5 pt-0.5"
-          >
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 font-bold text-xs text-[#171717] hover:text-[#ED1C24] transition-colors group"
-            >
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FFF1F2] text-[#ED1C24] border border-[#ED1C24]/30 transition-transform group-hover:scale-105">
-                <PhoneCall size={13} />
+      {/* 2. Floating Statistics Panel (Directly matching reference design) */}
+      <div className="wrap relative z-30 -mt-6 sm:-mt-8 lg:-mt-10 pb-4">
+        <div className="rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white p-5 sm:p-6 lg:p-7 shadow-[0_12px_36px_rgba(0,0,0,0.06)]">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#E5E7EB]/80">
+            {/* Stat 1: 20,000+ Happy Customers */}
+            <div className="flex items-center gap-3.5 sm:gap-4 lg:px-6 pt-3 sm:pt-0">
+              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
+                <Users size={20} className="sm:size-[22px]" />
               </span>
-              <span className="underline underline-offset-4">Talk to an Expert</span>
-            </Link>
-
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#5B6472]">
-              <ShieldCheck size={14} className="text-[#ED1C24]" />
-              <span>50+ IRDAI Partners</span>
+              <div>
+                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight">
+                  20,000+
+                </b>
+                <span className="block text-xs font-semibold text-[#53627A] mt-0.5">
+                  Happy Customers
+                </span>
+              </div>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#5B6472]">
-              <CheckCircle2 size={14} className="text-[#B45309]" />
-              <span>100% Cashless Claims</span>
+            {/* Stat 2: 50+ Insurance Partners */}
+            <div className="flex items-center gap-3.5 sm:gap-4 lg:px-6 pt-3 sm:pt-0">
+              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
+                <ShieldCheck size={20} className="sm:size-[22px]" />
+              </span>
+              <div>
+                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight">
+                  50+
+                </b>
+                <span className="block text-xs font-semibold text-[#53627A] mt-0.5">
+                  Insurance Partners
+                </span>
+              </div>
             </div>
-          </motion.div>
+
+            {/* Stat 3: 98% Claim Settlement Ratio */}
+            <div className="flex items-center gap-3.5 sm:gap-4 lg:px-6 pt-3 sm:pt-0">
+              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F8F5] text-[#10B981]">
+                <FileCheck size={20} className="sm:size-[22px]" />
+              </span>
+              <div>
+                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight">
+                  98%
+                </b>
+                <span className="block text-xs font-semibold text-[#53627A] mt-0.5">
+                  Claim Settlement Ratio
+                </span>
+              </div>
+            </div>
+
+            {/* Stat 4: 24/7 Customer Support */}
+            <div className="flex items-center gap-3.5 sm:gap-4 lg:px-6 pt-3 sm:pt-0">
+              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF6FF] text-[#3B82F6]">
+                <Headphones size={20} className="sm:size-[22px]" />
+              </span>
+              <div>
+                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight">
+                  24/7
+                </b>
+                <span className="block text-xs font-semibold text-[#53627A] mt-0.5">
+                  Customer Support
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
@@ -229,18 +379,18 @@ export const Cards = () => {
                 </div>
 
                 {/* Card Body: Title, Description, and Actions */}
-                <div className="flex flex-1 flex-col justify-between pt-9 pb-5 px-5 sm:px-6 text-center">
+                <div className="flex flex-1 flex-col justify-between pt-9 pb-5 px-4 sm:px-6 text-center">
                   <div>
                     <h3 className="font-display text-lg sm:text-[19px] font-bold text-[#171717] mb-2 leading-snug">
                       {c.title}
                     </h3>
-                    <p className="text-xs sm:text-[13px] text-[#5B6472] leading-relaxed min-h-[44px]">
+                    <p className="text-xs sm:text-[13px] text-[#53627A] leading-relaxed min-h-[44px]">
                       {c.desc}
                     </p>
                   </div>
 
                   {/* Action Row */}
-                  <div className="flex items-center justify-between gap-3 pt-6 mt-auto">
+                  <div className="flex flex-wrap items-center justify-between gap-2.5 pt-6 mt-auto">
                     <Link
                       to={c.path}
                       className={`inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0 ${c.btnBg}`}

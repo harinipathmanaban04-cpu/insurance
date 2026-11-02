@@ -37,7 +37,7 @@ export const FAQ = ({ items }) => {
             key={q}
             className={`rounded-2xl border transition-all duration-200 ${
               isOpen
-                ? 'border-[#DFB24A] bg-white shadow-sm ring-1 ring-[#DFB24A]/20'
+                ? 'border-[#E5B544] bg-white shadow-sm ring-1 ring-[#E5B544]/20'
                 : 'border-[#E5E7EB] bg-white hover:border-[#A7ADB4]'
             }`}
           >
@@ -49,7 +49,7 @@ export const FAQ = ({ items }) => {
               <span className="text-sm sm:text-base pr-4">{q}</span>
               <span
                 className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-200 ${
-                  isOpen ? 'bg-[#DFB24A] text-[#171717] rotate-180' : 'bg-[#F7F8FA] text-[#5B6472]'
+                  isOpen ? 'bg-[#E5B544] text-[#171717] rotate-180' : 'bg-[#F7F8FA] text-[#53627A]'
                 }`}
               >
                 <ChevronDown size={18} />
@@ -64,7 +64,7 @@ export const FAQ = ({ items }) => {
                   transition={{ duration: 0.22, ease: 'easeInOut' }}
                   className="overflow-hidden"
                 >
-                  <p className="px-4 pb-5 pt-1 text-sm text-[#5B6472] leading-relaxed border-t border-[#E5E7EB] sm:px-5">
+                  <p className="px-4 pb-5 pt-1 text-xs sm:text-sm text-[#53627A] leading-relaxed border-t border-[#E5E7EB] sm:px-5">
                     {a}
                   </p>
                 </motion.div>
