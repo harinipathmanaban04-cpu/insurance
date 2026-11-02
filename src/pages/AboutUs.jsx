@@ -20,7 +20,7 @@ export default function AboutUs() {
         </div>
 
         {/* Story Card */}
-        <div className="card border border-[#E5E7EB] bg-white p-5 sm:p-8 md:p-10 shadow-card mb-8 sm:mb-10">
+        <div className="card border border-[#E5E7EB] bg-white p-4 sm:p-8 md:p-10 shadow-card mb-8 sm:mb-10">
           <h2 className="font-display text-xl sm:text-2xl font-black text-[#171717] mb-3 sm:mb-4">
             Who We Are
           </h2>
@@ -61,12 +61,12 @@ export default function AboutUs() {
           <p className="mt-2 text-xs sm:text-sm text-[#53627A] max-w-lg mx-auto">
             Get personalized quotes in minutes with zero obligation and 100% free claim assistance.
           </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-            <Link to="/contact#quote" className="btn-gold text-xs sm:text-sm font-bold shadow-xs">
+          <div className="mt-6 flex flex-col min-[480px]:flex-row items-stretch min-[480px]:items-center justify-center gap-3 sm:gap-4">
+            <Link to="/contact#quote" className="btn-gold text-xs sm:text-sm font-bold shadow-xs justify-center">
               <span>Request Free Quote</span>
               <ArrowRight size={16} />
             </Link>
-            <Link to="/contact" className="btn-outline text-xs sm:text-sm font-semibold">
+            <Link to="/contact" className="btn-outline text-xs sm:text-sm font-semibold justify-center">
               Contact Our Office
             </Link>
           </div>

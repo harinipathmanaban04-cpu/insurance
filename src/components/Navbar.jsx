@@ -58,24 +58,24 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5E7EB] bg-white/95 backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
-      {/* Top Utility Micro-Bar (Matches reference design) */}
+      {/* Top Utility Micro-Bar */}
       <div className="hidden border-b border-[#E5E7EB] bg-white px-4 py-1.5 text-xs text-[#53627A] md:block">
-        <div className="wrap flex items-center justify-between">
-          <div className="flex items-center gap-4 lg:gap-6">
-            <span className="inline-flex items-center gap-1.5 font-semibold text-[#101C38]">
+        <div className="wrap flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4 lg:gap-6 min-w-0">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-[#101C38] shrink-0">
               <ShieldCheck size={14} className="text-[#F51F2B]" />
               <span>Trusted Insurance Company</span>
             </span>
-            <span className="inline-flex items-center gap-1.5 font-semibold text-[#101C38]">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-[#101C38] shrink-0">
               <CheckCircle2 size={14} className="text-[#E5B544]" />
               <span>50+ IRDAI Approved Partners</span>
             </span>
-            <span className="hidden xl:inline-flex items-center gap-1.5 font-medium text-[#53627A]">
+            <span className="hidden xl:inline-flex items-center gap-1.5 font-medium text-[#53627A] truncate">
               <Shield size={13} className="text-[#101C38]/70" />
               <span>Fast & Reliable Policy Issuance & Claim Support</span>
             </span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 shrink-0">
             <a
               href={`tel:${PHONE.replace(/\s+/g, '')}`}
               className="inline-flex items-center gap-1.5 font-bold text-[#101C38] hover:text-[#F51F2B] transition-colors"
@@ -88,18 +88,18 @@ export default function Navbar() {
       </div>
 
       {/* Main Navbar */}
-      <div className="wrap flex h-[74px] items-center justify-between gap-2 sm:gap-4">
+      <div className="wrap flex h-[70px] sm:h-[74px] items-center justify-between gap-2 sm:gap-4">
         {/* Brand Shield Logo & Name */}
-        <Link to="/" className="flex shrink-0 items-center gap-2 sm:gap-3 group max-w-[calc(100%-56px)] sm:max-w-none">
-          <Logo className="h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105" />
+        <Link to="/" className="flex shrink-0 items-center gap-2 sm:gap-3 group max-w-[calc(100%-48px)] sm:max-w-none min-w-0">
+          <Logo className="h-9 min-[360px]:h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105 shrink-0" />
           <div className="leading-tight min-w-0">
-            <span className="block font-display text-base sm:text-xl font-black tracking-tight text-[#101C38] truncate">
+            <span className="block font-display text-[15px] min-[360px]:text-base sm:text-xl font-black tracking-tight text-[#101C38] truncate">
               THE BEST
             </span>
-            <span className="block text-[9.5px] sm:text-[11px] font-black tracking-[0.14em] text-[#F51F2B] truncate">
+            <span className="block text-[8.5px] min-[360px]:text-[9.5px] sm:text-[11px] font-black tracking-[0.14em] text-[#F51F2B] truncate">
               INSURANCE COMPANY
             </span>
-            <span className="hidden text-[10px] font-medium text-[#53627A] sm:block truncate">
+            <span className="hidden text-[10px] font-medium text-[#53627A] md:block truncate">
               Your World. Your People. Our Protection.
             </span>
           </div>
@@ -200,25 +200,25 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right CTA Actions: Contact Us rounded-full outline + Get a Quote Gold rounded-full button */}
+        {/* Right CTA Actions */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <Link
             to="/contact"
-            className="hidden md:inline-flex items-center justify-center rounded-full border border-[#E5E7EB] bg-white px-5 py-2 text-xs font-bold text-[#101C38] shadow-xs hover:border-[#101C38] hover:bg-[#F7F8FA] transition-all whitespace-nowrap"
+            className="hidden xl:inline-flex items-center justify-center rounded-full border border-[#E5E7EB] bg-white px-4 xl:px-5 py-2 text-xs font-bold text-[#101C38] shadow-xs hover:border-[#101C38] hover:bg-[#F7F8FA] transition-all whitespace-nowrap"
           >
             Contact Us
           </Link>
 
           <Link
             to="/contact#quote"
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#E5B544] hover:bg-[#CF9F30] px-5 py-2 text-xs font-bold text-[#101C38] shadow-xs transition-all whitespace-nowrap active:translate-y-0.5"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#E5B544] hover:bg-[#CF9F30] px-4 sm:px-5 py-2 text-xs font-bold text-[#101C38] shadow-xs transition-all whitespace-nowrap active:translate-y-0.5"
           >
             <span>Get a Quote</span>
             <ArrowRight size={14} />
           </Link>
 
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#E5E7EB] text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B] lg:hidden focus:outline-none transition-colors"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#E5E7EB] text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B] lg:hidden focus:outline-none transition-colors shrink-0"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -236,13 +236,13 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.22, ease: 'easeInOut' }}
-            className="overflow-hidden border-t border-[#E5E7EB] bg-white lg:hidden max-h-[calc(100vh-74px)] overflow-y-auto"
+            className="overflow-hidden border-t border-[#E5E7EB] bg-white lg:hidden max-h-[calc(100vh-70px)] sm:max-h-[calc(100vh-74px)] overflow-y-auto overscroll-contain"
           >
             <div className="wrap space-y-1.5 py-4">
               <Link
                 to="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block rounded-xl px-4 py-2.5 text-base font-semibold transition-colors ${
+                className={`block rounded-xl px-4 py-3 text-base font-semibold transition-colors ${
                   isActive('/')
                     ? 'bg-[#FFF1F2] text-[#F51F2B] font-bold'
                     : 'text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B]'
@@ -255,7 +255,7 @@ export default function Navbar() {
               <div>
                 <button
                   type="button"
-                  className="flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-base font-semibold text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B] transition-colors"
+                  className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-base font-semibold text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B] transition-colors"
                   aria-expanded={insuranceAccordion}
                   onClick={() => setInsuranceAccordion(!insuranceAccordion)}
                 >
@@ -271,7 +271,7 @@ export default function Navbar() {
                   />
                 </button>
                 {insuranceAccordion && (
-                  <div className="my-1.5 space-y-1 rounded-xl bg-[#F7F8FA] p-2 pl-3">
+                  <div className="my-1.5 space-y-1 rounded-xl bg-[#F7F8FA] p-2 sm:p-2.5">
                     {CATS.map((c) => {
                       const Icon = c.icon;
                       const active = pathname === c.path;
@@ -280,7 +280,7 @@ export default function Navbar() {
                           key={c.id}
                           to={c.path}
                           onClick={() => setMobileMenuOpen(false)}
-                          className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                          className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                             active
                               ? 'bg-white text-[#F51F2B] font-bold shadow-xs'
                               : 'text-[#101C38] hover:bg-white hover:text-[#F51F2B]'
@@ -305,7 +305,7 @@ export default function Navbar() {
                   key={title}
                   to={path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block rounded-xl px-4 py-2.5 text-base font-semibold transition-colors ${
+                  className={`block rounded-xl px-4 py-3 text-base font-semibold transition-colors ${
                     isActive(path)
                       ? 'bg-[#FFF1F2] text-[#F51F2B] font-bold'
                       : 'text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B]'
@@ -318,7 +318,7 @@ export default function Navbar() {
               <Link
                 to="/contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block rounded-xl px-4 py-2.5 text-base font-semibold transition-colors ${
+                className={`block rounded-xl px-4 py-3 text-base font-semibold transition-colors ${
                   isActive('/contact')
                     ? 'bg-[#FFF1F2] text-[#F51F2B] font-bold'
                     : 'text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B]'
@@ -331,7 +331,7 @@ export default function Navbar() {
                 <Link
                   to="/contact#quote"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="rounded-full bg-[#E5B544] hover:bg-[#CF9F30] text-[#101C38] w-full justify-center !py-3 text-sm font-bold shadow-sm inline-flex items-center gap-1.5 transition-all"
+                  className="rounded-full bg-[#E5B544] hover:bg-[#CF9F30] text-[#101C38] w-full justify-center !py-3.5 text-sm font-bold shadow-sm inline-flex items-center gap-1.5 transition-all"
                 >
                   <span>Get a Free Quote</span>
                   <ArrowRight size={15} />

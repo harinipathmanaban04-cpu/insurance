@@ -151,14 +151,16 @@ export default function QuoteForm({ defaultType = '' }) {
         </select>
       </FormField>
 
-      <FormField id="city" label="City / RTO Location *">
-        <input
-          className={`inp mt-1 ${errors.city ? 'border-[#F51F2B] focus:border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
-          placeholder="e.g. Mumbai, Delhi, Bengaluru"
-          value={formData.city}
-          onChange={handleChange('city')}
-        />
-      </FormField>
+      <div className="sm:col-span-2">
+        <FormField id="city" label="City / RTO Location *">
+          <input
+            className={`inp mt-1 ${errors.city ? 'border-[#F51F2B] focus:border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
+            placeholder="e.g. Mumbai, Delhi, Bengaluru"
+            value={formData.city}
+            onChange={handleChange('city')}
+          />
+        </FormField>
+      </div>
 
       <div className="sm:col-span-2">
         <label className="block text-xs sm:text-sm font-bold text-[#171717]">

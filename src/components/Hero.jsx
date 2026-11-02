@@ -72,7 +72,7 @@ export const Hero = () => {
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="font-display font-black tracking-tight flex flex-col text-[26px] min-[360px]:text-[29px] min-[400px]:text-[33px] sm:text-4xl lg:text-[42px] xl:text-[46px] 2xl:text-[50px] leading-[1.12]"
+                className="font-display font-black tracking-tight flex flex-col text-[25px] min-[360px]:text-[28px] min-[400px]:text-[32px] sm:text-4xl lg:text-[42px] xl:text-[46px] 2xl:text-[50px] leading-[1.14]"
               >
                 <span className="block text-[#101C38]">Protect Your Family.</span>
                 <span className="block text-[#F51F2B] mt-0.5 sm:mt-1">Secure Every Tomorrow.</span>
@@ -104,7 +104,7 @@ export const Hero = () => {
                   className="rounded-2xl border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-3 lg:p-0 flex flex-col lg:flex-row lg:items-stretch gap-2.5 lg:gap-0 overflow-hidden"
                 >
                   {/* Field 1: Vehicle / Mobile */}
-                  <div className="flex-1 px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] flex items-center">
+                  <div className="flex-1 px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] flex items-center min-h-[44px]">
                     <Car size={17} className="text-[#101C38]/60 mr-2.5 shrink-0" />
                     <div className="min-w-0 flex-1">
                       <label htmlFor="hero-vehicle-input" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A]">
@@ -122,7 +122,7 @@ export const Hero = () => {
                   </div>
 
                   {/* Field 2: Insurance Category Selector */}
-                  <div className="px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] lg:min-w-[170px] flex items-center">
+                  <div className="px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] lg:min-w-[170px] flex items-center min-h-[44px]">
                     <ShieldCheck size={17} className="text-[#101C38]/60 mr-2.5 shrink-0" />
                     <div className="min-w-0 flex-1">
                       <label htmlFor="hero-category-select" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A]">
@@ -132,7 +132,7 @@ export const Hero = () => {
                         id="hero-category-select"
                         value={policyType}
                         onChange={(e) => setPolicyType(e.target.value)}
-                        className="w-full text-xs sm:text-[13px] font-semibold text-[#101C38] focus:outline-none bg-transparent pt-0.5 cursor-pointer"
+                        className="w-full text-xs sm:text-[13px] font-semibold text-[#101C38] focus:outline-none bg-transparent pt-0.5 cursor-pointer truncate"
                       >
                         <option value="Car Insurance">Car Insurance</option>
                         <option value="Bike Insurance">Bike Insurance</option>
@@ -145,7 +145,7 @@ export const Hero = () => {
                   {/* Red CTA Button */}
                   <button
                     type="submit"
-                    className="w-full lg:w-auto inline-flex items-center justify-center gap-1.5 bg-[#F51F2B] hover:bg-[#D61420] text-white font-bold text-xs uppercase tracking-wider py-3.5 lg:py-0 px-6 rounded-xl lg:rounded-none transition-all shadow-sm active:translate-y-0.5 whitespace-nowrap shrink-0"
+                    className="w-full lg:w-auto inline-flex items-center justify-center gap-1.5 bg-[#F51F2B] hover:bg-[#D61420] text-white font-bold text-xs uppercase tracking-wider py-3.5 lg:py-0 px-6 rounded-xl lg:rounded-none transition-all shadow-sm active:translate-y-0.5 whitespace-nowrap shrink-0 min-h-[44px]"
                   >
                     <span>GET A QUOTE</span>
                     <ArrowRight size={14} />
@@ -160,7 +160,7 @@ export const Hero = () => {
                 transition={{ duration: 0.55, delay: 0.18 }}
                 className="lg:hidden mt-6 w-full"
               >
-                <div className="relative overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-card aspect-[16/10] sm:aspect-[16/9]">
+                <div className="relative overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-card aspect-[16/10] sm:aspect-[16/9] md:aspect-[21/9] md:max-h-[360px]">
                   <img
                     src={familyConsultationImg}
                     alt="Indian family consulting with professional insurance advisor"
@@ -174,51 +174,51 @@ export const Hero = () => {
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="mt-5 sm:mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-1 max-w-[530px]"
+                className="mt-5 sm:mt-6 grid grid-cols-1 min-[480px]:grid-cols-3 sm:grid-cols-3 gap-2 sm:gap-3 pt-1 max-w-[530px]"
               >
                 {/* 1. Talk to an Expert */}
                 <Link
                   to="/contact"
-                  className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/60 transition-colors group"
+                  className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl hover:bg-white/80 transition-colors group"
                 >
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B] transition-transform group-hover:scale-105">
                     <Users size={18} />
                   </span>
                   <div className="min-w-0">
-                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
+                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight">
                       Talk to an Expert
                     </b>
-                    <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
+                    <span className="block text-[11px] text-[#53627A] mt-0.5">
                       24/7 Support
                     </span>
                   </div>
                 </Link>
 
                 {/* 2. 50+ IRDAI Partners */}
-                <div className="flex items-center gap-3 p-2 rounded-xl">
+                <div className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
                     <ShieldCheck size={18} />
                   </span>
                   <div className="min-w-0">
-                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
+                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight">
                       50+ IRDAI Partners
                     </b>
-                    <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
+                    <span className="block text-[11px] text-[#53627A] mt-0.5">
                       Trusted Network
                     </span>
                   </div>
                 </div>
 
                 {/* 3. 100% Cashless Claims */}
-                <div className="flex items-center gap-3 p-2 rounded-xl">
+                <div className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
                     <CheckCircle2 size={18} />
                   </span>
                   <div className="min-w-0">
-                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
+                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight">
                       100% Cashless Claims
                     </b>
-                    <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
+                    <span className="block text-[11px] text-[#53627A] mt-0.5">
                       Hassle-free Process
                     </span>
                   </div>
@@ -232,65 +232,65 @@ export const Hero = () => {
         </div>
       </section>
 
-      {/* 2. Floating Statistics Panel (Directly matching reference design) */}
+      {/* 2. Floating Statistics Panel */}
       <div className="wrap relative z-30 -mt-6 sm:-mt-8 lg:-mt-10 pb-4">
-        <div className="rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white p-5 sm:p-6 lg:p-7 shadow-[0_12px_36px_rgba(0,0,0,0.06)]">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#E5E7EB]/80">
+        <div className="rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white p-3.5 sm:p-5 lg:p-7 shadow-[0_12px_36px_rgba(0,0,0,0.06)]">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-0 lg:divide-x lg:divide-[#E5E7EB]/80">
             {/* Stat 1: 20,000+ Happy Customers */}
-            <div className="flex items-center gap-3.5 sm:gap-4 lg:px-6 pt-3 sm:pt-0">
-              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
-                <Users size={20} className="sm:size-[22px]" />
+            <div className="flex items-center gap-2.5 min-[360px]:gap-3 sm:gap-4 p-2.5 min-[360px]:p-3 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
+              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
+                <Users size={18} className="sm:size-[22px]" />
               </span>
-              <div>
-                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight">
+              <div className="min-w-0">
+                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   20,000+
                 </b>
-                <span className="block text-xs font-semibold text-[#53627A] mt-0.5">
+                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
                   Happy Customers
                 </span>
               </div>
             </div>
 
             {/* Stat 2: 50+ Insurance Partners */}
-            <div className="flex items-center gap-3.5 sm:gap-4 lg:px-6 pt-3 sm:pt-0">
-              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
-                <ShieldCheck size={20} className="sm:size-[22px]" />
+            <div className="flex items-center gap-2.5 min-[360px]:gap-3 sm:gap-4 p-2.5 min-[360px]:p-3 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
+              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
+                <ShieldCheck size={18} className="sm:size-[22px]" />
               </span>
-              <div>
-                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight">
+              <div className="min-w-0">
+                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   50+
                 </b>
-                <span className="block text-xs font-semibold text-[#53627A] mt-0.5">
+                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
                   Insurance Partners
                 </span>
               </div>
             </div>
 
             {/* Stat 3: 98% Claim Settlement Ratio */}
-            <div className="flex items-center gap-3.5 sm:gap-4 lg:px-6 pt-3 sm:pt-0">
-              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F8F5] text-[#10B981]">
-                <FileCheck size={20} className="sm:size-[22px]" />
+            <div className="flex items-center gap-2.5 min-[360px]:gap-3 sm:gap-4 p-2.5 min-[360px]:p-3 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
+              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F8F5] text-[#10B981]">
+                <FileCheck size={18} className="sm:size-[22px]" />
               </span>
-              <div>
-                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight">
+              <div className="min-w-0">
+                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   98%
                 </b>
-                <span className="block text-xs font-semibold text-[#53627A] mt-0.5">
+                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
                   Claim Settlement Ratio
                 </span>
               </div>
             </div>
 
             {/* Stat 4: 24/7 Customer Support */}
-            <div className="flex items-center gap-3.5 sm:gap-4 lg:px-6 pt-3 sm:pt-0">
-              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF6FF] text-[#3B82F6]">
-                <Headphones size={20} className="sm:size-[22px]" />
+            <div className="flex items-center gap-2.5 min-[360px]:gap-3 sm:gap-4 p-2.5 min-[360px]:p-3 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
+              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF6FF] text-[#3B82F6]">
+                <Headphones size={18} className="sm:size-[22px]" />
               </span>
-              <div>
-                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight">
+              <div className="min-w-0">
+                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   24/7
                 </b>
-                <span className="block text-xs font-semibold text-[#53627A] mt-0.5">
+                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
                   Customer Support
                 </span>
               </div>
@@ -390,17 +390,17 @@ export const Cards = () => {
                   </div>
 
                   {/* Action Row */}
-                  <div className="flex flex-wrap items-center justify-between gap-2.5 pt-6 mt-auto">
+                  <div className="flex items-center justify-between gap-2 pt-6 mt-auto">
                     <Link
                       to={c.path}
-                      className={`inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0 ${c.btnBg}`}
+                      className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 sm:px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0 min-h-[40px] shrink-0 ${c.btnBg}`}
                     >
                       <span>Explore Plans</span>
                       <ArrowRight size={13} />
                     </Link>
                     <Link
                       to={`/contact?type=${encodeURIComponent(c.type)}#quote`}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-[#171717] hover:text-[#087F8C] transition-colors"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-[#171717] hover:text-[#087F8C] transition-colors py-2 shrink-0"
                     >
                       <span>Get Quote</span>
                       <ArrowRight size={13} className="text-[#386FA4]" />

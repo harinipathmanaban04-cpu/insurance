@@ -100,7 +100,7 @@ export default function ClaimsAssistance() {
                 <span className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-[#171717] font-display text-xs sm:text-sm font-bold text-white">
                   {i + 1}
                 </span>
-                <div>
+                <div className="min-w-0 flex-1">
                   <b className="block text-sm sm:text-base font-bold text-[#171717]">
                     {s.title}
                   </b>

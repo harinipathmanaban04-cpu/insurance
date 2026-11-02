@@ -28,10 +28,10 @@ export default function InsurancePage({ id }) {
               {p.lead}
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+            <div className="mt-6 sm:mt-8 flex flex-col min-[480px]:flex-row items-stretch min-[480px]:items-center gap-3 sm:gap-4">
               <Link
                 to={`/contact?type=${encodeURIComponent(c.type)}#quote`}
-                className="btn-gold text-xs sm:text-base px-5 sm:px-6 py-3 font-bold shadow-xs"
+                className="btn-gold text-xs sm:text-base px-4 sm:px-6 py-3 font-bold shadow-xs justify-center text-center"
               >
                 <span>Get a Free {c.title.replace(' Vehicle', '')} Quote</span>
                 <ArrowRight size={17} />
@@ -39,14 +39,14 @@ export default function InsurancePage({ id }) {
 
               <a
                 href={`tel:${PHONE.replace(/\s+/g, '')}`}
-                className="btn-outline text-xs sm:text-base px-4 sm:px-5 py-3 font-semibold"
+                className="btn-outline text-xs sm:text-base px-4 sm:px-5 py-3 font-semibold justify-center text-center"
               >
                 <PhoneCall size={16} className="text-[#F51F2B]" />
                 <span>Call Advisor</span>
               </a>
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs sm:text-sm text-[#53627A]">
+            <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-x-5 sm:gap-x-6 gap-y-2 text-xs sm:text-sm text-[#53627A]">
               <span className="flex items-center gap-1.5 font-semibold text-[#171717]">
                 <CheckCircle2 size={16} className="text-[#F51F2B]" />
                 Instant Issuance
@@ -67,7 +67,7 @@ export default function InsurancePage({ id }) {
               <Img
                 src={c.img}
                 alt={c.title}
-                className="h-64 min-[400px]:h-72 sm:h-96 w-full rounded-2xl object-cover"
+                className="h-52 min-[360px]:h-60 sm:h-80 md:h-96 w-full rounded-2xl object-cover"
               />
             </div>
           </div>

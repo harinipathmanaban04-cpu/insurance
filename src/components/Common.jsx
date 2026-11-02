@@ -42,17 +42,17 @@ export const FAQ = ({ items }) => {
             }`}
           >
             <button
-              className="flex w-full items-center justify-between p-4 sm:p-5 text-left font-bold text-[#171717] focus:outline-none"
+              className="flex w-full items-center justify-between p-3.5 sm:p-5 text-left font-bold text-[#171717] focus:outline-none cursor-pointer"
               aria-expanded={isOpen}
               onClick={() => setOpenIndex(isOpen ? -1 : i)}
             >
-              <span className="text-sm sm:text-base pr-4">{q}</span>
+              <span className="text-xs sm:text-base pr-2.5 sm:pr-4 leading-snug">{q}</span>
               <span
-                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-200 ${
+                className={`flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-200 ${
                   isOpen ? 'bg-[#E5B544] text-[#171717] rotate-180' : 'bg-[#F7F8FA] text-[#53627A]'
                 }`}
               >
-                <ChevronDown size={18} />
+                <ChevronDown size={17} />
               </span>
             </button>
             <AnimatePresence initial={false}>
@@ -64,7 +64,7 @@ export const FAQ = ({ items }) => {
                   transition={{ duration: 0.22, ease: 'easeInOut' }}
                   className="overflow-hidden"
                 >
-                  <p className="px-4 pb-5 pt-1 text-xs sm:text-sm text-[#53627A] leading-relaxed border-t border-[#E5E7EB] sm:px-5">
+                  <p className="px-3.5 pb-4 pt-2 text-xs sm:text-sm text-[#53627A] leading-relaxed border-t border-[#E5E7EB] sm:px-5 sm:pb-5">
                     {a}
                   </p>
                 </motion.div>

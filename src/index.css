@@ -20,7 +20,7 @@
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-200 cursor-pointer;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer min-h-[40px];
   }
   /* Primary CTA: Gold with dark text */
   .btn-gold {
@@ -43,12 +43,12 @@
     @apply rounded-2xl border border-[#E5E7EB] bg-white shadow-card transition-all duration-200;
   }
   .wrap {
-    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full;
   }
   .h2 {
-    @apply font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#171717] tracking-tight;
+    @apply font-display text-xl min-[360px]:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#171717] tracking-tight;
   }
   .inp {
-    @apply w-full rounded-xl border border-[#E5E7EB] bg-white px-4 py-2.5 text-sm text-[#171717] placeholder-[#53627A] focus:outline-none focus:border-[#E5B544] focus:ring-2 focus:ring-[#E5B544]/20 transition-all;
+    @apply w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm text-[#171717] placeholder-[#53627A] focus:outline-none focus:border-[#E5B544] focus:ring-2 focus:ring-[#E5B544]/20 transition-all min-h-[44px];
   }
 }

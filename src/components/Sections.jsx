@@ -41,7 +41,7 @@ export const Selector = () => {
 
   return (
     <section className="wrap py-8">
-      <div className="card border border-[#E5E7EB] bg-[#F7F8FA] p-6 sm:p-8 shadow-card">
+      <div className="card border border-[#E5E7EB] bg-[#F7F8FA] p-4 sm:p-6 lg:p-8 shadow-card">
         <div className="flex flex-col items-center justify-between gap-6 lg:flex-row">
           {/* Header */}
           <div className="text-center lg:text-left lg:max-w-xs">
@@ -58,7 +58,7 @@ export const Selector = () => {
           </div>
 
           {/* Category Tabs */}
-          <div className="grid w-full flex-1 grid-cols-2 gap-3 sm:grid-cols-4 lg:max-w-2xl">
+          <div className="grid w-full flex-1 grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3 lg:max-w-2xl">
             {CATS.map((cat) => {
               const Icon = cat.icon;
               const isSelected = selectedId === cat.id;
@@ -67,27 +67,27 @@ export const Selector = () => {
                   key={cat.id}
                   onClick={() => setSelectedId(cat.id)}
                   aria-pressed={isSelected}
-                  className={`group relative flex flex-col items-center justify-center rounded-2xl border-2 p-3 sm:p-4 text-center transition-all duration-200 focus:outline-none ${
+                  className={`group relative flex flex-col items-center justify-center rounded-2xl border-2 p-2.5 min-[360px]:p-3 sm:p-4 text-center transition-all duration-200 focus:outline-none min-h-[96px] ${
                     isSelected
                       ? 'border-[#E5B544] bg-white shadow-sm ring-2 ring-[#E5B544]/30'
                       : 'border-[#E5E7EB] bg-white hover:border-[#E5B544]/60'
                   }`}
                 >
                   {isSelected && (
-                    <span className="absolute right-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#F51F2B] text-white">
-                      <Check size={12} strokeWidth={3} />
+                    <span className="absolute right-2 top-2 sm:right-2.5 sm:top-2.5 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-[#F51F2B] text-white">
+                      <Check size={11} strokeWidth={3} />
                     </span>
                   )}
                   <span
-                    className={`mb-2 flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl transition-colors ${
+                    className={`mb-2 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl transition-colors ${
                       isSelected
                         ? 'bg-[#E5B544] text-[#171717]'
                         : 'bg-[#FAF2DE] text-[#171717] group-hover:bg-[#E5B544]'
                     }`}
                   >
-                    <Icon size={20} />
+                    <Icon size={19} />
                   </span>
-                  <span className="text-xs font-bold text-[#171717]">
+                  <span className="text-xs font-bold text-[#171717] leading-tight">
                     {cat.id === 'life-family'
                       ? 'Health & Life'
                       : cat.id === 'commercial'
@@ -100,13 +100,13 @@ export const Selector = () => {
           </div>
 
           {/* Action Button */}
-          <div className="w-full text-center lg:w-56 shrink-0 border-t border-[#E5E7EB] pt-4 lg:border-t-0 lg:border-l lg:pl-6 lg:pt-0">
+          <div className="w-full text-center max-w-xs sm:max-w-sm mx-auto lg:max-w-none lg:mx-0 lg:w-56 shrink-0 border-t border-[#E5E7EB] pt-4 lg:border-t-0 lg:border-l lg:pl-6 lg:pt-0">
             <span className="text-xs text-[#53627A] block">Selected Protection:</span>
             <b className="block text-sm font-bold text-[#171717] mt-0.5 truncate">
               {currentCat.type}
             </b>
             <button
-              className="btn-gold mt-2.5 w-full shadow-xs text-xs sm:text-sm font-bold"
+              className="btn-gold mt-2.5 w-full shadow-xs text-xs sm:text-sm font-bold min-h-[42px]"
               onClick={() => navigate(currentCat.path)}
             >
               <span>Get Started</span>
@@ -190,12 +190,12 @@ export const WhyCompare = () => (
         </div>
 
         <div className="mt-4 overflow-x-auto -mx-1 px-1">
-          <table className="w-full min-w-[340px] text-sm">
+          <table className="w-full min-w-[280px] sm:min-w-0 text-xs sm:text-sm">
             <thead>
-              <tr className="border-b border-[#E5E7EB] text-left text-xs uppercase tracking-wider text-[#53627A]">
-                <th className="py-2.5">Key Features</th>
-                <th className="py-2.5 text-center font-bold text-[#53627A]">Third Party</th>
-                <th className="rounded-t-xl bg-[#FAF2DE] py-2.5 text-center font-bold text-[#171717] border-x border-[#E5B544]/40">
+              <tr className="border-b border-[#E5E7EB] text-left text-[11px] sm:text-xs uppercase tracking-wider text-[#53627A]">
+                <th className="py-2.5 px-1 sm:px-2">Key Features</th>
+                <th className="py-2.5 px-1 sm:px-2 text-center font-bold text-[#53627A]">Third Party</th>
+                <th className="rounded-t-xl bg-[#FAF2DE] py-2.5 px-1 sm:px-2 text-center font-bold text-[#171717] border-x border-[#E5B544]/40">
                   Comprehensive
                 </th>
               </tr>
@@ -203,15 +203,15 @@ export const WhyCompare = () => (
             <tbody className="divide-y divide-[#E5E7EB] text-xs">
               {ROWS.map(([feature, thirdParty, comprehensive]) => (
                 <tr key={feature} className="hover:bg-[#F7F8FA] transition-colors">
-                  <td className="py-2.5 font-medium text-[#171717]">{feature}</td>
-                  <td className="py-2.5 text-center">
+                  <td className="py-2.5 px-1 sm:px-2 font-medium text-[#171717] leading-tight">{feature}</td>
+                  <td className="py-2.5 px-1 sm:px-2 text-center">
                     {thirdParty ? (
                       <Check className="mx-auto text-[#171717]" size={16} />
                     ) : (
                       <X className="mx-auto text-[#A7ADB4]" size={16} />
                     )}
                   </td>
-                  <td className="bg-[#FAF2DE]/40 py-2.5 text-center border-x border-[#E5B544]/30 font-semibold">
+                  <td className="bg-[#FAF2DE]/40 py-2.5 px-1 sm:px-2 text-center border-x border-[#E5B544]/30 font-semibold">
                     {comprehensive ? (
                       <Check className="mx-auto text-[#F51F2B]" size={16} />
                     ) : (
@@ -221,9 +221,9 @@ export const WhyCompare = () => (
                 </tr>
               ))}
               <tr className="border-t border-[#E5E7EB] bg-[#F7F8FA]">
-                <td className="py-2.5 font-bold text-[#171717]">Add-on Riders</td>
-                <td className="py-2.5 text-center text-[#53627A]">Limited</td>
-                <td className="bg-[#FAF2DE] py-2.5 text-center font-bold text-[#171717] border-x border-[#E5B544]/40">
+                <td className="py-2.5 px-1 sm:px-2 font-bold text-[#171717]">Add-on Riders</td>
+                <td className="py-2.5 px-1 sm:px-2 text-center text-[#53627A]">Limited</td>
+                <td className="bg-[#FAF2DE] py-2.5 px-1 sm:px-2 text-center font-bold text-[#171717] border-x border-[#E5B544]/40">
                   Full Suite Available
                 </td>
               </tr>
@@ -268,9 +268,14 @@ export const How = () => (
       </p>
     </div>
 
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+    <div className="grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-5">
       {STEPS.map(([Icon, title, desc], i) => (
-        <Reveal key={title} className="relative">
+        <Reveal
+          key={title}
+          className={`relative ${
+            i === 4 ? 'sm:col-span-2 sm:max-w-sm sm:mx-auto lg:col-span-1 lg:max-w-none w-full' : ''
+          }`}
+        >
           <div className="card h-full border border-[#E5E7EB] bg-white p-5 text-center transition-all duration-200 hover:-translate-y-1 hover:border-[#E5B544]">
             {/* Step Number Badge */}
             <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FAF2DE] text-[#171717] border border-[#E5B544]/40">
@@ -386,15 +391,15 @@ export const Testimonials = () => {
         </button>
 
         {/* Testimonials Grid */}
-        <div className="grid flex-1 gap-6 md:grid-cols-3 min-w-0">
+        <div className="grid flex-1 gap-3.5 sm:gap-4 lg:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-w-0">
           {visible.map(([name, location, feedback], k) => (
             <motion.div
               key={name + index}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.35 }}
-              className={`card flex flex-col justify-between border border-[#E5E7EB] bg-white p-4 sm:p-6 shadow-card hover:border-[#E5B544] ${
-                k ? 'hidden md:flex' : 'flex'
+              className={`card flex flex-col justify-between border border-[#E5E7EB] bg-white p-4 sm:p-5 lg:p-6 shadow-card hover:border-[#E5B544] ${
+                k === 2 ? 'hidden lg:flex' : k === 1 ? 'hidden md:flex' : 'flex'
               }`}
             >
               <div>
@@ -520,19 +525,19 @@ export const Partners = () => {
       </div>
 
       {/* Clean Responsive Logo Grid (6-7 cols desktop, 3-4 tablet, 2 mobile) */}
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 sm:gap-4">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 sm:gap-4">
         {displayedLogos.map((partner) => (
           <div
             key={partner.id}
             title={partner.name}
-            className="group flex h-20 sm:h-22 items-center justify-center rounded-2xl border border-[#E5E7EB] bg-white p-3 sm:p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5B544] hover:shadow-card"
+            className="group flex h-18 sm:h-22 items-center justify-center rounded-2xl border border-[#E5E7EB] bg-white p-2.5 sm:p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5B544] hover:shadow-card"
           >
             {/* Logo in original full official brand colors, rich, saturated and clear */}
             <img
               src={partner.img}
               alt={partner.name}
               loading="lazy"
-              className="max-h-10 sm:max-h-12 w-auto max-w-full object-contain opacity-100 filter contrast-[1.06] saturate-[1.12] transition-transform duration-200 group-hover:scale-105"
+              className="max-h-9 sm:max-h-12 w-auto max-w-full object-contain opacity-100 filter contrast-[1.06] saturate-[1.12] transition-transform duration-200 group-hover:scale-105"
             />
           </div>
         ))}

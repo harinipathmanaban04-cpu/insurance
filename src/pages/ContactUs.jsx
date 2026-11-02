@@ -22,7 +22,7 @@ export default function ContactUs() {
 
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Left Column: Contact Cards */}
-          <div className="space-y-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-4">
             <div className="card border border-[#E5E7EB] bg-white p-4 sm:p-6 shadow-xs hover:border-[#E5B544] transition-all">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FAF2DE] text-[#171717] mb-3">
                 <Phone size={20} className="text-[#F51F2B]" />

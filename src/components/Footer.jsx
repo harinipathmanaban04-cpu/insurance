@@ -55,9 +55,9 @@ export default function Footer() {
     <>
       <footer className="border-t-2 border-[#E5B544] bg-[#171717] text-white">
         {/* Main Footer Content */}
-        <div className="wrap grid gap-10 py-12 sm:py-14 sm:grid-cols-2 lg:grid-cols-5 text-sm">
+        <div className="wrap grid gap-8 sm:gap-10 py-12 sm:py-14 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 text-sm">
           {/* Column 1: Brand & Tagline */}
-          <div className="lg:col-span-2">
+          <div className="sm:col-span-2 lg:col-span-2">
             <Link to="/" className="inline-flex items-center gap-2.5 sm:gap-3">
               <div className="rounded-xl bg-white p-1.5 shadow-sm shrink-0">
                 <Logo className="h-9 sm:h-10 w-auto" />
@@ -93,7 +93,7 @@ export default function Footer() {
                   href="#"
                   onClick={(e) => e.preventDefault()}
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-[#A7ADB4] transition-colors hover:border-[#E5B544] hover:bg-[#E5B544] hover:text-[#171717]"
+                  className="flex h-10 w-10 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-[#A7ADB4] transition-colors hover:border-[#E5B544] hover:bg-[#E5B544] hover:text-[#171717]"
                 >
                   <Icon size={16} />
                 </a>
@@ -131,7 +131,7 @@ export default function Footer() {
           </div>
 
           {/* Column 4: Contact & Callback */}
-          <div>
+          <div className="sm:col-span-2 lg:col-span-1">
             <FooterHeading>Contact Us</FooterHeading>
             <ul className="space-y-3 text-xs sm:text-sm">
               <li className="flex items-start gap-2.5">
@@ -214,7 +214,7 @@ export default function Footer() {
         <button
           aria-label="Scroll back to top"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-19 sm:bottom-20 right-5 z-50 flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#E5B544] text-[#171717] shadow-lg transition-all hover:bg-[#CF9F30] hover:scale-110 active:scale-95"
+          className="fixed bottom-20 right-5 z-50 flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#E5B544] text-[#171717] shadow-lg transition-all hover:bg-[#CF9F30] hover:scale-110 active:scale-95"
         >
           <ArrowUp size={18} />
         </button>
