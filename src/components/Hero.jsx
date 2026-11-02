@@ -37,11 +37,20 @@ export const Hero = () => {
 
   return (
     <div className="relative bg-[#FFFCF5]">
-      {/* 1. Main Hero Area (Reduced top gap to upward picture and align sentences cleanly) */}
+      {/* 1. Main Hero Area */}
       <section className="relative overflow-hidden pt-2.5 sm:pt-3.5 lg:pt-4 pb-10 sm:pb-12 lg:pb-14">
         {/* Soft Ambient Glows */}
         <div className="pointer-events-none absolute -left-16 top-0 h-[400px] w-[400px] rounded-full bg-[#FAF2DE]/70 blur-3xl -z-10" />
         <div className="pointer-events-none absolute right-10 top-20 h-[360px] w-[360px] rounded-full bg-[#FFF1F2]/50 blur-3xl -z-10" />
+
+        {/* Desktop Right Image: Extends all the way to right-0, covering the right-side gap completely on Vercel/desktop */}
+        <div className="hidden lg:block absolute top-2.5 sm:top-3.5 lg:top-4 bottom-10 sm:bottom-12 lg:bottom-14 left-[calc(50%+0.75rem)] xl:left-[calc(50%+1.25rem)] right-0 overflow-hidden rounded-tl-[80px] xl:rounded-tl-[120px] rounded-bl-[80px] xl:rounded-bl-[120px] rounded-r-none border-l-[3.5px] border-t-[3.5px] border-b-[3.5px] border-r-0 border-[#E5B544]/50 shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-slate-100 z-10">
+          <img
+            src={familyConsultationImg}
+            alt="Family consulting with professional insurance advisor"
+            className="h-full w-full object-cover object-[center_top] xl:object-center filter contrast-[1.08] saturate-[1.2] brightness-[1.01]"
+          />
+        </div>
 
         <div className="wrap relative z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-8 xl:gap-12 items-center">
@@ -217,17 +226,8 @@ export const Hero = () => {
               </motion.div>
             </div>
 
-            {/* RIGHT COLUMN: ~52% on desktop with curved left frame (Clean photo without overlapping sentence) */}
-            <div className="hidden lg:block lg:col-span-6 xl:col-span-6 relative">
-              {/* Curved Asymmetric Image Container matching reference */}
-              <div className="relative h-[480px] xl:h-[520px] 2xl:h-[550px] w-full overflow-hidden rounded-tl-[80px] xl:rounded-tl-[120px] rounded-bl-[80px] xl:rounded-bl-[120px] rounded-r-3xl border-[3.5px] border-[#E5B544]/40 shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-slate-100">
-                <img
-                  src={familyConsultationImg}
-                  alt="Indian family consulting with professional insurance advisor"
-                  className="h-full w-full object-cover object-[center_15%] filter contrast-[1.08] saturate-[1.2] brightness-[1.01]"
-                />
-              </div>
-            </div>
+            {/* RIGHT COLUMN SPACER: Reserves height on desktop to keep grid and left column perfectly balanced */}
+            <div className="hidden lg:block lg:col-span-6 xl:col-span-6 min-h-[460px] xl:min-h-[500px] 2xl:min-h-[540px] pointer-events-none" />
           </div>
         </div>
       </section>
