@@ -33,10 +33,10 @@ function ScrollToTop() {
 
 export default function App() {
   return (
-    <div className="flex min-h-screen flex-col bg-white text-[#171717] antialiased">
+    <div className="flex min-h-screen w-full max-w-full flex-col bg-white text-[#171717] antialiased overflow-x-hidden">
       <ScrollToTop />
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 w-full min-w-0">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/insurance/car" element={<CarInsurance />} />

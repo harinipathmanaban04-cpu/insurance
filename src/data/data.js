@@ -178,6 +178,10 @@ export const TESTIMONIALS = [
   ['Sana Khan', 'Hyderabad', 'Compared many car plans and picked the right one with their help.'],
 ];
 
-export const PHONE = '+91 98765 43210';
-export const EMAIL = 'info@example.com';
-export const ADDRESS = '123, Business Park, Your City (placeholder)';
+export const COMPANY_NAME = 'THE BEST INSURANCE POINT';
+export const PHONE = '63803 60336';
+export const PHONE_RAW = '6380360336';
+export const EMAIL = 'bestinsurance.pmk@gmail.com';
+export const ADDRESS = 'NO 9/275, CHINNAKADAI VEETHI, PARAMAKUDI - 623707, RAMNAD DIST.';
+export const MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=NO+9%2F275%2C+CHINNAKADAI+VEETHI%2C+PARAMAKUDI+-+623707%2C+RAMNAD+DIST.';
+export const WHATSAPP_URL = 'https://wa.me/916380360336';

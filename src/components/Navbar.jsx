@@ -64,7 +64,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4 lg:gap-6 min-w-0">
             <span className="inline-flex items-center gap-1.5 font-semibold text-[#101C38] shrink-0">
               <ShieldCheck size={14} className="text-[#F51F2B]" />
-              <span>Trusted Insurance Company</span>
+              <span>Trusted Insurance Point</span>
             </span>
             <span className="inline-flex items-center gap-1.5 font-semibold text-[#101C38] shrink-0">
               <CheckCircle2 size={14} className="text-[#E5B544]" />
@@ -97,7 +97,7 @@ export default function Navbar() {
               THE BEST
             </span>
             <span className="block text-[8.5px] min-[360px]:text-[9.5px] sm:text-[11px] font-black tracking-[0.14em] text-[#F51F2B] truncate">
-              INSURANCE COMPANY
+              INSURANCE POINT
             </span>
             <span className="hidden text-[10px] font-medium text-[#53627A] md:block truncate">
               Your World. Your People. Our Protection.
@@ -140,7 +140,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 6, scale: 0.98 }}
                   transition={{ duration: 0.16, ease: 'easeOut' }}
-                  className="absolute left-0 top-[calc(100%-8px)] z-50 pt-2 w-[310px] sm:w-[320px] max-w-[calc(100vw-2rem)]"
+                  className="absolute left-0 top-[calc(100%-8px)] z-50 pt-2 w-[310px] sm:w-[320px] max-w-xs"
                 >
                   <div className="rounded-2xl border border-[#E5E7EB] bg-white p-3.5 shadow-card">
                     <div className="px-2.5 pb-2 mb-2 border-b border-[#E5E7EB] flex items-center justify-between">
@@ -336,10 +336,13 @@ export default function Navbar() {
                   <span>Get a Free Quote</span>
                   <ArrowRight size={15} />
                 </Link>
-                <div className="mt-3 flex items-center justify-center gap-2 text-xs text-[#53627A]">
+                <a
+                  href={`tel:${PHONE.replace(/\s+/g, '')}`}
+                  className="mt-3 flex items-center justify-center gap-2 text-xs text-[#53627A] hover:text-[#F51F2B] transition-colors"
+                >
                   <Phone size={13} className="text-[#F51F2B]" />
                   <span>Helpline: {PHONE}</span>
-                </div>
+                </a>
               </div>
             </div>
           </motion.div>

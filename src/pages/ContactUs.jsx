@@ -1,6 +1,6 @@
 import { Phone, Mail, MapPin, Clock, Sparkles } from 'lucide-react';
 import QuoteForm from '../components/QuoteForm';
-import { PHONE, EMAIL, ADDRESS } from '../data/data';
+import { PHONE, EMAIL, ADDRESS, MAPS_URL } from '../data/data';
 
 export default function ContactUs() {
   return (
@@ -56,9 +56,23 @@ export default function ContactUs() {
                 <MapPin size={20} className="text-[#F51F2B]" />
               </span>
               <b className="block text-sm font-bold text-[#171717]">Registered Office</b>
-              <p className="mt-2 text-xs sm:text-sm text-[#53627A] leading-relaxed">
+              <a
+                href={MAPS_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 block text-xs sm:text-sm text-[#53627A] leading-relaxed hover:text-[#F51F2B] transition-colors"
+                title="View on Google Maps"
+              >
                 {ADDRESS}
-              </p>
+              </a>
+              <a
+                href={MAPS_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2.5 inline-flex items-center gap-1 text-xs font-bold text-[#F51F2B] hover:underline"
+              >
+                <span>View on Google Maps →</span>
+              </a>
             </div>
 
             <div className="rounded-2xl border border-[#E5E7EB] bg-[#F7F8FA] p-4 sm:p-5 text-xs text-[#53627A] flex items-start gap-2.5">

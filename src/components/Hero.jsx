@@ -36,9 +36,9 @@ export const Hero = () => {
   };
 
   return (
-    <div className="relative bg-[#FFFCF5]">
+    <div className="relative bg-[#FFFCF5] w-full max-w-full overflow-hidden">
       {/* 1. Main Hero Area */}
-      <section className="relative overflow-hidden pt-2.5 sm:pt-3.5 lg:pt-4 pb-10 sm:pb-12 lg:pb-14">
+      <section className="relative overflow-hidden isolate w-full pt-2.5 sm:pt-3.5 lg:pt-4 pb-10 sm:pb-12 lg:pb-14">
         {/* Soft Ambient Glows */}
         <div className="pointer-events-none absolute -left-16 top-0 h-[400px] w-[400px] rounded-full bg-[#FAF2DE]/70 blur-3xl -z-10" />
         <div className="pointer-events-none absolute right-10 top-20 h-[360px] w-[360px] rounded-full bg-[#FFF1F2]/50 blur-3xl -z-10" />
@@ -55,7 +55,7 @@ export const Hero = () => {
         <div className="wrap relative z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-8 xl:gap-12 items-center">
             {/* LEFT COLUMN: ~48% on desktop */}
-            <div className="lg:col-span-6 xl:col-span-6 max-w-xl lg:max-w-none">
+            <div className="lg:col-span-6 xl:col-span-6 w-full min-w-0 max-w-xl lg:max-w-none">
               {/* Top Safety Badge */}
               <motion.div
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
@@ -72,7 +72,7 @@ export const Hero = () => {
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="font-display font-black tracking-tight flex flex-col text-[25px] min-[360px]:text-[28px] min-[400px]:text-[32px] sm:text-4xl lg:text-[42px] xl:text-[46px] 2xl:text-[50px] leading-[1.14]"
+                className="font-display font-black tracking-tight text-[24px] min-[360px]:text-[28px] min-[400px]:text-[32px] sm:text-4xl lg:text-[42px] xl:text-[46px] 2xl:text-[50px] leading-[1.15] break-words"
               >
                 <span className="block text-[#101C38]">Protect Your Family.</span>
                 <span className="block text-[#F51F2B] mt-0.5 sm:mt-1">Secure Every Tomorrow.</span>
@@ -83,7 +83,7 @@ export const Hero = () => {
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.08 }}
-                className="mt-3.5 sm:mt-4 text-xs min-[360px]:text-[13px] sm:text-sm lg:text-[15px] text-[#53627A] leading-relaxed max-w-[500px]"
+                className="mt-3.5 sm:mt-4 text-xs min-[360px]:text-[13px] sm:text-sm lg:text-[15px] text-[#53627A] leading-relaxed w-full max-w-[500px] break-words"
               >
                 From protecting your family's health to securing your vehicles and business, we make insurance simple with trusted partners, expert guidance and reliable support.
               </motion.p>
@@ -101,10 +101,10 @@ export const Hero = () => {
 
                 <form
                   onSubmit={handleQuoteSubmit}
-                  className="rounded-2xl border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-3 lg:p-0 flex flex-col lg:flex-row lg:items-stretch gap-2.5 lg:gap-0 overflow-hidden"
+                  className="w-full rounded-2xl border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-3 lg:p-0 flex flex-col lg:flex-row lg:items-stretch gap-2.5 lg:gap-0 overflow-hidden"
                 >
                   {/* Field 1: Vehicle / Mobile */}
-                  <div className="flex-1 px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] flex items-center min-h-[44px]">
+                  <div className="w-full min-w-0 flex-1 px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] flex items-center min-h-[44px]">
                     <Car size={17} className="text-[#101C38]/60 mr-2.5 shrink-0" />
                     <div className="min-w-0 flex-1">
                       <label htmlFor="hero-vehicle-input" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A]">
@@ -116,13 +116,13 @@ export const Hero = () => {
                         placeholder="e.g. MH 02 CB 1234"
                         value={regNo}
                         onChange={(e) => setRegNo(e.target.value)}
-                        className="w-full text-xs sm:text-[13px] font-semibold text-[#101C38] placeholder:text-[#9CA3AF] focus:outline-none bg-transparent pt-0.5"
+                        className="w-full min-w-0 text-xs sm:text-[13px] font-semibold text-[#101C38] placeholder:text-[#9CA3AF] focus:outline-none bg-transparent pt-0.5"
                       />
                     </div>
                   </div>
 
                   {/* Field 2: Insurance Category Selector */}
-                  <div className="px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] lg:min-w-[170px] flex items-center min-h-[44px]">
+                  <div className="w-full min-w-0 px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] lg:w-auto lg:min-w-[170px] flex items-center min-h-[44px]">
                     <ShieldCheck size={17} className="text-[#101C38]/60 mr-2.5 shrink-0" />
                     <div className="min-w-0 flex-1">
                       <label htmlFor="hero-category-select" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A]">
@@ -132,7 +132,7 @@ export const Hero = () => {
                         id="hero-category-select"
                         value={policyType}
                         onChange={(e) => setPolicyType(e.target.value)}
-                        className="w-full text-xs sm:text-[13px] font-semibold text-[#101C38] focus:outline-none bg-transparent pt-0.5 cursor-pointer truncate"
+                        className="w-full min-w-0 text-xs sm:text-[13px] font-semibold text-[#101C38] focus:outline-none bg-transparent pt-0.5 cursor-pointer truncate"
                       >
                         <option value="Car Insurance">Car Insurance</option>
                         <option value="Bike Insurance">Bike Insurance</option>
@@ -174,51 +174,51 @@ export const Hero = () => {
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="mt-5 sm:mt-6 grid grid-cols-1 min-[480px]:grid-cols-3 sm:grid-cols-3 gap-2 sm:gap-3 pt-1 max-w-[530px]"
+                className="mt-5 sm:mt-6 grid grid-cols-1 min-[480px]:grid-cols-3 sm:grid-cols-3 gap-2 sm:gap-3 pt-1 w-full max-w-[530px]"
               >
                 {/* 1. Talk to an Expert */}
                 <Link
                   to="/contact"
-                  className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl hover:bg-white/80 transition-colors group"
+                  className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl hover:bg-white/80 transition-colors group min-w-0"
                 >
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B] transition-transform group-hover:scale-105">
                     <Users size={18} />
                   </span>
-                  <div className="min-w-0">
-                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight">
+                  <div className="min-w-0 flex-1">
+                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
                       Talk to an Expert
                     </b>
-                    <span className="block text-[11px] text-[#53627A] mt-0.5">
+                    <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
                       24/7 Support
                     </span>
                   </div>
                 </Link>
 
                 {/* 2. 50+ IRDAI Partners */}
-                <div className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl">
+                <div className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl min-w-0">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
                     <ShieldCheck size={18} />
                   </span>
-                  <div className="min-w-0">
-                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight">
+                  <div className="min-w-0 flex-1">
+                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
                       50+ IRDAI Partners
                     </b>
-                    <span className="block text-[11px] text-[#53627A] mt-0.5">
+                    <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
                       Trusted Network
                     </span>
                   </div>
                 </div>
 
                 {/* 3. 100% Cashless Claims */}
-                <div className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl">
+                <div className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl min-w-0">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
                     <CheckCircle2 size={18} />
                   </span>
-                  <div className="min-w-0">
-                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight">
+                  <div className="min-w-0 flex-1">
+                    <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
                       100% Cashless Claims
                     </b>
-                    <span className="block text-[11px] text-[#53627A] mt-0.5">
+                    <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
                       Hassle-free Process
                     </span>
                   </div>
@@ -234,63 +234,63 @@ export const Hero = () => {
 
       {/* 2. Floating Statistics Panel */}
       <div className="wrap relative z-30 -mt-6 sm:-mt-8 lg:-mt-10 pb-4">
-        <div className="rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white p-3.5 sm:p-5 lg:p-7 shadow-[0_12px_36px_rgba(0,0,0,0.06)]">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-0 lg:divide-x lg:divide-[#E5E7EB]/80">
+        <div className="w-full rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white p-3.5 sm:p-5 lg:p-7 shadow-[0_12px_36px_rgba(0,0,0,0.06)] overflow-hidden">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3.5 lg:gap-0 lg:divide-x lg:divide-[#E5E7EB]/80">
             {/* Stat 1: 20,000+ Happy Customers */}
-            <div className="flex items-center gap-2.5 min-[360px]:gap-3 sm:gap-4 p-2.5 min-[360px]:p-3 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
-              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
-                <Users size={18} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-2 min-[360px]:gap-2.5 sm:gap-4 p-2 min-[360px]:p-2.5 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
+              <span className="flex h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
+                <Users size={16} className="sm:size-[22px]" />
               </span>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   20,000+
                 </b>
-                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
+                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug break-words">
                   Happy Customers
                 </span>
               </div>
             </div>
 
             {/* Stat 2: 50+ Insurance Partners */}
-            <div className="flex items-center gap-2.5 min-[360px]:gap-3 sm:gap-4 p-2.5 min-[360px]:p-3 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
-              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
-                <ShieldCheck size={18} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-2 min-[360px]:gap-2.5 sm:gap-4 p-2 min-[360px]:p-2.5 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
+              <span className="flex h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
+                <ShieldCheck size={16} className="sm:size-[22px]" />
               </span>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   50+
                 </b>
-                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
+                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug break-words">
                   Insurance Partners
                 </span>
               </div>
             </div>
 
             {/* Stat 3: 98% Claim Settlement Ratio */}
-            <div className="flex items-center gap-2.5 min-[360px]:gap-3 sm:gap-4 p-2.5 min-[360px]:p-3 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
-              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F8F5] text-[#10B981]">
-                <FileCheck size={18} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-2 min-[360px]:gap-2.5 sm:gap-4 p-2 min-[360px]:p-2.5 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
+              <span className="flex h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F8F5] text-[#10B981]">
+                <FileCheck size={16} className="sm:size-[22px]" />
               </span>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   98%
                 </b>
-                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
+                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug break-words">
                   Claim Settlement Ratio
                 </span>
               </div>
             </div>
 
             {/* Stat 4: 24/7 Customer Support */}
-            <div className="flex items-center gap-2.5 min-[360px]:gap-3 sm:gap-4 p-2.5 min-[360px]:p-3 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
-              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF6FF] text-[#3B82F6]">
-                <Headphones size={18} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-2 min-[360px]:gap-2.5 sm:gap-4 p-2 min-[360px]:p-2.5 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
+              <span className="flex h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF6FF] text-[#3B82F6]">
+                <Headphones size={16} className="sm:size-[22px]" />
               </span>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   24/7
                 </b>
-                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
+                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug break-words">
                   Customer Support
                 </span>
               </div>
@@ -358,7 +358,7 @@ export const Cards = () => {
         {CORE_CARDS.map((c) => {
           const Icon = c.icon;
           return (
-            <Reveal key={c.id}>
+            <Reveal key={c.id} className="w-full min-w-0">
               <div className="group flex h-full flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
                 {/* Card Top: Image with Centered Overlapping Circular Category Icon */}
                 <div className="relative">

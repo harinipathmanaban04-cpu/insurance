@@ -29,7 +29,7 @@ const steps = [
 const faqs = [
   [
     'Do you settle claims directly?',
-    'Claims are legally settled and paid by the respective insurance provider. THE BEST INSURANCE COMPANY provides dedicated claims advocacy and step-by-step assistance to ensure your claim is processed quickly and fairly.',
+    'Claims are legally settled and paid by the respective insurance provider. THE BEST INSURANCE POINT provides dedicated claims advocacy and step-by-step assistance to ensure your claim is processed quickly and fairly.',
   ],
   [
     'What is a cashless claim?',

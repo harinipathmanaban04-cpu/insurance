@@ -58,7 +58,7 @@ export const Selector = () => {
           </div>
 
           {/* Category Tabs */}
-          <div className="grid w-full flex-1 grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3 lg:max-w-2xl">
+          <div className="grid w-full flex-1 grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3 lg:max-w-2xl min-w-0">
             {CATS.map((cat) => {
               const Icon = cat.icon;
               const isSelected = selectedId === cat.id;
@@ -67,7 +67,7 @@ export const Selector = () => {
                   key={cat.id}
                   onClick={() => setSelectedId(cat.id)}
                   aria-pressed={isSelected}
-                  className={`group relative flex flex-col items-center justify-center rounded-2xl border-2 p-2.5 min-[360px]:p-3 sm:p-4 text-center transition-all duration-200 focus:outline-none min-h-[96px] ${
+                  className={`group relative flex flex-col items-center justify-center rounded-2xl border-2 p-2.5 min-[360px]:p-3 sm:p-4 text-center transition-all duration-200 focus:outline-none min-h-[96px] min-w-0 ${
                     isSelected
                       ? 'border-[#E5B544] bg-white shadow-sm ring-2 ring-[#E5B544]/30'
                       : 'border-[#E5E7EB] bg-white hover:border-[#E5B544]/60'
@@ -150,7 +150,7 @@ export const WhyCompare = () => (
         <span>Our Core Advantage</span>
       </div>
       <h2 className="h2">
-        Why Choose <span className="text-[#F51F2B]">THE BEST</span> Insurance Company?
+        Why Choose <span className="text-[#F51F2B]">THE BEST</span> Insurance Point?
       </h2>
       <p className="mt-2 text-sm sm:text-base text-[#53627A]">
         We make insurance transparent, accessible, and reliable with personalized guidance from start to finish.
@@ -189,7 +189,7 @@ export const WhyCompare = () => (
           </span>
         </div>
 
-        <div className="mt-4 overflow-x-auto -mx-1 px-1">
+        <div className="mt-4 w-full overflow-x-auto">
           <table className="w-full min-w-[280px] sm:min-w-0 text-xs sm:text-sm">
             <thead>
               <tr className="border-b border-[#E5E7EB] text-left text-[11px] sm:text-xs uppercase tracking-wider text-[#53627A]">
@@ -310,7 +310,7 @@ export const Stats = () => {
       <div className="rounded-3xl border border-[#E5E7EB] bg-white p-5 sm:p-8 lg:p-10 shadow-card">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           {/* Left / Stats Grid */}
-          <div className="grid flex-1 grid-cols-2 gap-3 min-[400px]:gap-4 sm:grid-cols-5 sm:gap-4">
+          <div className="grid flex-1 grid-cols-2 gap-3 min-[400px]:gap-4 sm:grid-cols-5 sm:gap-4 min-w-0">
             {[
               { val: '25K+', label: 'Active Customers', sub: 'Across India', icon: Users },
               { val: '50+', label: 'Insurance Partners', sub: 'Leading Insurers', icon: ShieldCheck },
@@ -320,7 +320,7 @@ export const Stats = () => {
             ].map(({ val, label, sub, icon: Icon }) => (
               <div
                 key={label}
-                className="flex flex-col items-center justify-center rounded-2xl border border-[#E5E7EB] bg-[#F7F8FA] p-3 sm:p-4 text-center transition-all duration-200 hover:border-[#E5B544] hover:bg-white last:col-span-2 sm:last:col-span-1"
+                className="min-w-0 flex flex-col items-center justify-center rounded-2xl border border-[#E5E7EB] bg-[#F7F8FA] p-3 sm:p-4 text-center transition-all duration-200 hover:border-[#E5B544] hover:bg-white last:col-span-2 sm:last:col-span-1"
               >
                 <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-[#FAF2DE] text-[#171717]">
                   <Icon size={18} />
@@ -376,7 +376,7 @@ export const Testimonials = () => {
         </div>
         <h2 className="h2">What Our Customers Say</h2>
         <p className="mt-2 text-sm sm:text-base text-[#53627A]">
-          Hear from individuals, families, and business owners who rely on THE BEST INSURANCE COMPANY.
+          Hear from individuals, families, and business owners who rely on THE BEST INSURANCE POINT.
         </p>
       </div>
 
@@ -395,10 +395,10 @@ export const Testimonials = () => {
           {visible.map(([name, location, feedback], k) => (
             <motion.div
               key={name + index}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35 }}
-              className={`card flex flex-col justify-between border border-[#E5E7EB] bg-white p-4 sm:p-5 lg:p-6 shadow-card hover:border-[#E5B544] ${
+              className={`card flex flex-col justify-between border border-[#E5E7EB] bg-white p-4 sm:p-5 lg:p-6 shadow-card hover:border-[#E5B544] min-w-0 ${
                 k === 2 ? 'hidden lg:flex' : k === 1 ? 'hidden md:flex' : 'flex'
               }`}
             >
@@ -525,12 +525,12 @@ export const Partners = () => {
       </div>
 
       {/* Clean Responsive Logo Grid (6-7 cols desktop, 3-4 tablet, 2 mobile) */}
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 sm:gap-4">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 sm:gap-4 min-w-0">
         {displayedLogos.map((partner) => (
           <div
             key={partner.id}
             title={partner.name}
-            className="group flex h-18 sm:h-22 items-center justify-center rounded-2xl border border-[#E5E7EB] bg-white p-2.5 sm:p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5B544] hover:shadow-card"
+            className="group flex h-18 sm:h-22 items-center justify-center rounded-2xl border border-[#E5E7EB] bg-white p-2.5 sm:p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5B544] hover:shadow-card min-w-0"
           >
             {/* Logo in original full official brand colors, rich, saturated and clear */}
             <img
@@ -557,7 +557,7 @@ export const Partners = () => {
       )}
 
       <p className="mt-6 text-center text-xs text-[#53627A]">
-        All trademarks, logos, and brand names are the property of their respective owners. THE BEST INSURANCE COMPANY provides unbiased policy comparison and claims support.
+        All trademarks, logos, and brand names are the property of their respective owners. THE BEST INSURANCE POINT provides unbiased policy comparison and claims support.
       </p>
     </section>
   );

@@ -80,7 +80,7 @@ export const FAQ = ({ items }) => {
 export const Logo = ({ className = 'h-11' }) => (
   <img
     src={new URL('../assets/logo.png', import.meta.url).href}
-    alt="The Best Insurance Company"
+    alt="The Best Insurance Point"
     className={`${className} w-auto object-contain`}
   />
 );

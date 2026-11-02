@@ -9,7 +9,7 @@ export default function AboutUs() {
         <div className="text-center mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-[#FAF2DE] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#171717] border border-[#E5B544]/50 mb-3">
             <ShieldCheck size={14} className="text-[#F51F2B]" />
-            <span>About THE BEST INSURANCE COMPANY</span>
+            <span>About THE BEST INSURANCE POINT</span>
           </div>
           <h1 className="font-display text-2xl min-[360px]:text-3xl sm:text-4xl lg:text-5xl font-black text-[#171717] tracking-tight">
             Protecting What Matters Most To You
@@ -25,7 +25,7 @@ export default function AboutUs() {
             Who We Are
           </h2>
           <p className="text-xs sm:text-sm md:text-base text-[#53627A] leading-relaxed">
-            At <b>THE BEST INSURANCE COMPANY</b>, we believe that buying insurance should not be complicated, confusing, or stressful. Founded with a vision to provide transparent and unbiased financial security, we partner with over 50 leading IRDAI-registered insurance providers in India to deliver competitive premiums and customized coverage.
+            At <b>THE BEST INSURANCE POINT</b>, we believe that buying insurance should not be complicated, confusing, or stressful. Founded with a vision to provide transparent and unbiased financial security, we partner with over 50 leading IRDAI-registered insurance providers in India to deliver competitive premiums and customized coverage.
           </p>
           <p className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-[#53627A] leading-relaxed">
             Whether you need comprehensive vehicle protection for your family car, affordable two-wheeler insurance, fleet coverage for commercial vehicles, or complete health and life protection, our team of seasoned advisors is here to guide you every step of the way.
