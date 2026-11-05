@@ -47,6 +47,20 @@ export default function Navbar() {
     return pathname === path && (h ? hash === '#' + h : path !== '/' || !hash);
   };
 
+  const handleNavClick = (e, path) => {
+    if (path.includes('#')) {
+      const [p, h] = path.split('#');
+      if (pathname === p || (p === '/' && pathname === '')) {
+        const el = document.getElementById(h);
+        if (el) {
+          e.preventDefault();
+          window.history.pushState(null, '', path);
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+  };
+
   const navLinkClass = (active) =>
     `relative flex items-center h-[74px] px-2.5 xl:px-3.5 text-[13.5px] xl:text-[14.5px] font-semibold whitespace-nowrap transition-colors duration-200 cursor-pointer ${
       active
@@ -57,7 +71,7 @@ export default function Navbar() {
   const isInsuranceActive = pathname.startsWith('/insurance');
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#E5E7EB] bg-white/95 backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+    <header className="relative z-50 border-b border-[#E5E7EB] bg-white shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
       {/* Top Utility Micro-Bar */}
       <div className="hidden border-b border-[#E5E7EB] bg-white px-4 py-1.5 text-xs text-[#53627A] md:block">
         <div className="wrap flex items-center justify-between gap-4">
@@ -70,7 +84,7 @@ export default function Navbar() {
               <CheckCircle2 size={14} className="text-[#E5B544]" />
               <span>50+ IRDAI Approved Partners</span>
             </span>
-            <span className="hidden xl:inline-flex items-center gap-1.5 font-medium text-[#53627A] truncate">
+            <span className="hidden lg:inline-flex items-center gap-1.5 font-medium text-[#53627A] truncate">
               <Shield size={13} className="text-[#101C38]/70" />
               <span>Fast & Reliable Policy Issuance & Claim Support</span>
             </span>
@@ -88,18 +102,18 @@ export default function Navbar() {
       </div>
 
       {/* Main Navbar */}
-      <div className="wrap flex h-[70px] sm:h-[74px] items-center justify-between gap-2 sm:gap-4">
+      <div className="wrap flex h-[74px] items-center justify-between gap-3 sm:gap-4">
         {/* Brand Shield Logo & Name */}
-        <Link to="/" className="flex shrink-0 items-center gap-2 sm:gap-3 group max-w-[calc(100%-48px)] sm:max-w-none min-w-0">
-          <Logo className="h-9 min-[360px]:h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105 shrink-0" />
-          <div className="leading-tight min-w-0">
-            <span className="block font-display text-[15px] min-[360px]:text-base sm:text-xl font-black tracking-tight text-[#101C38] truncate">
+        <Link to="/" className="flex shrink-0 items-center gap-2.5 sm:gap-3 group">
+          <Logo className="h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105" />
+          <div className="leading-tight">
+            <span className="block font-display text-base min-[360px]:text-lg sm:text-xl font-black tracking-tight text-[#101C38]">
               THE BEST
             </span>
-            <span className="block text-[8.5px] min-[360px]:text-[9.5px] sm:text-[11px] font-black tracking-[0.14em] text-[#F51F2B] truncate">
+            <span className="block text-[9px] min-[360px]:text-[10px] sm:text-[11px] font-black tracking-[0.16em] text-[#F51F2B]">
               INSURANCE POINT
             </span>
-            <span className="hidden text-[10px] font-medium text-[#53627A] md:block truncate">
+            <span className="hidden text-[10px] font-medium text-[#53627A] sm:block">
               Your World. Your People. Our Protection.
             </span>
           </div>
@@ -194,17 +208,22 @@ export default function Navbar() {
           </div>
 
           {links.slice(1).map(([title, path]) => (
-            <Link key={title} to={path} className={navLinkClass(isActive(path))}>
+            <Link
+              key={title}
+              to={path}
+              onClick={(e) => handleNavClick(e, path)}
+              className={navLinkClass(isActive(path))}
+            >
               {title}
             </Link>
           ))}
         </nav>
 
         {/* Right CTA Actions */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
           <Link
             to="/contact"
-            className="hidden xl:inline-flex items-center justify-center rounded-full border border-[#E5E7EB] bg-white px-4 xl:px-5 py-2 text-xs font-bold text-[#101C38] shadow-xs hover:border-[#101C38] hover:bg-[#F7F8FA] transition-all whitespace-nowrap"
+            className="hidden md:inline-flex items-center justify-center rounded-full border border-[#E5E7EB] bg-white px-4 xl:px-5 py-2 text-xs font-bold text-[#101C38] shadow-xs hover:border-[#101C38] hover:bg-[#F7F8FA] transition-all whitespace-nowrap"
           >
             Contact Us
           </Link>
@@ -304,7 +323,10 @@ export default function Navbar() {
                 <Link
                   key={title}
                   to={path}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    handleNavClick(e, path);
+                  }}
                   className={`block rounded-xl px-4 py-3 text-base font-semibold transition-colors ${
                     isActive(path)
                       ? 'bg-[#FFF1F2] text-[#F51F2B] font-bold'

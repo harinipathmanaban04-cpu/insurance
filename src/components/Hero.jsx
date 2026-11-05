@@ -38,13 +38,13 @@ export const Hero = () => {
   return (
     <div className="relative bg-[#FFFCF5] w-full max-w-full overflow-hidden">
       {/* 1. Main Hero Area */}
-      <section className="relative overflow-hidden isolate w-full pt-2.5 sm:pt-3.5 lg:pt-4 pb-10 sm:pb-12 lg:pb-14">
+      <section className="relative overflow-hidden isolate w-full pt-3 sm:pt-4 lg:pt-5 pb-10 sm:pb-12 lg:pb-14">
         {/* Soft Ambient Glows */}
         <div className="pointer-events-none absolute -left-16 top-0 h-[400px] w-[400px] rounded-full bg-[#FAF2DE]/70 blur-3xl -z-10" />
         <div className="pointer-events-none absolute right-10 top-20 h-[360px] w-[360px] rounded-full bg-[#FFF1F2]/50 blur-3xl -z-10" />
 
-        {/* Desktop Right Image: Extends all the way to right-0, covering the right-side gap completely on Vercel/desktop */}
-        <div className="hidden lg:block absolute top-2.5 sm:top-3.5 lg:top-4 bottom-10 sm:bottom-12 lg:bottom-14 left-[calc(50%+0.75rem)] xl:left-[calc(50%+1.25rem)] right-0 overflow-hidden rounded-tl-[80px] xl:rounded-tl-[120px] rounded-bl-[80px] xl:rounded-bl-[120px] rounded-r-none border-l-[3.5px] border-t-[3.5px] border-b-[3.5px] border-r-0 border-[#E5B544]/50 shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-slate-100 z-10">
+        {/* Desktop Right Image: Smooth Curved Golden Arch matching reference image */}
+        <div className="hidden lg:block absolute top-2.5 sm:top-3.5 lg:top-4 bottom-8 sm:bottom-10 lg:bottom-12 left-[calc(50%+0.5rem)] xl:left-[calc(50%+1rem)] right-0 overflow-hidden rounded-tl-[110px] xl:rounded-tl-[130px] rounded-bl-[110px] xl:rounded-bl-[130px] rounded-r-none border-l-[3.5px] border-t-[3.5px] border-b-[3.5px] border-r-0 border-[#E5B544] shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-slate-100 z-10">
           <img
             src={familyConsultationImg}
             alt="Family consulting with professional insurance advisor"
@@ -54,25 +54,25 @@ export const Hero = () => {
 
         <div className="wrap relative z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-8 xl:gap-12 items-center">
-            {/* LEFT COLUMN: ~48% on desktop */}
+            {/* LEFT COLUMN: Exactly matching reference image */}
             <div className="lg:col-span-6 xl:col-span-6 w-full min-w-0 max-w-xl lg:max-w-none">
               {/* Top Safety Badge */}
               <motion.div
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45 }}
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#FAF2DE] px-3.5 py-1 text-xs font-bold text-[#8C6D1F] border border-[#E5B544]/40 mb-3 sm:mb-3.5 shadow-2xs"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#FAF2DE] px-3.5 py-1 text-xs font-bold text-[#8C6D1F] border border-[#E5B544]/50 mb-3 sm:mb-3.5 shadow-2xs"
               >
                 <Shield size={13} className="text-[#8C6D1F]" />
                 <span>Your Safety, Our Priority</span>
               </motion.div>
 
-              {/* Main Heading: 2 lines matching reference image */}
+              {/* Main Heading: Reduced text size matching Image 1 */}
               <motion.h1
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="font-display font-black tracking-tight text-[24px] min-[360px]:text-[28px] min-[400px]:text-[32px] sm:text-4xl lg:text-[42px] xl:text-[46px] 2xl:text-[50px] leading-[1.15] break-words"
+                className="font-display font-black tracking-tight text-[24px] min-[360px]:text-[28px] min-[400px]:text-[32px] sm:text-4xl lg:text-[40px] xl:text-[44px] leading-[1.14] break-words"
               >
                 <span className="block text-[#101C38]">Protect Your Family.</span>
                 <span className="block text-[#F51F2B] mt-0.5 sm:mt-1">Secure Every Tomorrow.</span>
@@ -83,37 +83,37 @@ export const Hero = () => {
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.08 }}
-                className="mt-3.5 sm:mt-4 text-xs min-[360px]:text-[13px] sm:text-sm lg:text-[15px] text-[#53627A] leading-relaxed w-full max-w-[500px] break-words"
+                className="mt-3 sm:mt-3.5 text-xs min-[360px]:text-[13px] sm:text-sm lg:text-[14px] text-[#53627A] leading-relaxed w-full max-w-[480px] break-words"
               >
                 From protecting your family's health to securing your vehicles and business, we make insurance simple with trusted partners, expert guidance and reliable support.
               </motion.p>
 
-              {/* Instant Quotation Form */}
+              {/* Instant Quotation Form - Exactly matching Image 1 */}
               <motion.div
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.15 }}
-                className="mt-5 sm:mt-6 w-full max-w-[520px]"
+                className="mt-5 sm:mt-5.5 w-full max-w-[510px]"
               >
-                <span className="block text-[11px] font-bold text-[#101C38] uppercase tracking-wider mb-2">
+                <span className="block text-[10.5px] font-bold text-[#101C38] uppercase tracking-wider mb-2">
                   GET AN INSTANT QUOTATION
                 </span>
 
                 <form
                   onSubmit={handleQuoteSubmit}
-                  className="w-full rounded-2xl border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-3 lg:p-0 flex flex-col lg:flex-row lg:items-stretch gap-2.5 lg:gap-0 overflow-hidden"
+                  className="w-full rounded-2xl border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col sm:flex-row sm:items-stretch overflow-hidden"
                 >
                   {/* Field 1: Vehicle / Mobile */}
-                  <div className="w-full min-w-0 flex-1 px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] flex items-center min-h-[44px]">
-                    <Car size={17} className="text-[#101C38]/60 mr-2.5 shrink-0" />
+                  <div className="flex-1 min-w-0 px-3.5 sm:px-4 py-2 sm:py-2.5 flex items-center border-b sm:border-b-0 sm:border-r border-[#E5E7EB] min-h-[48px] sm:min-h-[50px]">
+                    <Car size={18} className="text-[#101C38]/60 mr-2.5 shrink-0" />
                     <div className="min-w-0 flex-1">
-                      <label htmlFor="hero-vehicle-input" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A]">
-                        Vehicle No / Mobile
+                      <label htmlFor="hero-vehicle-input" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A] leading-[1.15]">
+                        Vehicle No /<br className="hidden sm:inline" /> Mobile
                       </label>
                       <input
                         id="hero-vehicle-input"
                         type="text"
-                        placeholder="e.g. MH 02 CB 1234"
+                        placeholder="e.g. MH 02 CB 12"
                         value={regNo}
                         onChange={(e) => setRegNo(e.target.value)}
                         className="w-full min-w-0 text-xs sm:text-[13px] font-semibold text-[#101C38] placeholder:text-[#9CA3AF] focus:outline-none bg-transparent pt-0.5"
@@ -122,30 +122,31 @@ export const Hero = () => {
                   </div>
 
                   {/* Field 2: Insurance Category Selector */}
-                  <div className="w-full min-w-0 px-3.5 py-2.5 lg:py-2.5 rounded-xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0 lg:border-r lg:border-[#E5E7EB] lg:w-auto lg:min-w-[170px] flex items-center min-h-[44px]">
-                    <ShieldCheck size={17} className="text-[#101C38]/60 mr-2.5 shrink-0" />
-                    <div className="min-w-0 flex-1">
-                      <label htmlFor="hero-category-select" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A]">
+                  <div className="px-3.5 sm:px-4 py-2 sm:py-2.5 flex items-center border-b sm:border-b-0 sm:w-auto sm:min-w-[165px] min-h-[48px] sm:min-h-[50px]">
+                    <ShieldCheck size={18} className="text-[#101C38]/60 mr-2.5 shrink-0" />
+                    <div className="min-w-0 flex-1 relative pr-4">
+                      <label htmlFor="hero-category-select" className="block text-[9px] font-bold uppercase tracking-wider text-[#53627A] leading-[1.15] mb-0.5">
                         Category
                       </label>
                       <select
                         id="hero-category-select"
                         value={policyType}
                         onChange={(e) => setPolicyType(e.target.value)}
-                        className="w-full min-w-0 text-xs sm:text-[13px] font-semibold text-[#101C38] focus:outline-none bg-transparent pt-0.5 cursor-pointer truncate"
+                        className="w-full min-w-0 text-xs sm:text-[13px] font-bold text-[#101C38] focus:outline-none bg-transparent cursor-pointer truncate appearance-none"
                       >
                         <option value="Car Insurance">Car Insurance</option>
                         <option value="Bike Insurance">Bike Insurance</option>
                         <option value="Commercial Vehicle Insurance">Commercial Vehicle</option>
                         <option value="Life & Family Insurance">Life & Family</option>
                       </select>
+                      <ChevronDown size={14} className="pointer-events-none absolute right-0 bottom-1 text-[#101C38]/70" />
                     </div>
                   </div>
 
-                  {/* Red CTA Button */}
+                  {/* Red CTA Button: Flush with right, top, bottom matching Image 1 */}
                   <button
                     type="submit"
-                    className="w-full lg:w-auto inline-flex items-center justify-center gap-1.5 bg-[#F51F2B] hover:bg-[#D61420] text-white font-bold text-xs uppercase tracking-wider py-3.5 lg:py-0 px-6 rounded-xl lg:rounded-none transition-all shadow-sm active:translate-y-0.5 whitespace-nowrap shrink-0 min-h-[44px]"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-[#F51F2B] hover:bg-[#D61420] text-white font-bold text-xs uppercase tracking-wider py-3 sm:py-0 px-5 sm:px-6 transition-colors whitespace-nowrap shrink-0 active:bg-[#C71219]"
                   >
                     <span>GET A QUOTE</span>
                     <ArrowRight size={14} />
@@ -153,7 +154,7 @@ export const Hero = () => {
                 </form>
               </motion.div>
 
-              {/* Mobile Dedicated Family Insurance Image (< lg screens: Positioned below quotation form matching reference phone mockup) */}
+              {/* Mobile Dedicated Family Insurance Image (< lg screens: Positioned below quotation form matching phone mockup) */}
               <motion.div
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -169,24 +170,24 @@ export const Hero = () => {
                 </div>
               </motion.div>
 
-              {/* Trust Indicators: 3 items horizontally aligned on desktop, stacked cleanly on mobile */}
+              {/* Trust Indicators: 3 items exactly matching Image 1 */}
               <motion.div
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="mt-5 sm:mt-6 grid grid-cols-1 min-[480px]:grid-cols-3 sm:grid-cols-3 gap-2 sm:gap-3 pt-1 w-full max-w-[530px]"
+                className="mt-5 sm:mt-6 grid grid-cols-1 min-[480px]:grid-cols-3 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1 w-full max-w-[520px]"
               >
-                {/* 1. Talk to an Expert */}
+                {/* 1. Talk to an Exp... */}
                 <Link
                   to="/contact"
-                  className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl hover:bg-white/80 transition-colors group min-w-0"
+                  className="flex items-center gap-2.5 p-1 rounded-xl hover:bg-white/80 transition-colors group min-w-0"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B] transition-transform group-hover:scale-105">
-                    <Users size={18} />
+                  <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B] transition-transform group-hover:scale-105">
+                    <Users size={17} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
-                      Talk to an Expert
+                      Talk to an Exp...
                     </b>
                     <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
                       24/7 Support
@@ -194,14 +195,14 @@ export const Hero = () => {
                   </div>
                 </Link>
 
-                {/* 2. 50+ IRDAI Partners */}
-                <div className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl min-w-0">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
-                    <ShieldCheck size={18} />
+                {/* 2. 50+ IRDAI Par... */}
+                <div className="flex items-center gap-2.5 p-1 rounded-xl min-w-0">
+                  <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
+                    <ShieldCheck size={17} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
-                      50+ IRDAI Partners
+                      50+ IRDAI Par...
                     </b>
                     <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
                       Trusted Network
@@ -209,88 +210,88 @@ export const Hero = () => {
                   </div>
                 </div>
 
-                {/* 3. 100% Cashless Claims */}
-                <div className="flex items-center gap-2.5 sm:gap-3 p-2 rounded-xl min-w-0">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
-                    <CheckCircle2 size={18} />
+                {/* 3. 100% Cashle... */}
+                <div className="flex items-center gap-2.5 p-1 rounded-xl min-w-0">
+                  <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
+                    <CheckCircle2 size={17} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
-                      100% Cashless Claims
+                      100% Cashle...
                     </b>
                     <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
-                      Hassle-free Process
+                      Hassle-free Proc...
                     </span>
                   </div>
                 </div>
               </motion.div>
             </div>
 
-            {/* RIGHT COLUMN SPACER: Reserves height on desktop to keep grid and left column perfectly balanced */}
-            <div className="hidden lg:block lg:col-span-6 xl:col-span-6 min-h-[460px] xl:min-h-[500px] 2xl:min-h-[540px] pointer-events-none" />
+            {/* RIGHT COLUMN SPACER: Reserves height on desktop */}
+            <div className="hidden lg:block lg:col-span-6 xl:col-span-6 min-h-[440px] xl:min-h-[480px] pointer-events-none" />
           </div>
         </div>
       </section>
 
-      {/* 2. Floating Statistics Panel */}
-      <div className="wrap relative z-30 -mt-6 sm:-mt-8 lg:-mt-10 pb-4">
-        <div className="w-full rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white p-3.5 sm:p-5 lg:p-7 shadow-[0_12px_36px_rgba(0,0,0,0.06)] overflow-hidden">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3.5 lg:gap-0 lg:divide-x lg:divide-[#E5E7EB]/80">
+      {/* 2. Floating Statistics Panel (Matching Image 2 exactly) */}
+      <div className="wrap relative z-30 -mt-6 sm:-mt-8 lg:-mt-10 pb-6">
+        <div className="w-full rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white p-4 sm:p-6 lg:p-7 shadow-[0_12px_36px_rgba(0,0,0,0.06)] overflow-hidden">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-0 lg:divide-x lg:divide-[#E5E7EB]">
             {/* Stat 1: 20,000+ Happy Customers */}
-            <div className="min-w-0 flex items-center gap-2 min-[360px]:gap-2.5 sm:gap-4 p-2 min-[360px]:p-2.5 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
-              <span className="flex h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
-                <Users size={16} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-3 sm:gap-4 p-2 sm:p-3 lg:p-0 lg:px-6">
+              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
+                <Users size={20} className="sm:size-[22px]" />
               </span>
               <div className="min-w-0 flex-1">
-                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
+                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   20,000+
                 </b>
-                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug break-words">
+                <span className="block text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
                   Happy Customers
                 </span>
               </div>
             </div>
 
             {/* Stat 2: 50+ Insurance Partners */}
-            <div className="min-w-0 flex items-center gap-2 min-[360px]:gap-2.5 sm:gap-4 p-2 min-[360px]:p-2.5 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
-              <span className="flex h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
-                <ShieldCheck size={16} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-3 sm:gap-4 p-2 sm:p-3 lg:p-0 lg:px-6">
+              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
+                <ShieldCheck size={20} className="sm:size-[22px]" />
               </span>
               <div className="min-w-0 flex-1">
-                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
+                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   50+
                 </b>
-                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug break-words">
+                <span className="block text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
                   Insurance Partners
                 </span>
               </div>
             </div>
 
             {/* Stat 3: 98% Claim Settlement Ratio */}
-            <div className="min-w-0 flex items-center gap-2 min-[360px]:gap-2.5 sm:gap-4 p-2 min-[360px]:p-2.5 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
-              <span className="flex h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F8F5] text-[#10B981]">
-                <FileCheck size={16} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-3 sm:gap-4 p-2 sm:p-3 lg:p-0 lg:px-6">
+              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F8F5] text-[#10B981]">
+                <FileCheck size={20} className="sm:size-[22px]" />
               </span>
               <div className="min-w-0 flex-1">
-                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
+                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   98%
                 </b>
-                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug break-words">
+                <span className="block text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
                   Claim Settlement Ratio
                 </span>
               </div>
             </div>
 
             {/* Stat 4: 24/7 Customer Support */}
-            <div className="min-w-0 flex items-center gap-2 min-[360px]:gap-2.5 sm:gap-4 p-2 min-[360px]:p-2.5 sm:p-4 lg:p-0 lg:px-6 rounded-xl sm:rounded-2xl lg:rounded-none bg-[#F7F8FA] lg:bg-transparent border border-[#E5E7EB] lg:border-0">
-              <span className="flex h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF6FF] text-[#3B82F6]">
-                <Headphones size={16} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-3 sm:gap-4 p-2 sm:p-3 lg:p-0 lg:px-6">
+              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF6FF] text-[#3B82F6]">
+                <Headphones size={20} className="sm:size-[22px]" />
               </span>
               <div className="min-w-0 flex-1">
-                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
+                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
                   24/7
                 </b>
-                <span className="block text-[10px] min-[360px]:text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug break-words">
+                <span className="block text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
                   Customer Support
                 </span>
               </div>
@@ -358,7 +359,7 @@ export const Cards = () => {
         {CORE_CARDS.map((c) => {
           const Icon = c.icon;
           return (
-            <Reveal key={c.id} className="w-full min-w-0">
+            <Reveal key={c.id}>
               <div className="group flex h-full flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
                 {/* Card Top: Image with Centered Overlapping Circular Category Icon */}
                 <div className="relative">
@@ -379,7 +380,7 @@ export const Cards = () => {
                 </div>
 
                 {/* Card Body: Title, Description, and Actions */}
-                <div className="flex flex-1 flex-col justify-between pt-9 pb-5 px-4 sm:px-6 text-center">
+                <div className="flex flex-1 flex-col justify-between pt-9 pb-5 px-5 sm:px-6 text-center">
                   <div>
                     <h3 className="font-display text-lg sm:text-[19px] font-bold text-[#171717] mb-2 leading-snug">
                       {c.title}
@@ -390,17 +391,17 @@ export const Cards = () => {
                   </div>
 
                   {/* Action Row */}
-                  <div className="flex items-center justify-between gap-2 pt-6 mt-auto">
+                  <div className="flex items-center justify-between gap-3 pt-6 mt-auto">
                     <Link
                       to={c.path}
-                      className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 sm:px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0 min-h-[40px] shrink-0 ${c.btnBg}`}
+                      className={`inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0 ${c.btnBg}`}
                     >
                       <span>Explore Plans</span>
                       <ArrowRight size={13} />
                     </Link>
                     <Link
                       to={`/contact?type=${encodeURIComponent(c.type)}#quote`}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-[#171717] hover:text-[#087F8C] transition-colors py-2 shrink-0"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-[#171717] hover:text-[#087F8C] transition-colors"
                     >
                       <span>Get Quote</span>
                       <ArrowRight size={13} className="text-[#386FA4]" />

@@ -170,12 +170,111 @@ export const PAGES = {
 };
 
 export const TESTIMONIALS = [
-  ['Rahul Sharma', 'Kolkata', 'Buying insurance was so easy. The team guided me perfectly and claim support was excellent.'],
-  ['Pooja Verma', 'Pune', 'Very professional service and quick response. Got the best policy for my bike at an affordable price.'],
-  ['Amit Singh', 'Jaipur', 'I insured my commercial vehicle through them. The process was smooth and hassle-free.'],
-  ['Neha Iyer', 'Chennai', 'Clear advice on family health cover. Cashless process explained step by step.'],
-  ['Karthik R', 'Coimbatore', 'Renewal took minutes. Helpful and honest guidance.'],
-  ['Sana Khan', 'Hyderabad', 'Compared many car plans and picked the right one with their help.'],
+  [
+    'Karthik',
+    'Devakottai',
+    'The team explained all the policy details clearly and helped me choose suitable vehicle insurance without any confusion. Very patient and supportive staff.',
+  ],
+  [
+    'Kaviya',
+    'Karaikudi',
+    'Renewing my two-wheeler insurance took only a few minutes over the phone. The digital policy copy was delivered immediately to my email and phone.',
+  ],
+  [
+    'Aravind',
+    'Pudukkottai',
+    'I received timely renewal reminders before my bike insurance expired, saving me from fines. Smooth process and very polite communication throughout.',
+  ],
+  [
+    'Priya',
+    'Kadaveli',
+    'Dependable team for our mini delivery vans. They ensured all safety and legal liability requirements were properly covered at economical rates.',
+  ],
+  [
+    'Vignesh',
+    'Coimbatore',
+    'They suggested the right add-on covers like zero depreciation and roadside assistance for my new scooter. Truly honest and professional advice.',
+  ],
+  [
+    'Divya',
+    'Erode',
+    'The entire documentation process was completely smooth and paperless. I simply submitted the RC copy and received the renewal confirmation promptly.',
+  ],
+  [
+    'Saravanan',
+    'Kanyakumari',
+    'Their advisor guided me systematically on garage formalities and claim filing after minor vehicle damage. Reliable and reassuring claims assistance.',
+  ],
+  [
+    'Nandhini',
+    'Vilathikulam',
+    'Whenever I called with questions regarding premium breakup, they responded promptly and politely. Outstanding customer service from start to finish.',
+  ],
+  [
+    'Suresh',
+    'Vembar',
+    'No hidden charges or confusing clauses. Everything about the premium calculation and deductible benefits was explained openly before making any payment.',
+  ],
+  [
+    'Harini',
+    'Chathirakudi',
+    'Sent my vehicle details and had a verified quotation within ten minutes. Quick, convenient, and highly responsive customer support on WhatsApp.',
+  ],
+  [
+    'Pradeep',
+    'Paramakudi',
+    'Friendly advisors who patiently answered every single doubt regarding comprehensive coverage. Having a trusted local insurance office in Paramakudi gives great peace of mind.',
+  ],
+  [
+    'Meena',
+    'Ramanathapuram',
+    'I got an affordable premium for my family car after comparing multiple insurer quotes. Their transparent guidance saved both my money and valuable time.',
+  ],
+  [
+    'Muthu',
+    'Tiruchirappalli',
+    'Finding the right insurance plan was effortless with their step-by-step assistance. They highlighted key terms so I could decide with full confidence.',
+  ],
+  [
+    'Keerthana',
+    'Tirunelveli',
+    'Impressed with how fast they issued the policy certificate. No waiting or tedious follow-ups; the representative made the registration effortless.',
+  ],
+  [
+    'Balaji',
+    'Sivakasi',
+    'Managed insurance for both our bike and car under one roof. Reasonable pricing, clear policy terms, and quick coordination across both plans.',
+  ],
+  [
+    'Swetha',
+    'Madurai',
+    'Excellent support for our commercial transport vehicles. They handled the paperwork swiftly and guided our company on suitable goods vehicle coverage options.',
+  ],
+  [
+    'Vijay',
+    'Aruppukottai',
+    'As a first-time vehicle owner, I was unsure about legal third-party rules. The staff guided me with genuine warmth and clear advice.',
+  ],
+  [
+    'Revathi',
+    'Sivaganga',
+    'Very professional approach and sound knowledge of insurance guidelines. They compared top IRDAI-registered plans to find the ideal match for my car.',
+  ],
+  [
+    'Dinesh',
+    'Kalaiyarkoil',
+    'Assisted me smoothly with policy name transfer and ownership updates. Their team made what seemed like complex paperwork feel completely hassle-free.',
+  ],
+  [
+    'Abinaya',
+    'Thiruvellarai',
+    'They helped me select a budget-friendly policy without compromising on necessary coverage. Very trustworthy team with customer-first values.',
+  ],
+  [
+    'Manikandan',
+    'Sayalgudi',
+    'From quotation comparison to final policy delivery, their dedication was remarkable. I will definitely recommend The Best Insurance Point to all my friends.',
+  ],
 ];
 
 export const COMPANY_NAME = 'THE BEST INSURANCE POINT';

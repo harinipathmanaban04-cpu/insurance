@@ -16,12 +16,13 @@ function ScrollToTop() {
 
   useEffect(() => {
     if (hash) {
+      const id = hash.replace('#', '');
       const timer = setTimeout(() => {
-        const el = document.querySelector(hash);
+        const el = document.getElementById(id) || document.querySelector(hash);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 100);
+      }, 120);
       return () => clearTimeout(timer);
     } else {
       window.scrollTo(0, 0);
@@ -33,10 +34,10 @@ function ScrollToTop() {
 
 export default function App() {
   return (
-    <div className="flex min-h-screen w-full max-w-full flex-col bg-white text-[#171717] antialiased overflow-x-hidden">
+    <div className="flex min-h-screen flex-col bg-white text-[#171717] antialiased">
       <ScrollToTop />
       <Navbar />
-      <main className="flex-1 w-full min-w-0">
+      <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/insurance/car" element={<CarInsurance />} />

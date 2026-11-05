@@ -360,12 +360,12 @@ export const Stats = () => {
 };
 
 // -------------------------------------------------------------
-// 5. TESTIMONIALS
+// 5. TESTIMONIALS (7 slides of 3 reviews = 21 reviews total)
 // -------------------------------------------------------------
 export const Testimonials = () => {
-  const [index, setIndex] = useState(0);
-  const n = TESTIMONIALS.length;
-  const visible = [0, 1, 2].map((k) => TESTIMONIALS[(index + k) % n]);
+  const [slide, setSlide] = useState(0);
+  const totalSlides = 7; // Exactly 7 slides representing 21 reviews (3 reviews per slide)
+  const visible = TESTIMONIALS.slice(slide * 3, slide * 3 + 3);
 
   return (
     <section className="wrap py-12 sm:py-16">
@@ -381,25 +381,29 @@ export const Testimonials = () => {
       </div>
 
       <div className="flex items-center gap-2 sm:gap-4">
-        {/* Prev Button */}
+        {/* Prev Button: Navigates slide by slide */}
         <button
-          aria-label="Previous testimonial"
-          onClick={() => setIndex((index - 1 + n) % n)}
-          className="flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#171717] shadow-xs transition hover:border-[#E5B544] hover:bg-[#FAF2DE] focus:outline-none"
+          aria-label="Previous slide"
+          onClick={() => setSlide((slide - 1 + totalSlides) % totalSlides)}
+          className="flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#101C38] shadow-xs transition hover:border-[#E5B544] hover:bg-[#FAF2DE] hover:scale-105 active:scale-95 focus:outline-none cursor-pointer"
         >
           <ChevronLeft size={18} />
         </button>
 
-        {/* Testimonials Grid */}
+        {/* Testimonials Grid (1 card on mobile, 2 on tablet, 3 on desktop) */}
         <div className="grid flex-1 gap-3.5 sm:gap-4 lg:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-w-0">
           {visible.map(([name, location, feedback], k) => (
             <motion.div
-              key={name + index}
+              key={name + '-' + slide}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35 }}
-              className={`card flex flex-col justify-between border border-[#E5E7EB] bg-white p-4 sm:p-5 lg:p-6 shadow-card hover:border-[#E5B544] min-w-0 ${
-                k === 2 ? 'hidden lg:flex' : k === 1 ? 'hidden md:flex' : 'flex'
+              className={`card flex flex-col justify-between bg-white p-5 sm:p-6 shadow-card hover:shadow-card-hover transition-all duration-300 min-w-0 ${
+                k === 1
+                  ? 'border border-[#E5B544] ring-1 ring-[#E5B544]/20 hidden md:flex'
+                  : k === 2
+                  ? 'border border-[#E5E7EB] hidden lg:flex'
+                  : 'border border-[#E5E7EB] flex'
               }`}
             >
               <div>
@@ -409,43 +413,46 @@ export const Testimonials = () => {
                     <Star key={s} size={16} fill="currentColor" />
                   ))}
                 </div>
-                <p className="mt-3.5 text-xs sm:text-sm text-[#171717] leading-relaxed italic">
+                <p className="mt-3.5 text-xs sm:text-sm text-[#171717] leading-relaxed italic min-h-[66px] sm:min-h-[72px]">
                   "{feedback}"
                 </p>
               </div>
 
               <div className="mt-6 flex items-center gap-3 border-t border-[#E5E7EB] pt-4">
-                <span className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-[#FAF2DE] font-bold text-sm text-[#171717] shrink-0">
-                  {name[0]}
+                <span className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-[#FAF2DE] font-bold text-xs sm:text-sm text-[#101C38] border border-[#E5B544]/40 shrink-0">
+                  {name.trim().charAt(0).toUpperCase()}
                 </span>
-                <div className="min-w-0">
-                  <b className="block text-sm font-bold text-[#171717] truncate">{name}</b>
-                  <p className="text-xs text-[#53627A] truncate">{location} • Verified Policyholder</p>
+                <div className="min-w-0 flex-1">
+                  <b className="block text-sm font-bold text-[#101C38] truncate">{name}</b>
+                  <p className="text-xs text-[#53627A] truncate">
+                    {location} • <span className="text-[#8C6D1F] font-medium">Sample Customer Review</span>
+                  </p>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Next Button */}
+        {/* Next Button: Navigates slide by slide */}
         <button
-          aria-label="Next testimonial"
-          onClick={() => setIndex((index + 1) % n)}
-          className="flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#171717] shadow-xs transition hover:border-[#E5B544] hover:bg-[#FAF2DE] focus:outline-none"
+          aria-label="Next slide"
+          onClick={() => setSlide((slide + 1) % totalSlides)}
+          className="flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#101C38] shadow-xs transition hover:border-[#E5B544] hover:bg-[#FAF2DE] hover:scale-105 active:scale-95 focus:outline-none cursor-pointer"
         >
           <ChevronRight size={18} />
         </button>
       </div>
 
-      {/* Pagination Dots */}
-      <div className="mt-6 flex justify-center gap-2">
-        {TESTIMONIALS.map((_, k) => (
+      {/* Exactly 7 Pagination Dots (Each dot represents 1 slide of 3 reviews) */}
+      <div className="mt-8 flex items-center justify-center gap-2 px-4">
+        {Array.from({ length: totalSlides }).map((_, k) => (
           <button
             key={k}
-            aria-label={`Slide ${k + 1}`}
-            onClick={() => setIndex(k)}
-            className={`h-2 rounded-full transition-all duration-200 ${
-              k === index ? 'w-7 bg-[#E5B544]' : 'w-2 bg-[#E5E7EB] hover:bg-[#A7ADB4]'
+            type="button"
+            aria-label={`Go to slide ${k + 1} of ${totalSlides}`}
+            onClick={() => setSlide(k)}
+            className={`h-2 rounded-full transition-all duration-200 cursor-pointer ${
+              k === slide ? 'w-7 bg-[#E5B544]' : 'w-2 bg-[#E5E7EB] hover:bg-[#A7ADB4]'
             }`}
           />
         ))}
@@ -524,13 +531,23 @@ export const Partners = () => {
         })}
       </div>
 
-      {/* Clean Responsive Logo Grid (6-7 cols desktop, 3-4 tablet, 2 mobile) */}
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 sm:gap-4 min-w-0">
+      {/* Clean Responsive Logo Grid (Centered when Health is selected, full grid for other tabs) */}
+      <div
+        className={`min-w-0 ${
+          filter === 'Health'
+            ? 'flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 max-w-6xl mx-auto'
+            : 'grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 sm:gap-4'
+        }`}
+      >
         {displayedLogos.map((partner) => (
           <div
             key={partner.id}
             title={partner.name}
-            className="group flex h-18 sm:h-22 items-center justify-center rounded-2xl border border-[#E5E7EB] bg-white p-2.5 sm:p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5B544] hover:shadow-card min-w-0"
+            className={`group flex h-18 sm:h-22 items-center justify-center rounded-2xl border border-[#E5E7EB] bg-white p-2.5 sm:p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5B544] hover:shadow-card min-w-0 ${
+              filter === 'Health'
+                ? 'w-[calc(50%-0.625rem)] sm:w-[calc(33.333%-0.75rem)] md:w-[calc(33.333%-0.75rem)] lg:flex-1 lg:max-w-[175px]'
+                : ''
+            }`}
           >
             {/* Logo in original full official brand colors, rich, saturated and clear */}
             <img

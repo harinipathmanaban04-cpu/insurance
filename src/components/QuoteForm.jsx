@@ -51,11 +51,11 @@ export default function QuoteForm({ defaultType = '' }) {
 
   if (submitted) {
     return (
-      <div className="card border border-[#E5E7EB] bg-white p-5 sm:p-8 text-center shadow-card">
+      <div className="card border border-[#E5E7EB] bg-white p-8 text-center shadow-card">
         <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#FAF2DE] text-[#F51F2B]">
           <CheckCircle2 size={36} />
         </span>
-        <h3 className="mt-4 font-display text-2xl font-black text-[#171717]">
+        <h3 className="mt-4 font-display text-2xl font-black text-[#101C38]">
           Thank you, {formData.name}!
         </h3>
         <p className="mt-2 text-sm text-[#53627A] max-w-md mx-auto leading-relaxed">
@@ -75,7 +75,7 @@ export default function QuoteForm({ defaultType = '' }) {
   }
 
   const FormField = ({ id, label, children }) => (
-    <label className="block text-xs sm:text-sm font-bold text-[#171717]">
+    <label className="block text-xs sm:text-sm font-bold text-[#101C38]">
       {label}
       {children}
       {errors[id] && (
@@ -91,14 +91,14 @@ export default function QuoteForm({ defaultType = '' }) {
       onSubmit={handleSubmit}
       noValidate
       id="quote"
-      className="card border border-[#E5E7EB] bg-white p-4 sm:p-6 md:p-8 shadow-card grid gap-4 sm:grid-cols-2"
+      className="card border border-[#E5E7EB] bg-white p-6 sm:p-8 shadow-card grid gap-4 sm:grid-cols-2"
     >
       <div className="sm:col-span-2 border-b border-[#E5E7EB] pb-3">
         <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#F51F2B]">
           <Sparkles size={13} />
           <span>No Spam Guarantee</span>
         </span>
-        <h3 className="font-display text-xl sm:text-2xl font-bold text-[#171717] mt-1">
+        <h3 className="font-display text-xl sm:text-2xl font-bold text-[#101C38] mt-1">
           Request a Free Insurance Quote
         </h3>
         <p className="text-xs sm:text-sm text-[#53627A] mt-0.5">
@@ -151,19 +151,17 @@ export default function QuoteForm({ defaultType = '' }) {
         </select>
       </FormField>
 
-      <div className="sm:col-span-2">
-        <FormField id="city" label="City / RTO Location *">
-          <input
-            className={`inp mt-1 ${errors.city ? 'border-[#F51F2B] focus:border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
-            placeholder="e.g. Mumbai, Delhi, Bengaluru"
-            value={formData.city}
-            onChange={handleChange('city')}
-          />
-        </FormField>
-      </div>
+      <FormField id="city" label="City / RTO Location *">
+        <input
+          className={`inp mt-1 ${errors.city ? 'border-[#F51F2B] focus:border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
+          placeholder="e.g. Paramakudi, Madurai, Chennai"
+          value={formData.city}
+          onChange={handleChange('city')}
+        />
+      </FormField>
 
       <div className="sm:col-span-2">
-        <label className="block text-xs sm:text-sm font-bold text-[#171717]">
+        <label className="block text-xs sm:text-sm font-bold text-[#101C38]">
           Additional Requirements (Vehicle Model, Manufacturing Year, or Health Goals)
           <textarea
             rows={3}
