@@ -23,13 +23,15 @@ export async function submitEnquiry(req, res, next) {
       message: rawMessage,
     } = req.body || {};
 
-    const name = (rawName || '').toString().trim();
-    const cleanMobile = (rawMobile || '').toString().trim().replace(/\D/g, '').slice(-10);
-    const email = (rawEmail || '').toString().trim().toLowerCase();
-    const city = (rawCity || '').toString().trim();
-    const insuranceType = (rawType || 'General Insurance').toString().trim();
-    const subject = (rawSubject || '').toString().trim();
-    const message = (rawMessage || '').toString().trim();
+    const rawCustomer = req.body?.customer || {};
+    const name = (rawName || rawCustomer.name || '').toString().trim();
+    const rawMobileVal = rawMobile || rawCustomer.mobile || '';
+    const cleanMobile = (rawMobileVal || '').toString().trim().replace(/\D/g, '').slice(-10);
+    const email = (rawEmail || rawCustomer.email || '').toString().trim().toLowerCase();
+    const city = (rawCity || rawCustomer.city || '').toString().trim();
+    const insuranceType = (rawType || req.body?.category || 'General Insurance').toString().trim();
+    const subject = (rawSubject || `Online Insurance Application - ${insuranceType}`).toString().trim();
+    const message = (rawMessage || (req.body?.details ? JSON.stringify(req.body.details) : '') || 'Customer requested insurance quotation').toString().trim();
 
     // 1. Validation
     if (!name || name.length < 2) {

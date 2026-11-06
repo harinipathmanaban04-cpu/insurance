@@ -5,7 +5,6 @@ import {
   listApplications,
   updateApplicationStatus,
 } from './controllers/applicationController.js';
-import { submitCallback } from './controllers/callbackController.js';
 import { submitEnquiry } from './controllers/enquiryController.js';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 import { otpRateLimiter, enquiryRateLimiter } from './middleware/rateLimiter.js';
@@ -168,10 +167,6 @@ async function nativeHttpDispatcher(req, res) {
   if (pathname === '/api/enquiries/list' && (req.method === 'PATCH' || req.method === 'POST')) {
     req.params = { id: req.body?.applicationId };
     return updateApplicationStatus(req, res, next);
-  }
-
-  if (pathname === '/api/callback' && req.method === 'POST') {
-    return submitCallback(req, res, next);
   }
 
   if ((pathname === '/api/enquiries' || pathname === '/api/enquiry') && req.method === 'POST') {

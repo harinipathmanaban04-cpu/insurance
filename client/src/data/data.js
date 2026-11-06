@@ -187,7 +187,7 @@ export const TESTIMONIALS = [
   ],
   [
     'Priya',
-    'Kadaveli',
+    'Kadaladi',
     'Dependable team for our mini delivery vans. They ensured all safety and legal liability requirements were properly covered at economical rates.',
   ],
   [
@@ -217,7 +217,7 @@ export const TESTIMONIALS = [
   ],
   [
     'Harini',
-    'Chathirakudi',
+    'Sathirakudi',
     'Sent my vehicle details and had a verified quotation within ten minutes. Quick, convenient, and highly responsive customer support on WhatsApp.',
   ],
   [
@@ -267,7 +267,7 @@ export const TESTIMONIALS = [
   ],
   [
     'Abinaya',
-    'Thiruvellarai',
+    'Thiruvadanai',
     'They helped me select a budget-friendly policy without compromising on necessary coverage. Very trustworthy team with customer-first values.',
   ],
   [

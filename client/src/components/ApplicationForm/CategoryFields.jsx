@@ -1,4 +1,13 @@
-import { HeartPulse, Users } from 'lucide-react';
+import {
+  Car,
+  Bike,
+  Truck,
+  HeartPulse,
+  Users,
+  Shield,
+  ChevronDown,
+  AlertCircle,
+} from 'lucide-react';
 import {
   CAR_MANUFACTURERS,
   POPULAR_CAR_MODELS,
@@ -6,6 +15,7 @@ import {
   POPULAR_BIKE_MODELS,
   COMMERCIAL_CATEGORIES,
   COMMERCIAL_MANUFACTURERS,
+  POPULAR_COMMERCIAL_MODELS,
   HEALTH_SUM_INSURED,
   LIFE_SUM_ASSURED,
   LIFE_INCOME_RANGES,
@@ -13,635 +23,919 @@ import {
   TAMIL_NADU_RTO_SUGGESTIONS,
 } from './constants';
 
-// FormField defined at module level with a stable identity so inputs never remount on keystroke
-function FormField({ label, required = true, error, children, helpText }) {
+// Reusable, bulletproof Select Field component
+function SelectField({
+  id,
+  label,
+  value = '',
+  onChange,
+  options = [],
+  placeholder = 'Select option...',
+  required = false,
+  error,
+  className = '',
+  disabled = false,
+}) {
+  const isSelected = Boolean(value);
+
   return (
-    <label className="block text-xs font-bold text-[#101C38]">
-      <div className="flex items-center justify-between mb-1">
-        <span>
-          {label} {required && <span className="text-[#F51F2B]">*</span>}
-        </span>
-        {helpText && <span className="text-[10.5px] font-normal text-slate-500">{helpText}</span>}
+    <div className={`flex flex-col ${className}`}>
+      <div className="flex items-center justify-between mb-1.5 min-h-[18px]">
+        <label htmlFor={id} className="text-xs sm:text-[13px] font-semibold text-[#101C38] cursor-pointer select-none">
+          {label} {required && <span className="text-[#F51F2B] font-bold">*</span>}
+        </label>
       </div>
-      {children}
-      {error && <span className="mt-1 block text-xs font-semibold text-[#F51F2B]">{error}</span>}
-    </label>
+
+      <div className="relative">
+        <select
+          id={id}
+          value={value || ''}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          className={`w-full h-[44px] rounded-lg border bg-white pl-3.5 pr-10 text-sm appearance-none cursor-pointer focus:outline-none transition-colors duration-150 disabled:bg-slate-50 disabled:cursor-not-allowed ${
+            isSelected ? 'text-[#101C38] font-medium' : 'text-slate-400 font-normal text-[13px] sm:text-sm'
+          } ${
+            error
+              ? 'border-[#F51F2B] focus:border-[#F51F2B] focus:ring-2 focus:ring-[#F51F2B]/20'
+              : isSelected
+              ? 'border-[#E5B544]/70 hover:border-[#CF9F30] focus:border-[#E5B544] focus:ring-2 focus:ring-[#E5B544]/25'
+              : 'border-slate-300 hover:border-[#CF9F30] focus:border-[#E5B544] focus:ring-2 focus:ring-[#E5B544]/25'
+          }`}
+        >
+          <option value="" disabled className="text-slate-400 font-normal bg-white">
+            {placeholder}
+          </option>
+          {options.map((opt) => {
+            const optVal = typeof opt === 'string' ? opt : opt.value;
+            const optLabel = typeof opt === 'string' ? opt : opt.label;
+            return (
+              <option key={optVal} value={optVal} className="text-[#101C38] font-normal bg-white py-1">
+                {optLabel}
+              </option>
+            );
+          })}
+        </select>
+
+        {/* Clear, accessible dropdown indicator arrow */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+          <ChevronDown size={16} strokeWidth={2.2} />
+        </div>
+      </div>
+
+      {error && (
+        <span className="mt-1.5 flex items-center gap-1 text-[11.5px] font-medium text-[#F51F2B]">
+          <AlertCircle size={12} className="shrink-0" />
+          <span>{error}</span>
+        </span>
+      )}
+    </div>
+  );
+}
+
+// Reusable, compact Input Field component matching SelectField styling
+function InputField({
+  id,
+  label,
+  value,
+  onChange,
+  type = 'text',
+  placeholder = '',
+  required = false,
+  error,
+  className = '',
+  list,
+  uppercase = false,
+  maxLength,
+  disabled = false,
+}) {
+  return (
+    <div className={`flex flex-col ${className}`}>
+      <div className="flex items-center justify-between mb-1.5 min-h-[18px]">
+        <label htmlFor={id} className="text-xs sm:text-[13px] font-semibold text-[#101C38] cursor-pointer select-none">
+          {label} {required && <span className="text-[#F51F2B] font-bold">*</span>}
+        </label>
+      </div>
+
+      <input
+        id={id}
+        type={type}
+        list={list}
+        maxLength={maxLength}
+        disabled={disabled}
+        placeholder={placeholder}
+        value={value || ''}
+        onChange={(e) => onChange(uppercase ? e.target.value.toUpperCase() : e.target.value)}
+        className={`w-full h-[44px] rounded-lg border bg-white px-3.5 text-sm text-[#101C38] font-medium placeholder:text-slate-400 placeholder:font-normal placeholder:text-[13px] sm:placeholder:text-sm focus:outline-none transition-colors duration-150 disabled:bg-slate-50 disabled:cursor-not-allowed ${
+          uppercase ? 'uppercase font-semibold tracking-wider' : ''
+        } ${
+          error
+            ? 'border-[#F51F2B] focus:border-[#F51F2B] focus:ring-2 focus:ring-[#F51F2B]/20'
+            : value
+            ? 'border-[#E5B544]/70 hover:border-[#CF9F30] focus:border-[#E5B544] focus:ring-2 focus:ring-[#E5B544]/25'
+            : 'border-slate-300 hover:border-[#CF9F30] focus:border-[#E5B544] focus:ring-2 focus:ring-[#E5B544]/25'
+        }`}
+      />
+
+      {error && (
+        <span className="mt-1.5 flex items-center gap-1 text-[11.5px] font-medium text-[#F51F2B]">
+          <AlertCircle size={12} className="shrink-0" />
+          <span>{error}</span>
+        </span>
+      )}
+    </div>
+  );
+}
+
+// Section Header with subtle icon and badge
+function SectionHeader({ title, subtitle, icon: Icon }) {
+  return (
+    <div className="flex items-center gap-2 pb-2.5 border-b border-[#E5B544]/25 mb-4 pt-1">
+      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#FAF2DE] text-[#101C38] shrink-0 border border-[#E5B544]/40">
+        <Icon size={14} className="text-[#F51F2B]" />
+      </span>
+      <div className="min-w-0">
+        <h5 className="text-xs font-bold uppercase tracking-wider text-[#101C38]">{title}</h5>
+        {subtitle && <p className="text-[11px] text-slate-500 truncate">{subtitle}</p>}
+      </div>
+    </div>
   );
 }
 
 export default function CategoryFields({ category, details, onChange, errors = {} }) {
+  // Atomic functional update helper
   const update = (field, val) => {
-    onChange({ ...details, [field]: val });
+    onChange((prev) => ({ ...prev, [field]: val }));
   };
 
-  // 1. CAR INSURANCE FIELDS
-  if (category === 'car') {
-    const models = POPULAR_CAR_MODELS[details.manufacturer] || [];
+  const updateMultiple = (fieldsObj) => {
+    onChange((prev) => ({ ...prev, ...fieldsObj }));
+  };
 
-    return (
-      <div className="grid gap-4 sm:grid-cols-2">
-        <FormField label="Vehicle Registration Number" error={errors.regNumber}>
-          <input
-            type="text"
-            placeholder="e.g. TN 01 AB 1234"
-            value={details.regNumber || ''}
-            onChange={(e) => update('regNumber', e.target.value.toUpperCase())}
-            className={`inp uppercase font-semibold tracking-wider ${errors.regNumber ? 'border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
-          />
-        </FormField>
-
-        <FormField label="Car Manufacturer" error={errors.manufacturer}>
-          <select
-            value={details.manufacturer || ''}
-            onChange={(e) => {
-              update('manufacturer', e.target.value);
-              update('model', '');
-            }}
-            className={`inp bg-white ${errors.manufacturer ? 'border-[#F51F2B]' : ''}`}
-          >
-            <option value="">Select Manufacturer...</option>
-            {CAR_MANUFACTURERS.map((m) => (
-              <option key={m} value={m}>{m}</option>
-            ))}
-          </select>
-        </FormField>
-
-        <FormField label="Car Model" error={errors.model}>
-          {models.length > 0 ? (
-            <select
-              value={details.model || ''}
-              onChange={(e) => update('model', e.target.value)}
-              className={`inp bg-white ${errors.model ? 'border-[#F51F2B]' : ''}`}
-            >
-              <option value="">Select Model...</option>
-              {models.map((m) => (
-                <option key={m} value={m}>{m}</option>
-              ))}
-              <option value="Other">Other Model</option>
-            </select>
-          ) : (
-            <input
-              type="text"
-              placeholder="e.g. Creta, Swift, Nexon"
-              value={details.model || ''}
-              onChange={(e) => update('model', e.target.value)}
-              className={`inp ${errors.model ? 'border-[#F51F2B]' : ''}`}
-            />
-          )}
-        </FormField>
-
-        <FormField label="Car Variant" error={errors.variant}>
-          <input
-            type="text"
-            placeholder="e.g. SX(O) 1.5, VXI, Creative"
-            value={details.variant || ''}
-            onChange={(e) => update('variant', e.target.value)}
-            className="inp"
-          />
-        </FormField>
-
-        <FormField label="Fuel Type" error={errors.fuelType}>
-          <select
-            value={details.fuelType || ''}
-            onChange={(e) => update('fuelType', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="">Select Fuel Type...</option>
-            <option value="Petrol">Petrol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="CNG / LPG">CNG / Hybrid CNG</option>
-            <option value="Electric (EV)">Electric (EV)</option>
-            <option value="Strong Hybrid">Strong Hybrid</option>
-          </select>
-        </FormField>
-
-        <FormField label="Manufacturing Year" error={errors.mfgYear}>
-          <select
-            value={details.mfgYear || ''}
-            onChange={(e) => update('mfgYear', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="">Select Year...</option>
-            {YEARS.map((y) => (
-              <option key={y} value={y}>{y}</option>
-            ))}
-          </select>
-        </FormField>
-
-        <FormField label="RTO Location" error={errors.rtoLocation}>
-          <input
-            type="text"
-            list="rto-list"
-            placeholder="e.g. TN-01 Chennai Central, TN-58 Madurai"
-            value={details.rtoLocation || ''}
-            onChange={(e) => update('rtoLocation', e.target.value)}
-            className="inp"
-          />
-          <datalist id="rto-list">
-            {TAMIL_NADU_RTO_SUGGESTIONS.map((r) => (
-              <option key={r} value={r} />
-            ))}
-          </datalist>
-        </FormField>
-
-        <FormField label="Insurance Type" error={errors.insuranceType}>
-          <select
-            value={details.insuranceType || 'Comprehensive + Zero Depreciation'}
-            onChange={(e) => update('insuranceType', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="Comprehensive + Zero Depreciation">Comprehensive + Zero Depreciation (Recommended)</option>
-            <option value="Standard Comprehensive Cover">Standard Comprehensive Cover</option>
-            <option value="Third-Party Cover Only">Third-Party Cover Only</option>
-            <option value="Standalone Own Damage (OD)">Standalone Own Damage (OD)</option>
-          </select>
-        </FormField>
-
-        <FormField label="Existing Policy Status" error={errors.policyStatus}>
-          <select
-            value={details.policyStatus || ''}
-            onChange={(e) => update('policyStatus', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="">Select Current Status...</option>
-            <option value="Active - Expiring soon">Active - Expiring soon</option>
-            <option value="Expired within 90 days">Expired within 90 days (NCB Valid)</option>
-            <option value="Expired more than 90 days">Expired more than 90 days</option>
-            <option value="Brand New Car">Brand New Car (No existing policy)</option>
-          </select>
-        </FormField>
-
-        <FormField label="Policy Expiry Date (if applicable)" required={false}>
-          <input
-            type="date"
-            value={details.expiryDate || ''}
-            onChange={(e) => update('expiryDate', e.target.value)}
-            className="inp"
-          />
-        </FormField>
-
-        <div className="sm:col-span-2">
-          <FormField label="Previous Claims & No-Claim Bonus (NCB)" required={false}>
-            <select
-              value={details.previousClaims || 'No Claims - 20% NCB'}
-              onChange={(e) => update('previousClaims', e.target.value)}
-              className="inp bg-white"
-            >
-              <option value="No Claims - 0% NCB (New / 1st year)">No Claims - 0% NCB (New car or 1st year)</option>
-              <option value="No Claims - 20% NCB">No Claims - 20% NCB (1 Claim-Free Year)</option>
-              <option value="No Claims - 25% NCB">No Claims - 25% NCB (2 Claim-Free Years)</option>
-              <option value="No Claims - 35% NCB">No Claims - 35% NCB (3 Claim-Free Years)</option>
-              <option value="No Claims - 45% NCB">No Claims - 45% NCB (4 Claim-Free Years)</option>
-              <option value="No Claims - 50% NCB">No Claims - 50% NCB (Maximum Discount)</option>
-              <option value="Claim made in previous year (0% NCB)">Claim made in previous year (0% NCB)</option>
-            </select>
-          </FormField>
-        </div>
-      </div>
-    );
-  }
-
-  // 2. BIKE INSURANCE FIELDS
+  // -------------------------------------------------------------
+  // 1. BIKE INSURANCE FORM
+  // -------------------------------------------------------------
   if (category === 'bike') {
-    const models = POPULAR_BIKE_MODELS[details.manufacturer] || [];
+    const popularModels = POPULAR_BIKE_MODELS[details.manufacturer] || [];
+    const isOtherModelSelected = details.model === 'Other Model' || (details.customModel && !popularModels.includes(details.model));
 
     return (
-      <div className="grid gap-4 sm:grid-cols-2">
-        <FormField label="Vehicle Registration Number" error={errors.regNumber}>
-          <input
-            type="text"
-            placeholder="e.g. TN 65 AB 5678"
-            value={details.regNumber || ''}
-            onChange={(e) => update('regNumber', e.target.value.toUpperCase())}
-            className={`inp uppercase font-semibold tracking-wider ${errors.regNumber ? 'border-[#F51F2B]' : ''}`}
+      <div className="space-y-6">
+        {/* Section A: Bike Specifications */}
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+          <SectionHeader
+            title="Two-Wheeler Specifications"
+            subtitle="Vehicle registration, manufacturer, model, fuel and manufacturing year"
+            icon={Bike}
           />
-        </FormField>
 
-        <FormField label="Bike Manufacturer" error={errors.manufacturer}>
-          <select
-            value={details.manufacturer || ''}
-            onChange={(e) => {
-              update('manufacturer', e.target.value);
-              update('model', '');
-            }}
-            className="inp bg-white"
-          >
-            <option value="">Select Manufacturer...</option>
-            {BIKE_MANUFACTURERS.map((m) => (
-              <option key={m} value={m}>{m}</option>
-            ))}
-          </select>
-        </FormField>
-
-        <FormField label="Bike Model" error={errors.model}>
-          {models.length > 0 ? (
-            <select
-              value={details.model || ''}
-              onChange={(e) => update('model', e.target.value)}
-              className="inp bg-white"
-            >
-              <option value="">Select Model...</option>
-              {models.map((m) => (
-                <option key={m} value={m}>{m}</option>
-              ))}
-              <option value="Other">Other Model</option>
-            </select>
-          ) : (
-            <input
-              type="text"
-              placeholder="e.g. Splendor Plus, Classic 350, Activa"
-              value={details.model || ''}
-              onChange={(e) => update('model', e.target.value)}
-              className="inp"
+          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+            <InputField
+              id="bike-regNumber"
+              label="Registration Number"
+              required={true}
+              error={errors.regNumber}
+              placeholder="e.g. TN 65 AB 5678 (or enter NEW)"
+              value={details.regNumber}
+              uppercase={true}
+              onChange={(val) => update('regNumber', val)}
             />
-          )}
-        </FormField>
 
-        <FormField label="Engine Capacity (CC)" error={errors.engineCapacity}>
-          <select
-            value={details.engineCapacity || '100cc - 150cc'}
-            onChange={(e) => update('engineCapacity', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="Under 100cc">Under 100cc (e.g. TVS XL100)</option>
-            <option value="100cc - 150cc">100cc - 150cc (e.g. Splendor, Activa, Shine)</option>
-            <option value="150cc - 250cc">150cc - 250cc (e.g. Pulsar 150, FZ, Apache)</option>
-            <option value="250cc - 350cc">250cc - 350cc (e.g. Classic 350, Hunter 350)</option>
-            <option value="Above 350cc">Above 350cc (Superbikes / 400cc+)</option>
-            <option value="Electric 2-Wheeler">Electric 2-Wheeler (EV)</option>
-          </select>
-        </FormField>
+            <SelectField
+              id="bike-manufacturer"
+              label="Bike Manufacturer"
+              required={true}
+              error={errors.manufacturer}
+              placeholder="Select Manufacturer..."
+              value={details.manufacturer}
+              options={BIKE_MANUFACTURERS}
+              onChange={(val) => {
+                updateMultiple({
+                  manufacturer: val,
+                  model: '',
+                  customModel: '',
+                });
+              }}
+            />
 
-        <FormField label="Manufacturing Year" error={errors.mfgYear}>
-          <select
-            value={details.mfgYear || ''}
-            onChange={(e) => update('mfgYear', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="">Select Year...</option>
-            {YEARS.map((y) => (
-              <option key={y} value={y}>{y}</option>
-            ))}
-          </select>
-        </FormField>
+            {/* Dynamic Model Dropdown / Custom Model Input */}
+            {popularModels.length > 0 ? (
+              <div className="flex flex-col space-y-2">
+                <SelectField
+                  id="bike-model"
+                  label="Bike Model"
+                  required={true}
+                  error={errors.model}
+                  placeholder="Select Model..."
+                  value={isOtherModelSelected ? 'Other Model' : details.model}
+                  options={[...popularModels, 'Other Model']}
+                  onChange={(val) => {
+                    if (val === 'Other Model') {
+                      updateMultiple({ model: 'Other Model', customModel: '' });
+                    } else {
+                      updateMultiple({ model: val, customModel: '' });
+                    }
+                  }}
+                />
+                {isOtherModelSelected && (
+                  <InputField
+                    id="bike-customModel"
+                    label="Specify Other Model Name"
+                    required={true}
+                    error={errors.model}
+                    placeholder="e.g. Karizma, Xtreme 160R"
+                    value={details.customModel || ''}
+                    onChange={(val) => updateMultiple({ customModel: val, model: val })}
+                  />
+                )}
+              </div>
+            ) : (
+              <InputField
+                id="bike-model-text"
+                label="Bike Model"
+                required={true}
+                error={errors.model}
+                placeholder="e.g. Splendor Plus, Classic 350, Activa"
+                value={details.model}
+                onChange={(val) => update('model', val)}
+              />
+            )}
 
-        <FormField label="RTO Location" error={errors.rtoLocation}>
-          <input
-            type="text"
-            list="rto-list"
-            placeholder="e.g. TN-65 Ramanathapuram, TN-01 Chennai"
-            value={details.rtoLocation || ''}
-            onChange={(e) => update('rtoLocation', e.target.value)}
-            className="inp"
+            <SelectField
+              id="bike-fuelType"
+              label="Fuel Type"
+              placeholder="Select Fuel Type..."
+              value={details.fuelType || ''}
+              options={['Petrol', 'Electric (EV)']}
+              onChange={(val) => update('fuelType', val)}
+            />
+
+            <SelectField
+              id="bike-engineCapacity"
+              label="Engine Capacity (CC)"
+              placeholder="Select Engine Capacity..."
+              value={details.engineCapacity || ''}
+              options={[
+                'Under 100cc (e.g. TVS XL100)',
+                '100cc - 150cc (e.g. Splendor, Activa, Shine)',
+                '150cc - 250cc (e.g. Pulsar 150, FZ, Apache)',
+                '250cc - 350cc (e.g. Classic 350, Hunter 350)',
+                'Above 350cc (Superbikes / 400cc+)',
+                'Electric 2-Wheeler (EV)',
+              ]}
+              onChange={(val) => update('engineCapacity', val)}
+            />
+
+            <SelectField
+              id="bike-mfgYear"
+              label="Manufacturing Year"
+              required={true}
+              error={errors.mfgYear}
+              placeholder="Select Year..."
+              value={details.mfgYear}
+              options={YEARS}
+              onChange={(val) => update('mfgYear', val)}
+            />
+
+            <div className="sm:col-span-2">
+              <InputField
+                id="bike-rtoLocation"
+                label="RTO Registration Location"
+                list="rto-list"
+                placeholder="e.g. TN-65 Ramanathapuram, TN-01 Chennai Central"
+                value={details.rtoLocation}
+                onChange={(val) => update('rtoLocation', val)}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Section B: Policy & Coverage Details */}
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+          <SectionHeader
+            title="Coverage & Policy Details"
+            subtitle="Plan preference and previous policy expiration details"
+            icon={Shield}
           />
-        </FormField>
 
-        <FormField label="Insurance Type" error={errors.insuranceType}>
-          <select
-            value={details.insuranceType || 'Comprehensive 1-Year Plan'}
-            onChange={(e) => update('insuranceType', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="Comprehensive 1-Year Plan">Comprehensive (Own Damage + Third-Party)</option>
-            <option value="Multi-Year Comprehensive (2 or 3 Years)">Multi-Year Comprehensive (2 or 3 Years)</option>
-            <option value="Third-Party Only Cover">Third-Party Cover Only</option>
-            <option value="Standalone Own Damage (OD)">Standalone Own Damage</option>
-          </select>
-        </FormField>
+          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+            <SelectField
+              id="bike-insuranceType"
+              label="Preferred Insurance Type"
+              placeholder="Select Insurance Type..."
+              value={details.insuranceType || ''}
+              options={[
+                { value: 'Comprehensive 1-Year Plan', label: 'Comprehensive (Own Damage + Third-Party)' },
+                { value: 'Multi-Year Comprehensive (2 or 3 Years)', label: 'Multi-Year Comprehensive (2 or 3 Years)' },
+                { value: 'Third-Party Only Cover', label: 'Third-Party Cover Only' },
+                { value: 'Standalone Own Damage (OD)', label: 'Standalone Own Damage (OD)' },
+              ]}
+              onChange={(val) => update('insuranceType', val)}
+            />
 
-        <FormField label="Existing Policy Status" error={errors.policyStatus}>
-          <select
-            value={details.policyStatus || ''}
-            onChange={(e) => update('policyStatus', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="">Select Status...</option>
-            <option value="Active">Active (Renewal)</option>
-            <option value="Expired within 90 days">Expired within 90 days</option>
-            <option value="Expired more than 90 days">Expired &gt; 90 days</option>
-            <option value="Brand New Bike">Brand New Bike</option>
-          </select>
-        </FormField>
+            <SelectField
+              id="bike-policyStatus"
+              label="Existing Policy Status"
+              placeholder="Select Current Policy Status..."
+              value={details.policyStatus || ''}
+              options={[
+                'Active (Standard Renewal)',
+                'Expired within 90 days (NCB Valid)',
+                'Expired more than 90 days',
+                'Brand New Bike',
+              ]}
+              onChange={(val) => update('policyStatus', val)}
+            />
 
-        <div className="sm:col-span-2">
-          <FormField label="Policy Expiry Date (if applicable)" required={false}>
-            <input
+            <div className="sm:col-span-2">
+              <InputField
+                id="bike-expiryDate"
+                type="date"
+                label="Registration Date / Policy Expiry Date"
+                value={details.expiryDate}
+                onChange={(val) => update('expiryDate', val)}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // 2. CAR INSURANCE FORM
+  // -------------------------------------------------------------
+  if (category === 'car') {
+    const popularModels = POPULAR_CAR_MODELS[details.manufacturer] || [];
+    const isOtherModelSelected = details.model === 'Other Model' || (details.customModel && !popularModels.includes(details.model));
+
+    return (
+      <div className="space-y-6">
+        {/* Section A: Car Specifications */}
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+          <SectionHeader
+            title="Four-Wheeler Specifications"
+            subtitle="Vehicle registration, brand, model, fuel type and manufacturing year"
+            icon={Car}
+          />
+
+          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+            <InputField
+              id="car-regNumber"
+              label="Vehicle Registration Number"
+              required={true}
+              error={errors.regNumber}
+              placeholder="e.g. TN 01 AB 1234 (or enter NEW)"
+              value={details.regNumber}
+              uppercase={true}
+              onChange={(val) => update('regNumber', val)}
+            />
+
+            <SelectField
+              id="car-manufacturer"
+              label="Car Manufacturer"
+              required={true}
+              error={errors.manufacturer}
+              placeholder="Select Manufacturer..."
+              value={details.manufacturer}
+              options={CAR_MANUFACTURERS}
+              onChange={(val) => {
+                updateMultiple({
+                  manufacturer: val,
+                  model: '',
+                  customModel: '',
+                });
+              }}
+            />
+
+            {/* Dynamic Model Dropdown / Custom Model Input */}
+            {popularModels.length > 0 ? (
+              <div className="flex flex-col space-y-2">
+                <SelectField
+                  id="car-model"
+                  label="Car Model"
+                  required={true}
+                  error={errors.model}
+                  placeholder="Select Model..."
+                  value={isOtherModelSelected ? 'Other Model' : details.model}
+                  options={[...popularModels, 'Other Model']}
+                  onChange={(val) => {
+                    if (val === 'Other Model') {
+                      updateMultiple({ model: 'Other Model', customModel: '' });
+                    } else {
+                      updateMultiple({ model: val, customModel: '' });
+                    }
+                  }}
+                />
+                {isOtherModelSelected && (
+                  <InputField
+                    id="car-customModel"
+                    label="Specify Other Model Name"
+                    required={true}
+                    error={errors.model}
+                    placeholder="e.g. Ioniq 5, Jimny, Meridian"
+                    value={details.customModel || ''}
+                    onChange={(val) => updateMultiple({ customModel: val, model: val })}
+                  />
+                )}
+              </div>
+            ) : (
+              <InputField
+                id="car-model-text"
+                label="Car Model"
+                required={true}
+                error={errors.model}
+                placeholder="e.g. Creta, Swift, Nexon, Seltos"
+                value={details.model}
+                onChange={(val) => update('model', val)}
+              />
+            )}
+
+            <InputField
+              id="car-variant"
+              label="Car Variant / Trim"
+              placeholder="e.g. SX(O) 1.5, VXI, Creative, ZXI+"
+              value={details.variant}
+              onChange={(val) => update('variant', val)}
+            />
+
+            <SelectField
+              id="car-fuelType"
+              label="Fuel Type"
+              placeholder="Select Fuel Type..."
+              value={details.fuelType || ''}
+              options={[
+                'Petrol',
+                'Diesel',
+                'CNG / Hybrid CNG',
+                'Electric (EV)',
+                'Strong Hybrid',
+              ]}
+              onChange={(val) => update('fuelType', val)}
+            />
+
+            <SelectField
+              id="car-mfgYear"
+              label="Manufacturing Year"
+              required={true}
+              error={errors.mfgYear}
+              placeholder="Select Year..."
+              value={details.mfgYear}
+              options={YEARS}
+              onChange={(val) => update('mfgYear', val)}
+            />
+
+            <div className="sm:col-span-2">
+              <InputField
+                id="car-rtoLocation"
+                label="RTO Registration Location"
+                list="rto-list"
+                placeholder="e.g. TN-01 Chennai Central, TN-58 Madurai, TN-65 Ramanathapuram"
+                value={details.rtoLocation}
+                onChange={(val) => update('rtoLocation', val)}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Section B: Policy & Coverage Details */}
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+          <SectionHeader
+            title="Coverage & Policy Details"
+            subtitle="Coverage type, previous claims and No-Claim Bonus savings"
+            icon={Shield}
+          />
+
+          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+            <SelectField
+              id="car-insuranceType"
+              label="Preferred Insurance Type"
+              placeholder="Select Insurance Plan..."
+              value={details.insuranceType || ''}
+              options={[
+                { value: 'Comprehensive + Zero Depreciation', label: 'Comprehensive + Zero Depreciation (Recommended)' },
+                { value: 'Standard Comprehensive Cover', label: 'Standard Comprehensive Cover' },
+                { value: 'Third-Party Cover Only', label: 'Third-Party Cover Only' },
+                { value: 'Standalone Own Damage (OD)', label: 'Standalone Own Damage (OD)' },
+              ]}
+              onChange={(val) => update('insuranceType', val)}
+            />
+
+            <SelectField
+              id="car-policyStatus"
+              label="Existing Policy Status"
+              placeholder="Select Current Policy Status..."
+              value={details.policyStatus || ''}
+              options={[
+                'Active - Expiring soon',
+                'Expired within 90 days (NCB Valid)',
+                'Expired more than 90 days',
+                'Brand New Car (No existing policy)',
+              ]}
+              onChange={(val) => update('policyStatus', val)}
+            />
+
+            <InputField
+              id="car-expiryDate"
               type="date"
-              value={details.expiryDate || ''}
-              onChange={(e) => update('expiryDate', e.target.value)}
-              className="inp"
+              label="Registration Date / Policy Expiry"
+              value={details.expiryDate}
+              onChange={(val) => update('expiryDate', val)}
             />
-          </FormField>
+
+            <SelectField
+              id="car-previousClaims"
+              label="Previous Claims & No-Claim Bonus (NCB)"
+              placeholder="Select Previous NCB / Claims..."
+              value={details.previousClaims || ''}
+              options={[
+                'No Claims - 0% NCB (New / 1st year)',
+                'No Claims - 20% NCB (1 Year Claim-Free)',
+                'No Claims - 25% NCB (2 Years Claim-Free)',
+                'No Claims - 35% NCB (3 Years Claim-Free)',
+                'No Claims - 45% NCB (4 Years Claim-Free)',
+                'No Claims - 50% NCB (Maximum Discount)',
+                'Claim made in previous year (0% NCB)',
+              ]}
+              onChange={(val) => update('previousClaims', val)}
+            />
+          </div>
         </div>
       </div>
     );
   }
 
-  // 3. COMMERCIAL VEHICLE INSURANCE FIELDS
+  // -------------------------------------------------------------
+  // 3. COMMERCIAL VEHICLE INSURANCE FORM
+  // -------------------------------------------------------------
   if (category === 'commercial') {
+    const popularCommercialModels = POPULAR_COMMERCIAL_MODELS[details.manufacturer] || [];
+    const isOtherModelSelected = details.model === 'Other Model' || (details.customModel && !popularCommercialModels.includes(details.model));
+
     return (
-      <div className="grid gap-4 sm:grid-cols-2">
-        <FormField label="Vehicle Registration Number" error={errors.regNumber}>
-          <input
-            type="text"
-            placeholder="e.g. TN 58 AX 9012"
-            value={details.regNumber || ''}
-            onChange={(e) => update('regNumber', e.target.value.toUpperCase())}
-            className={`inp uppercase font-semibold tracking-wider ${errors.regNumber ? 'border-[#F51F2B]' : ''}`}
+      <div className="space-y-6">
+        {/* Section A: Commercial Vehicle Specifications */}
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+          <SectionHeader
+            title="Commercial Vehicle Specifications"
+            subtitle="Vehicle category, manufacturer, payload capacity and commercial permit"
+            icon={Truck}
           />
-        </FormField>
 
-        <FormField label="Vehicle Commercial Category" error={errors.vehicleCategory}>
-          <select
-            value={details.vehicleCategory || ''}
-            onChange={(e) => update('vehicleCategory', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="">Select Category...</option>
-            {COMMERCIAL_CATEGORIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </FormField>
-
-        <FormField label="Manufacturer" error={errors.manufacturer}>
-          <select
-            value={details.manufacturer || ''}
-            onChange={(e) => update('manufacturer', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="">Select Manufacturer...</option>
-            {COMMERCIAL_MANUFACTURERS.map((m) => (
-              <option key={m} value={m}>{m}</option>
-            ))}
-          </select>
-        </FormField>
-
-        <FormField label="Vehicle Model" error={errors.model}>
-          <input
-            type="text"
-            placeholder="e.g. Tata Ace, Bolero Maxi Truck, Eicher Pro 2049"
-            value={details.model || ''}
-            onChange={(e) => update('model', e.target.value)}
-            className="inp"
-          />
-        </FormField>
-
-        <FormField label="Manufacturing Year" error={errors.mfgYear}>
-          <select
-            value={details.mfgYear || ''}
-            onChange={(e) => update('mfgYear', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="">Select Year...</option>
-            {YEARS.map((y) => (
-              <option key={y} value={y}>{y}</option>
-            ))}
-          </select>
-        </FormField>
-
-        <FormField label="Gross Vehicle Weight (GVW) / Seating Capacity" error={errors.gvwOrCapacity}>
-          <input
-            type="text"
-            placeholder="e.g. 11,990 kg GVW or 32 Seats"
-            value={details.gvwOrCapacity || ''}
-            onChange={(e) => update('gvwOrCapacity', e.target.value)}
-            className="inp"
-          />
-        </FormField>
-
-        <FormField label="Vehicle Commercial Usage" error={errors.vehicleUsage}>
-          <select
-            value={details.vehicleUsage || 'Public Carrier (State / National Permit)'}
-            onChange={(e) => update('vehicleUsage', e.target.value)}
-            className="inp bg-white"
-          >
-            <option value="Public Carrier (State / National Permit)">Public Carrier (State / National Permit)</option>
-            <option value="Private Carrier (Own Business Goods Transport)">Private Carrier (Own Business Goods)</option>
-            <option value="Passenger Taxi / App Cab (Commercial)">Passenger Taxi / App Cab</option>
-            <option value="Contract Carriage / Staff Transport">Contract Carriage / Staff Transport</option>
-            <option value="School / Educational Institution Bus">School / Institution Bus</option>
-            <option value="Agricultural / Farm Use">Agricultural / Farm Use</option>
-          </select>
-        </FormField>
-
-        <FormField label="RTO Location" error={errors.rtoLocation}>
-          <input
-            type="text"
-            list="rto-list"
-            placeholder="e.g. TN-58 Madurai South, TN-63 Sivaganga"
-            value={details.rtoLocation || ''}
-            onChange={(e) => update('rtoLocation', e.target.value)}
-            className="inp"
-          />
-        </FormField>
-
-        <div className="sm:col-span-2">
-          <FormField label="Existing Insurance & Insurer Information" required={false}>
-            <input
-              type="text"
-              placeholder="e.g. National Insurance - Policy #421098, Expired 10 days ago"
-              value={details.existingInsurance || ''}
-              onChange={(e) => update('existingInsurance', e.target.value)}
-              className="inp"
+          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+            <InputField
+              id="comm-regNumber"
+              label="Registration Number"
+              required={true}
+              error={errors.regNumber}
+              placeholder="e.g. TN 58 AX 9012 (or enter NEW)"
+              value={details.regNumber}
+              uppercase={true}
+              onChange={(val) => update('regNumber', val)}
             />
-          </FormField>
+
+            <SelectField
+              id="comm-vehicleCategory"
+              label="Commercial Vehicle Category"
+              required={true}
+              error={errors.vehicleCategory}
+              placeholder="Select Category..."
+              value={details.vehicleCategory}
+              options={COMMERCIAL_CATEGORIES}
+              onChange={(val) => update('vehicleCategory', val)}
+            />
+
+            <SelectField
+              id="comm-manufacturer"
+              label="Manufacturer"
+              required={true}
+              error={errors.manufacturer}
+              placeholder="Select Manufacturer..."
+              value={details.manufacturer}
+              options={COMMERCIAL_MANUFACTURERS}
+              onChange={(val) => {
+                updateMultiple({
+                  manufacturer: val,
+                  model: '',
+                  customModel: '',
+                });
+              }}
+            />
+
+            {/* Dynamic Model Dropdown / Custom Model Input */}
+            {popularCommercialModels.length > 0 ? (
+              <div className="flex flex-col space-y-2">
+                <SelectField
+                  id="comm-model"
+                  label="Vehicle Model"
+                  required={true}
+                  error={errors.model}
+                  placeholder="Select Model..."
+                  value={isOtherModelSelected ? 'Other Model' : details.model}
+                  options={[...popularCommercialModels, 'Other Model']}
+                  onChange={(val) => {
+                    if (val === 'Other Model') {
+                      updateMultiple({ model: 'Other Model', customModel: '' });
+                    } else {
+                      updateMultiple({ model: val, customModel: '' });
+                    }
+                  }}
+                />
+                {isOtherModelSelected && (
+                  <InputField
+                    id="comm-customModel"
+                    label="Specify Other Model Name"
+                    required={true}
+                    error={errors.model}
+                    placeholder="e.g. LPT 407, Signa 4825"
+                    value={details.customModel || ''}
+                    onChange={(val) => updateMultiple({ customModel: val, model: val })}
+                  />
+                )}
+              </div>
+            ) : (
+              <InputField
+                id="comm-model-text"
+                label="Vehicle Model"
+                required={true}
+                error={errors.model}
+                placeholder="e.g. Tata Ace, Bolero Maxi Truck, Eicher Pro 2049"
+                value={details.model}
+                onChange={(val) => update('model', val)}
+              />
+            )}
+
+            <SelectField
+              id="comm-fuelType"
+              label="Fuel Type"
+              placeholder="Select Fuel Type..."
+              value={details.fuelType || ''}
+              options={['Diesel', 'CNG', 'Electric (EV)', 'Petrol']}
+              onChange={(val) => update('fuelType', val)}
+            />
+
+            <SelectField
+              id="comm-mfgYear"
+              label="Manufacturing Year"
+              required={true}
+              error={errors.mfgYear}
+              placeholder="Select Year..."
+              value={details.mfgYear}
+              options={YEARS}
+              onChange={(val) => update('mfgYear', val)}
+            />
+
+            <InputField
+              id="comm-gvwOrCapacity"
+              label="GVW / Seating Capacity"
+              required={true}
+              error={errors.gvwOrCapacity}
+              placeholder="e.g. 11,990 kg GVW or 32 Seats"
+              value={details.gvwOrCapacity}
+              onChange={(val) => update('gvwOrCapacity', val)}
+            />
+
+            <SelectField
+              id="comm-vehicleUsage"
+              label="Commercial Vehicle Usage"
+              placeholder="Select Commercial Usage..."
+              value={details.vehicleUsage || ''}
+              options={[
+                'Public Carrier (State / National Permit)',
+                'Private Carrier (Own Business Goods Transport)',
+                'Passenger Taxi / App Cab (Commercial)',
+                'Contract Carriage / Staff Transport',
+                'School / Educational Institution Bus',
+                'Agricultural / Farm Use',
+              ]}
+              onChange={(val) => update('vehicleUsage', val)}
+            />
+
+            <div className="sm:col-span-2">
+              <InputField
+                id="comm-rtoLocation"
+                label="RTO Registration Location"
+                list="rto-list"
+                placeholder="e.g. TN-58 Madurai South, TN-63 Sivaganga, TN-65 Ramanathapuram"
+                value={details.rtoLocation}
+                onChange={(val) => update('rtoLocation', val)}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Section B: Existing Policy & Registration Details */}
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+          <SectionHeader
+            title="Existing Policy Information"
+            subtitle="Previous insurer and policy expiration details"
+            icon={Shield}
+          />
+
+          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+            <InputField
+              id="comm-existingInsurance"
+              label="Existing Insurance & Insurer Name"
+              placeholder="e.g. National Insurance, New India, Cholamandalam MS"
+              value={details.existingInsurance}
+              onChange={(val) => update('existingInsurance', val)}
+            />
+
+            <InputField
+              id="comm-expiryDate"
+              type="date"
+              label="Registration Date / Policy Expiry"
+              value={details.expiryDate}
+              onChange={(val) => update('expiryDate', val)}
+            />
+          </div>
         </div>
       </div>
     );
   }
 
-  // 4. COMBINED HEALTH + LIFE INSURANCE APPLICATION FORM
+  // -------------------------------------------------------------
+  // 4. LIFE & HEALTH INSURANCE FORM
+  // -------------------------------------------------------------
   if (category === 'health-life' || category === 'health' || category === 'life') {
     return (
-      <div className="space-y-5">
-        {/* Section A: Health Insurance Coverage */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF8F5]/80 p-4 sm:p-5">
-          <div className="flex items-center gap-2 mb-3 pb-2.5 border-b border-[#E5E7EB]">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#FFF1F2] text-[#F51F2B]">
-              <HeartPulse size={16} />
-            </span>
-            <div>
-              <h4 className="text-sm font-bold text-[#101C38]">Health Protection & Hospitalization</h4>
-              <p className="text-[11px] text-[#53627A]">Coverage for medical treatments, hospitalization & critical illness</p>
-            </div>
-          </div>
+      <div className="space-y-6">
+        {/* Section 1: Health Insurance Details */}
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+          <SectionHeader
+            title="Health Insurance & Hospitalization Details"
+            subtitle="Cashless medical coverage, family floater options and hospital network"
+            icon={HeartPulse}
+          />
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <FormField label="Health Plan Type" error={errors.planType}>
-              <select
-                value={details.planType || 'Family Floater (Self + Spouse + Children)'}
-                onChange={(e) => update('planType', e.target.value)}
-                className="inp bg-white"
-              >
-                <option value="Family Floater (Self + Spouse + Children)">Family Floater (Self + Spouse + Children)</option>
-                <option value="Individual Cover (Single Person)">Individual Cover (Single Person)</option>
-                <option value="Parents / Senior Citizen Plan">Parents / Senior Citizen Plan</option>
-                <option value="Critical Illness + Personal Accident">Critical Illness + Personal Accident</option>
-              </select>
-            </FormField>
+          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+            <SelectField
+              id="health-planType"
+              label="Health Plan Type"
+              placeholder="Select Health Plan Type..."
+              value={details.planType || ''}
+              options={[
+                'Family Floater (Self + Spouse + Children)',
+                'Individual Cover (Single Person)',
+                'Parents / Senior Citizen Plan',
+                'Critical Illness + Personal Accident',
+              ]}
+              onChange={(val) => update('planType', val)}
+            />
 
-            <FormField label="Total Insured Family Members" error={errors.familyCount}>
-              <select
-                value={details.familyCount || '4 Members (Self + Spouse + 2 Children)'}
-                onChange={(e) => update('familyCount', e.target.value)}
-                className="inp bg-white"
-              >
-                <option value="1 Member (Self Only)">1 Member (Self Only)</option>
-                <option value="2 Members (Self + Spouse)">2 Members (Self + Spouse)</option>
-                <option value="3 Members (Self + Spouse + 1 Child)">3 Members (Self + Spouse + 1 Child)</option>
-                <option value="4 Members (Self + Spouse + 2 Children)">4 Members (Self + Spouse + 2 Children)</option>
-                <option value="5+ Members (Including Parents)">5+ Members (Including Parents)</option>
-              </select>
-            </FormField>
+            <SelectField
+              id="health-familyCount"
+              label="Total Insured Family Members"
+              placeholder="Select Number of Members..."
+              value={details.familyCount || ''}
+              options={[
+                '1 Member (Self Only)',
+                '2 Members (Self + Spouse)',
+                '3 Members (Self + Spouse + 1 Child)',
+                '4 Members (Self + Spouse + 2 Children)',
+                '5+ Members (Including Parents)',
+              ]}
+              onChange={(val) => update('familyCount', val)}
+            />
 
-            <FormField label="Required Health Sum Insured" error={errors.sumInsured}>
-              <select
-                value={details.sumInsured || '₹10 Lakhs (Most Popular Family Cover)'}
-                onChange={(e) => update('sumInsured', e.target.value)}
-                className="inp bg-white font-semibold text-[#101C38]"
-              >
-                {HEALTH_SUM_INSURED.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </FormField>
+            <SelectField
+              id="health-sumInsured"
+              label="Required Health Sum Insured"
+              placeholder="Select Health Sum Insured..."
+              value={details.sumInsured || ''}
+              options={HEALTH_SUM_INSURED}
+              onChange={(val) => update('sumInsured', val)}
+            />
 
-            <FormField label="City & Pincode" error={errors.cityPincode}>
-              <input
-                type="text"
-                placeholder="e.g. Paramakudi - 623707, Madurai"
-                value={details.cityPincode || ''}
-                onChange={(e) => update('cityPincode', e.target.value)}
-                className={`inp ${errors.cityPincode ? 'border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
+            <InputField
+              id="health-cityPincode"
+              label="City & Pincode"
+              required={true}
+              error={errors.cityPincode}
+              placeholder="e.g. Paramakudi - 623707, Madurai"
+              value={details.cityPincode}
+              onChange={(val) => update('cityPincode', val)}
+            />
+
+            <div className="sm:col-span-2">
+              <InputField
+                id="health-membersAges"
+                label="Age of Each Member to be Covered"
+                placeholder="e.g. Self: 36, Spouse: 33, Child 1: 8, Child 2: 4"
+                value={details.membersAges}
+                onChange={(val) => update('membersAges', val)}
               />
-            </FormField>
-
-            <div className="sm:col-span-2">
-              <FormField label="Age of Each Member to be Covered" helpText="e.g. Self: 36, Spouse: 33, Child: 7">
-                <input
-                  type="text"
-                  placeholder="e.g. Self: 36, Spouse: 33, Child 1: 8, Child 2: 4"
-                  value={details.membersAges || ''}
-                  onChange={(e) => update('membersAges', e.target.value)}
-                  className="inp"
-                />
-              </FormField>
             </div>
 
             <div className="sm:col-span-2">
-              <FormField label="Existing Medical Conditions / Health Declaration" required={false}>
-                <input
-                  type="text"
-                  placeholder="e.g. None (Clean declaration) OR Diabetes, BP, porting existing policy"
-                  value={details.existingConditions || ''}
-                  onChange={(e) => update('existingConditions', e.target.value)}
-                  className="inp"
-                />
-              </FormField>
+              <InputField
+                id="health-existingConditions"
+                label="Existing Medical Conditions / Health Declaration"
+                placeholder="e.g. None (Clean declaration) OR BP, Diabetes, etc."
+                value={details.existingConditions}
+                onChange={(val) => update('existingConditions', val)}
+              />
             </div>
           </div>
         </div>
 
-        {/* Section B: Life & Term Financial Protection */}
-        <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAF8F5]/80 p-4 sm:p-5">
-          <div className="flex items-center gap-2 mb-3 pb-2.5 border-b border-[#E5E7EB]">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#FAF2DE] text-[#8C6D1F]">
-              <Users size={16} />
-            </span>
-            <div>
-              <h4 className="text-sm font-bold text-[#101C38]">Life & Term Financial Protection</h4>
-              <p className="text-[11px] text-[#53627A]">High-cover term insurance to secure your family's future financial independence</p>
-            </div>
-          </div>
+        {/* Section 2: Life Insurance & Financial Protection */}
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+          <SectionHeader
+            title="Life & Term Protection Details"
+            subtitle="Pure financial security and milestone income replacement"
+            icon={Users}
+          />
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <FormField label="Primary Insured Date of Birth" error={errors.dob}>
-              <input
-                type="date"
-                value={details.dob || ''}
-                onChange={(e) => update('dob', e.target.value)}
-                className={`inp ${errors.dob ? 'border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
-              />
-            </FormField>
+          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+            <InputField
+              id="life-dob"
+              type="date"
+              label="Primary Insured Date of Birth (DOB)"
+              required={true}
+              error={errors.dob}
+              value={details.dob}
+              onChange={(val) => update('dob', val)}
+            />
 
-            <FormField label="Gender" error={errors.gender}>
-              <select
-                value={details.gender || 'Male'}
-                onChange={(e) => update('gender', e.target.value)}
-                className="inp bg-white"
-              >
-                <option value="Male">Male</option>
-                <option value="Female">Female (Special Female Lower Premium Rate)</option>
-                <option value="Other">Other</option>
-              </select>
-            </FormField>
+            <SelectField
+              id="life-gender"
+              label="Gender"
+              placeholder="Select Gender..."
+              value={details.gender || ''}
+              options={[
+                { value: 'Male', label: 'Male' },
+                { value: 'Female', label: 'Female (Special Lower Premium Rate)' },
+                { value: 'Other', label: 'Other' },
+              ]}
+              onChange={(val) => update('gender', val)}
+            />
 
-            <FormField label="Annual Income Range" error={errors.annualIncome}>
-              <select
-                value={details.annualIncome || '₹5 Lakhs - ₹10 Lakhs'}
-                onChange={(e) => update('annualIncome', e.target.value)}
-                className={`inp bg-white ${errors.annualIncome ? 'border-[#F51F2B]' : ''}`}
-              >
-                {LIFE_INCOME_RANGES.map((r) => (
-                  <option key={r} value={r}>{r}</option>
-                ))}
-              </select>
-            </FormField>
+            <SelectField
+              id="life-annualIncome"
+              label="Annual Income Range"
+              required={true}
+              error={errors.annualIncome}
+              placeholder="Select Annual Income..."
+              value={details.annualIncome || ''}
+              options={LIFE_INCOME_RANGES}
+              onChange={(val) => update('annualIncome', val)}
+            />
 
-            <FormField label="Occupation Type" error={errors.occupation}>
-              <select
-                value={details.occupation || 'Salaried (Private / Govt)'}
-                onChange={(e) => update('occupation', e.target.value)}
-                className={`inp bg-white ${errors.occupation ? 'border-[#F51F2B]' : ''}`}
-              >
-                <option value="Salaried (Private / Govt)">Salaried (Private / Government)</option>
-                <option value="Self-Employed / Business Owner">Self-Employed / Business Owner</option>
-                <option value="Professional (Doctor, CA, Lawyer, Engineer)">Professional (Doctor, CA, Lawyer)</option>
-                <option value="Agriculturist / Farmer">Agriculturist / Farmer</option>
-                <option value="Homemaker">Homemaker</option>
-                <option value="Student / Other">Student / Other</option>
-              </select>
-            </FormField>
+            <SelectField
+              id="life-occupation"
+              label="Occupation Type"
+              required={true}
+              error={errors.occupation}
+              placeholder="Select Occupation..."
+              value={details.occupation || ''}
+              options={[
+                'Salaried (Private / Govt)',
+                'Self-Employed / Business Owner',
+                'Professional (Doctor, CA, Lawyer, Engineer)',
+                'Agriculturist / Farmer',
+                'Homemaker',
+                'Student / Other',
+              ]}
+              onChange={(val) => update('occupation', val)}
+            />
 
-            <FormField label="Required Life Coverage (Sum Assured)" error={errors.sumAssured}>
-              <select
-                value={details.sumAssured || '₹1 Crore (Recommended for ₹5-10L Income)'}
-                onChange={(e) => update('sumAssured', e.target.value)}
-                className="inp bg-white font-semibold text-[#101C38]"
-              >
-                {LIFE_SUM_ASSURED.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </FormField>
+            <SelectField
+              id="life-sumAssured"
+              label="Required Life Coverage (Sum Assured)"
+              placeholder="Select Life Coverage..."
+              value={details.sumAssured || ''}
+              options={LIFE_SUM_ASSURED}
+              onChange={(val) => update('sumAssured', val)}
+            />
 
-            <FormField label="Policy Duration / Coverage Till Age" error={errors.policyDuration}>
-              <select
-                value={details.policyDuration || 'Till 70 Years'}
-                onChange={(e) => update('policyDuration', e.target.value)}
-                className="inp bg-white"
-              >
-                <option value="Till 60 Years (Retirement Age)">Till 60 Years (Retirement Age)</option>
-                <option value="Till 65 Years">Till 65 Years</option>
-                <option value="Till 70 Years">Till 70 Years (Most Popular)</option>
-                <option value="Till 75 Years">Till 75 Years</option>
-                <option value="Till 85 Years">Till 85 Years (Extended Cover)</option>
-                <option value="Whole Life (Till Age 99 / 100)">Whole Life (Till Age 99 / 100)</option>
-              </select>
-            </FormField>
+            <SelectField
+              id="life-policyDuration"
+              label="Policy Duration / Coverage Till Age"
+              placeholder="Select Coverage Duration..."
+              value={details.policyDuration || ''}
+              options={[
+                'Till 60 Years (Retirement Age)',
+                'Till 65 Years',
+                'Till 70 Years (Most Popular)',
+                'Till 75 Years',
+                'Till 85 Years (Extended Cover)',
+                'Whole Life (Till Age 99 / 100)',
+              ]}
+              onChange={(val) => update('policyDuration', val)}
+            />
 
             <div className="sm:col-span-2">
-              <FormField label="Do You Consume Tobacco or Nicotine?" error={errors.tobacco}>
-                <select
-                  value={details.tobacco || 'No (Non-Smoker - Maximum Discount)'}
-                  onChange={(e) => update('tobacco', e.target.value)}
-                  className="inp bg-white"
-                >
-                  <option value="No (Non-Smoker - Maximum Discount)">No (Non-Smoker - Upto 20% Discount)</option>
-                  <option value="Yes (Smoker / Tobacco products)">Yes (Smoker / Tobacco products)</option>
-                </select>
-              </FormField>
+              <SelectField
+                id="life-tobacco"
+                label="Do You Consume Tobacco or Nicotine?"
+                placeholder="Select Tobacco Consumption..."
+                value={details.tobacco || ''}
+                options={[
+                  'No (Non-Smoker - Maximum Discount)',
+                  'Yes (Smoker / Tobacco products)',
+                ]}
+                onChange={(val) => update('tobacco', val)}
+              />
             </div>
           </div>
         </div>

@@ -66,29 +66,39 @@ let inMemoryApplications = [
 
 export async function submitApplication(req, res, next) {
   try {
-    const { category, customer = {}, details = {}, verificationProof } = req.body || {};
-    const cleanMobile = (customer.mobile || '').toString().trim().replace(/\D/g, '').slice(-10);
+    const { category, details = {}, verificationProof } = req.body || {};
+    const rawCustomer = req.body?.customer || {};
 
-    // 1. Strict Server-Side Mobile Verification Enforcement
-    const isProofValid = validateVerificationProof(verificationProof, cleanMobile);
-    if (!isProofValid) {
-      return res.status(403).json({
-        success: false,
-        error: 'Mobile number verification is required before submission. Please verify your OTP.',
-      });
+    const name = (rawCustomer.name || req.body?.name || '').toString().trim();
+    const rawMobile = (rawCustomer.mobile || req.body?.mobile || '').toString();
+    const cleanMobile = rawMobile.trim().replace(/\D/g, '').slice(-10);
+    const email = (rawCustomer.email || req.body?.email || '').toString().trim();
+    const city = (rawCustomer.city || req.body?.city || '').toString().trim();
+
+    const customer = {
+      name,
+      mobile: cleanMobile,
+      email,
+      city,
+    };
+
+    // 1. Mobile verification check (optional proof if OTP provided, otherwise direct submission allowed)
+    let isProofValid = false;
+    if (verificationProof) {
+      isProofValid = validateVerificationProof(verificationProof, cleanMobile);
     }
 
     // 2. Validate Customer Fields
-    if (!customer.name || !customer.name.trim()) {
-      return res.status(400).json({ success: false, error: 'Customer full name is required.' });
+    if (!name || name.length < 2) {
+      return res.status(400).json({ success: false, error: 'Customer full name is required (at least 2 characters).' });
     }
     if (!cleanMobile || !/^[6-9]\d{9}$/.test(cleanMobile)) {
       return res.status(400).json({ success: false, error: 'A valid 10-digit Indian mobile number is required.' });
     }
-    if (!customer.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email.trim())) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return res.status(400).json({ success: false, error: 'A valid email address is required.' });
     }
-    if (!customer.city || !customer.city.trim()) {
+    if (!city) {
       return res.status(400).json({ success: false, error: 'City / location is required.' });
     }
 
@@ -112,14 +122,16 @@ export async function submitApplication(req, res, next) {
         city: customer.city.trim(),
       },
       details: { ...details },
-      verifiedMobile: true,
+      verifiedMobile: Boolean(isProofValid),
       status: 'Pending',
       createdAt: new Date().toISOString(),
       statusHistory: [
         {
           status: 'Pending',
           timestamp: new Date().toISOString(),
-          note: `Online application submitted with verified mobile +91 ${cleanMobile}`,
+          note: isProofValid
+            ? `Online application submitted with verified mobile +91 ${cleanMobile}`
+            : `Online application submitted for ${categoryLabel}`,
         },
       ],
     };
@@ -137,7 +149,7 @@ export async function submitApplication(req, res, next) {
               name: customer.name.trim(),
               email: customer.email.trim(),
               city: customer.city.trim(),
-              isMobileVerified: true,
+              isMobileVerified: Boolean(isProofValid),
             },
             { upsert: true, new: true }
           );

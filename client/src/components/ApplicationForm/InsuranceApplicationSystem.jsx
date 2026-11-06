@@ -10,15 +10,14 @@ import {
   ArrowLeft,
   CheckCircle2,
   ShieldCheck,
-  Printer,
-  Sparkles,
   PhoneCall,
   Loader2,
   Lock,
+  Edit2,
+  AlertCircle,
 } from 'lucide-react';
 import { CATEGORIES } from './constants';
 import CategoryFields from './CategoryFields';
-import MobileOtpVerification from './MobileOtpVerification';
 import { PHONE } from '../../data/data';
 
 const ICONS = {
@@ -57,7 +56,7 @@ export default function InsuranceApplicationSystem({ initialCategory = 'car' }) 
     }
   }, [searchParams, initialCategory]);
 
-  // Current wizard step: 1 (Category Details) -> 2 (Customer Info) -> 3 (OTP Verification) -> 4 (Success)
+  // Current wizard step: 1 (Specifications & Details) -> 2 (Contact Information & Submit) -> 3 (Confirmation)
   const [step, setStep] = useState(1);
 
   // Common customer details (collected in Step 2)
@@ -70,13 +69,6 @@ export default function InsuranceApplicationSystem({ initialCategory = 'car' }) 
 
   // Category specific details (collected in Step 1)
   const [details, setDetails] = useState({});
-
-  // Mobile verification state (handled in Step 3)
-  const [verification, setVerification] = useState({
-    verified: false,
-    proof: null,
-    verifiedMobile: '',
-  });
 
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -141,17 +133,17 @@ export default function InsuranceApplicationSystem({ initialCategory = 'car' }) 
     return Object.keys(errs).length === 0;
   };
 
-  // Validate Step 2 (Common Customer Details)
+  // Validate Step 2 (Customer Details)
   const validateStep2 = () => {
     const errs = {};
 
-    if (!customer.name || !customer.name.trim()) {
-      errs.name = 'Full name is required as per official ID.';
+    if (!customer.name || !customer.name.trim() || customer.name.trim().length < 2) {
+      errs.name = 'Full name is required as per official ID (at least 2 characters).';
     }
 
     const cleanMobile = (customer.mobile || '').replace(/\D/g, '').slice(-10);
     if (!cleanMobile) {
-      errs.mobile = 'Mobile number is required for OTP verification.';
+      errs.mobile = 'Mobile number is required to receive quotation details.';
     } else if (!/^[6-9]\d{9}$/.test(cleanMobile)) {
       errs.mobile = 'Please enter a valid 10-digit Indian mobile number.';
     }
@@ -182,34 +174,28 @@ export default function InsuranceApplicationSystem({ initialCategory = 'car' }) 
     }
   };
 
-  // Advance to Next Step
+  // Advance from Step 1 to Step 2
   const handleNext = () => {
     if (step === 1) {
       if (validateStep1()) {
-        // Pre-fill customer name in step 2 if entered in health/life
-        if ((category === 'health' || category === 'life') && details.applicantName && !customer.name) {
-          setCustomer((c) => ({ ...c, name: details.applicantName }));
+        // Pre-fill customer city from health/life cityPincode if available
+        if (details.cityPincode && !customer.city) {
+          setCustomer((c) => ({ ...c, city: details.cityPincode.split('-')[0].trim() }));
         }
         setStep(2);
         setErrors({});
-      }
-    } else if (step === 2) {
-      if (validateStep2()) {
-        // If mobile changed, reset verification
-        const cleanMobile = customer.mobile.replace(/\D/g, '').slice(-10);
-        if (verification.verifiedMobile !== cleanMobile) {
-          setVerification({ verified: false, proof: null, verifiedMobile: '' });
-        }
-        setStep(3);
-        setErrors({});
+        // Scroll to form top smoothly
+        const el = document.getElementById('quote');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
   };
 
-  // Final Submission to Serverless Endpoint
-  const handleSubmitFinal = async () => {
-    if (!verification.verified || !verification.proof) {
-      setErrors({ otp: 'Please complete real mobile OTP verification before submitting.' });
+  // Direct Submission from Step 2 without OTP
+  const handleSubmitFinal = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+
+    if (!validateStep2()) {
       return;
     }
 
@@ -217,29 +203,38 @@ export default function InsuranceApplicationSystem({ initialCategory = 'car' }) 
     setErrors({});
 
     try {
+      const cleanMobile = customer.mobile.replace(/\D/g, '').slice(-10);
       const res = await fetch('/api/enquiries/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           category,
+          name: customer.name.trim(),
+          mobile: cleanMobile,
+          email: customer.email.trim(),
+          city: customer.city.trim(),
           customer: {
             ...customer,
-            mobile: customer.mobile.replace(/\D/g, '').slice(-10),
+            name: customer.name.trim(),
+            mobile: cleanMobile,
+            email: customer.email.trim(),
+            city: customer.city.trim(),
           },
           details,
-          verificationProof: verification.proof,
         }),
       });
 
       const data = await res.json();
       if (res.ok && data.success) {
         setSubmissionResult(data);
-        setStep(4);
+        setStep(3);
+        const el = document.getElementById('quote');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
-        setErrors({ submit: data.error || 'Submission failed. Please try again or call our advisor.' });
+        setErrors({ submit: data.error || data.message || 'Submission failed. Please try again or call our advisor.' });
       }
     } catch {
-      setErrors({ submit: 'Unable to connect to submission server. Please try again.' });
+      setErrors({ submit: 'Unable to connect to submission server. Please try again or call our helpline.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -248,401 +243,407 @@ export default function InsuranceApplicationSystem({ initialCategory = 'car' }) 
   const activeCategoryObj = CATEGORIES.find((c) => c.id === category) || CATEGORIES[0];
   const ActiveIcon = ICONS[category] || Car;
 
-  // Print Receipt handler
-  const handlePrint = () => {
-    window.print();
-  };
-
   // Reset for Another Application
   const handleReset = () => {
     setStep(1);
     setCustomer({ name: '', mobile: '', email: '', city: '' });
     setDetails({});
-    setVerification({ verified: false, proof: null, verifiedMobile: '' });
     setSubmissionResult(null);
     setErrors({});
   };
 
   return (
-    <div id="quote" className="card border border-[#E5E7EB] bg-white p-5 sm:p-8 shadow-card max-w-4xl mx-auto">
-      {/* Category Header Banner (Always visible except in Step 4) */}
-      {step < 4 && (
+    <div id="quote" className="card border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-white p-4.5 sm:p-7 shadow-card max-w-4xl mx-auto transition-all">
+      {/* 1. Category Header (Visible in Steps 1 & 2) */}
+      {step < 3 && (
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-3 flex-wrap gap-2 pb-3 border-b border-[#E5E7EB]">
-            <div>
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#F51F2B]">
-                <Sparkles size={13} />
-                <span>Instant IRDAI Comparative Quotes</span>
-              </span>
-              <h3 className="font-display text-xl sm:text-2xl font-black text-[#101C38] tracking-tight mt-0.5">
-                {activeCategoryObj.title} Application
-              </h3>
-            </div>
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#FAF2DE] text-[#101C38] border border-[#E5B544]/60">
+          {/* Header Title with Badge */}
+          <div className="flex items-center justify-between flex-wrap gap-2 pb-3 border-b border-[#E5B544]/25">
+            <h3 className="font-display text-xl sm:text-2xl font-black text-[#101C38] tracking-tight">
+              {activeCategoryObj.title} Application
+            </h3>
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#FAF2DE] text-[#101C38] border border-[#E5B544]/50">
               {activeCategoryObj.badge}
             </span>
           </div>
         </div>
       )}
 
-      {/* Policybazaar-style Wizard Progress Bar */}
-      {step < 4 && (
-        <div className="mb-6 border-y border-[#E5E7EB] py-3.5">
-          <div className="flex items-center justify-between max-w-xl mx-auto">
-            {/* Step 1 */}
-            <div className="flex items-center gap-2">
+      {/* 2. Compact 2-Step Progress Indicator (Replaces old OTP 3-step bar) */}
+      {step < 3 && (
+        <div className="mb-6 rounded-xl bg-slate-50/70 border border-[#E5E7EB] px-4 py-3">
+          <div className="flex items-center justify-between max-w-md mx-auto">
+            {/* Step 1 Pill */}
+            <button
+              type="button"
+              onClick={() => step > 1 && setStep(1)}
+              className={`flex items-center gap-2 text-left cursor-pointer transition-opacity ${
+                step === 1 ? 'opacity-100' : 'opacity-70 hover:opacity-100'
+              }`}
+            >
               <span
-                className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${
+                className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold ${
                   step === 1
-                    ? 'bg-[#E5B544] text-[#101C38] shadow-xs'
-                    : step > 1
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-slate-200 text-slate-600'
+                    ? 'bg-[#E5B544] text-[#101C38] ring-2 ring-[#E5B544]/30'
+                    : 'bg-emerald-600 text-white'
                 }`}
               >
-                {step > 1 ? <CheckCircle2 size={16} /> : '1'}
+                {step > 1 ? <CheckCircle2 size={14} /> : '1'}
               </span>
-              <span className={`text-xs font-bold ${step === 1 ? 'text-[#101C38]' : 'text-slate-500'}`}>
-                {activeCategoryObj.id === 'health-life' ? 'Health + Life' : activeCategoryObj.title.split(' ')[0]} Details
+              <span className={`text-xs font-bold ${step === 1 ? 'text-[#101C38]' : 'text-slate-600'}`}>
+                {category === 'health-life' ? 'Plan Coverage' : 'Vehicle Details'}
               </span>
-            </div>
+            </button>
 
+            {/* Connecting Divider */}
             <div className={`h-0.5 flex-1 mx-3 ${step > 1 ? 'bg-emerald-500' : 'bg-slate-200'}`} />
 
-            {/* Step 2 */}
+            {/* Step 2 Pill */}
             <div className="flex items-center gap-2">
               <span
-                className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${
+                className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold ${
                   step === 2
-                    ? 'bg-[#E5B544] text-[#101C38] shadow-xs'
-                    : step > 2
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-slate-200 text-slate-600'
+                    ? 'bg-[#E5B544] text-[#101C38] ring-2 ring-[#E5B544]/30'
+                    : 'bg-slate-200 text-slate-500'
                 }`}
               >
-                {step > 2 ? <CheckCircle2 size={16} /> : '2'}
+                2
               </span>
-              <span className={`text-xs font-bold ${step === 2 ? 'text-[#101C38]' : 'text-slate-500'}`}>
-                Customer Info
-              </span>
-            </div>
-
-            <div className={`h-0.5 flex-1 mx-3 ${step > 2 ? 'bg-emerald-500' : 'bg-slate-200'}`} />
-
-            {/* Step 3 */}
-            <div className="flex items-center gap-2">
-              <span
-                className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${
-                  step === 3
-                    ? 'bg-[#F51F2B] text-white shadow-xs animate-pulse'
-                    : verification.verified
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-slate-200 text-slate-600'
-                }`}
-              >
-                {verification.verified ? <CheckCircle2 size={16} /> : <Lock size={13} />}
-              </span>
-              <span className={`text-xs font-bold ${step === 3 ? 'text-[#F51F2B]' : 'text-slate-500'}`}>
-                Mobile OTP
+              <span className={`text-xs font-bold ${step === 2 ? 'text-[#101C38]' : 'text-slate-400'}`}>
+                Contact & Submit
               </span>
             </div>
           </div>
         </div>
       )}
 
-      {/* STEP 1: CATEGORY SPECIFIC FIELDS */}
+      {/* ------------------------------------------------------------- */}
+      {/* STEP 1: SPECIFICATIONS & COVERAGE DETAILS                      */}
+      {/* ------------------------------------------------------------- */}
       {step === 1 && (
         <div className="space-y-5 animate-fade-in">
-          <div className="flex items-center gap-2.5 pb-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#FAF2DE] text-[#F51F2B]">
-              <ActiveIcon size={16} />
-            </span>
-            <div>
-              <h4 className="font-display text-sm sm:text-base font-bold text-[#101C38]">
-                Step 1: Enter {activeCategoryObj.title} Specifications
-              </h4>
-              <p className="text-xs text-[#53627A]">
-                Provide your details below to generate quotes with maximum No-Claim Bonus and discounts.
-              </p>
-            </div>
-          </div>
-
           <CategoryFields
             category={category}
             details={details}
-            onChange={(newDetails) => {
-              setDetails(newDetails);
-              if (Object.keys(errors).length > 0) {
-                setErrors((prev) => {
-                  const next = { ...prev };
-                  Object.keys(newDetails).forEach((k) => {
-                    if (newDetails[k] && next[k]) delete next[k];
+            onChange={(updater) => {
+              setDetails((prev) => {
+                const next = typeof updater === 'function' ? updater(prev) : { ...prev, ...updater };
+                if (Object.keys(errors).length > 0) {
+                  setErrors((errPrev) => {
+                    const nextErr = { ...errPrev };
+                    Object.keys(next).forEach((k) => {
+                      if (next[k] && nextErr[k]) delete nextErr[k];
+                    });
+                    return nextErr;
                   });
-                  return next;
-                });
-              }
+                }
+                return next;
+              });
             }}
             errors={errors}
           />
 
-          <div className="flex items-center justify-end pt-4 border-t border-[#E5E7EB]">
+          <div className="flex items-center justify-end pt-4 border-t border-[#E5B544]/25">
             <button
               type="button"
               onClick={handleNext}
-              className="btn-gold !px-6 !py-3 text-xs sm:text-sm font-bold flex items-center gap-2"
+              className="btn-gold !px-6 !py-2.5 text-xs sm:text-sm font-bold flex items-center gap-2 shadow-xs"
             >
-              <span>Continue to Customer Info</span>
-              <ArrowRight size={16} />
+              <span>Continue to Contact Details</span>
+              <ArrowRight size={15} />
             </button>
           </div>
         </div>
       )}
 
-      {/* STEP 2: COMMON CUSTOMER DETAILS */}
+      {/* ------------------------------------------------------------- */}
+      {/* STEP 2: CONTACT INFORMATION & DIRECT SUBMIT (NO OTP)          */}
+      {/* ------------------------------------------------------------- */}
       {step === 2 && (
-        <div className="space-y-5 animate-fade-in">
-          <div className="flex items-center gap-2.5 pb-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#FAF2DE] text-[#F51F2B]">
-              <Users size={16} />
-            </span>
-            <div>
-              <h4 className="font-display text-sm sm:text-base font-bold text-[#101C38]">
-                Step 2: Applicant Contact Information
-              </h4>
-              <p className="text-xs text-[#53627A]">
-                Where should we send your policy quotes and insurance documentation?
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label className="block text-xs font-bold text-[#101C38] mb-1">
-                Full Name as per Official ID *
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Ramesh Kumar"
-                value={customer.name}
-                onChange={(e) => updateCustomer('name', e.target.value)}
-                className={`inp ${errors.name ? 'border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
-              />
-              {errors.name && <span className="mt-1 block text-xs font-semibold text-[#F51F2B]">{errors.name}</span>}
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-[#101C38] mb-1">
-                Mobile Number (for SMS OTP) *
-              </label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400 select-none">
-                  +91
+        <form onSubmit={handleSubmitFinal} className="space-y-5 animate-fade-in">
+          {/* Quick Summary Pill of Step 1 */}
+          <div className="flex items-center justify-between rounded-xl bg-[#FAF2DE]/50 border border-[#E5B544]/30 p-3 sm:px-4">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-[#101C38] border border-[#E5B544]/40 shrink-0">
+                <ActiveIcon size={14} className="text-[#F51F2B]" />
+              </span>
+              <div className="min-w-0 text-xs">
+                <span className="font-bold text-[#101C38] block truncate">
+                  {details.manufacturer
+                    ? `${details.mfgYear || ''} ${details.manufacturer} ${details.model || ''}`.trim()
+                    : activeCategoryObj.title}
                 </span>
-                <input
-                  type="tel"
-                  maxLength={10}
-                  placeholder="10-digit mobile number"
-                  value={customer.mobile}
-                  onChange={(e) => updateCustomer('mobile', e.target.value.replace(/\D/g, ''))}
-                  className={`inp pl-11 tracking-wider font-semibold ${errors.mobile ? 'border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
-                />
+                <span className="text-[11px] text-slate-500 truncate block">
+                  {details.regNumber
+                    ? `Reg: ${details.regNumber} • ${details.insuranceType || 'Comprehensive'}`
+                    : details.sumInsured
+                    ? `${details.sumInsured} • ${details.planType || 'Family Floater'}`
+                    : 'Specifications configured in Step 1'}
+                </span>
               </div>
-              {errors.mobile && <span className="mt-1 block text-xs font-semibold text-[#F51F2B]">{errors.mobile}</span>}
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-[#101C38] mb-1">
-                Email Address (for Quotations & Policy PDF) *
-              </label>
-              <input
-                type="email"
-                placeholder="name@example.com"
-                value={customer.email}
-                onChange={(e) => updateCustomer('email', e.target.value)}
-                className={`inp ${errors.email ? 'border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
-              />
-              {errors.email && <span className="mt-1 block text-xs font-semibold text-[#F51F2B]">{errors.email}</span>}
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-[#101C38] mb-1">
-                City / Location *
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Paramakudi, Madurai, Chennai"
-                value={customer.city}
-                onChange={(e) => updateCustomer('city', e.target.value)}
-                className={`inp ${errors.city ? 'border-[#F51F2B] ring-1 ring-[#F51F2B]' : ''}`}
-              />
-              {errors.city && <span className="mt-1 block text-xs font-semibold text-[#F51F2B]">{errors.city}</span>}
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between pt-4 border-t border-[#E5E7EB]">
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-[#101C38]"
+              className="inline-flex items-center gap-1 text-[11px] font-bold text-[#101C38] hover:text-[#F51F2B] shrink-0 ml-2 py-1 px-2.5 rounded-md hover:bg-white transition-colors"
             >
-              <ArrowLeft size={15} />
-              <span>Back to Details</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleNext}
-              className="btn-gold !px-6 !py-3 text-xs sm:text-sm font-bold flex items-center gap-2"
-            >
-              <span>Verify Mobile Number</span>
-              <ArrowRight size={16} />
+              <Edit2 size={12} />
+              <span>Edit Details</span>
             </button>
           </div>
-        </div>
-      )}
 
-      {/* STEP 3: REAL MOBILE OTP VERIFICATION */}
-      {step === 3 && (
-        <div className="space-y-5 animate-fade-in">
-          <MobileOtpVerification
-            mobile={customer.mobile}
-            onMobileChange={(newMobile) => setCustomer((c) => ({ ...c, mobile: newMobile }))}
-            isVerified={verification.verified}
-            verifiedProof={verification.proof}
-            onVerified={({ verified, proof, mobile }) => {
-              setVerification({ verified, proof, verifiedMobile: mobile });
-            }}
-          />
+          {/* Section: Applicant Contact Details */}
+          <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+            <div className="flex items-center gap-2 pb-2.5 border-b border-[#E5B544]/25 mb-4">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#FAF2DE] text-[#101C38] shrink-0 border border-[#E5B544]/30">
+                <Users size={14} className="text-[#F51F2B]" />
+              </span>
+              <div>
+                <h5 className="text-xs font-bold uppercase tracking-wider text-[#101C38]">
+                  Applicant Contact & Delivery Information
+                </h5>
+                <p className="text-[11px] text-slate-500">
+                  Where should our licensed advisors deliver your customized IRDAI policy quotes?
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+              {/* Full Name */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5 min-h-[18px]">
+                  <label className="text-xs font-semibold text-[#101C38]">
+                    Full Name as per Official ID <span className="text-[#F51F2B] font-bold">*</span>
+                  </label>
+                </div>
+                <input
+                  type="text"
+                  placeholder="e.g. Ramesh Kumar"
+                  value={customer.name}
+                  onChange={(e) => updateCustomer('name', e.target.value)}
+                  className={`inp ${errors.name ? 'border-[#F51F2B] focus:border-[#F51F2B] ring-2 ring-[#F51F2B]/20' : ''}`}
+                />
+                {errors.name && (
+                  <span className="mt-1.5 flex items-center gap-1 text-[11.5px] font-medium text-[#F51F2B]">
+                    <AlertCircle size={12} className="shrink-0" />
+                    <span>{errors.name}</span>
+                  </span>
+                )}
+              </div>
+
+              {/* Standard Mobile Number Input (No OTP buttons/fields) */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5 min-h-[18px]">
+                  <label className="text-xs font-semibold text-[#101C38]">
+                    Mobile Number <span className="text-[#F51F2B] font-bold">*</span>
+                  </label>
+                </div>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <span className="text-xs font-bold text-slate-400 select-none">+91</span>
+                  </div>
+                  <input
+                    type="tel"
+                    maxLength={10}
+                    placeholder="10-digit mobile number"
+                    value={customer.mobile}
+                    onChange={(e) => updateCustomer('mobile', e.target.value.replace(/\D/g, ''))}
+                    className={`inp pl-12 font-semibold tracking-wider ${
+                      errors.mobile ? 'border-[#F51F2B] focus:border-[#F51F2B] ring-2 ring-[#F51F2B]/20' : ''
+                    }`}
+                  />
+                </div>
+                {errors.mobile && (
+                  <span className="mt-1.5 flex items-center gap-1 text-[11.5px] font-medium text-[#F51F2B]">
+                    <AlertCircle size={12} className="shrink-0" />
+                    <span>{errors.mobile}</span>
+                  </span>
+                )}
+              </div>
+
+              {/* Email Address */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5 min-h-[18px]">
+                  <label className="text-xs font-semibold text-[#101C38]">
+                    Email Address <span className="text-[#F51F2B] font-bold">*</span>
+                  </label>
+                </div>
+                <input
+                  type="email"
+                  placeholder="name@example.com"
+                  value={customer.email}
+                  onChange={(e) => updateCustomer('email', e.target.value)}
+                  className={`inp ${errors.email ? 'border-[#F51F2B] focus:border-[#F51F2B] ring-2 ring-[#F51F2B]/20' : ''}`}
+                />
+                {errors.email && (
+                  <span className="mt-1.5 flex items-center gap-1 text-[11.5px] font-medium text-[#F51F2B]">
+                    <AlertCircle size={12} className="shrink-0" />
+                    <span>{errors.email}</span>
+                  </span>
+                )}
+              </div>
+
+              {/* City / Location */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5 min-h-[18px]">
+                  <label className="text-xs font-semibold text-[#101C38]">
+                    City / Location <span className="text-[#F51F2B] font-bold">*</span>
+                  </label>
+                </div>
+                <input
+                  type="text"
+                  placeholder="e.g. Paramakudi, Ramanathapuram, Madurai"
+                  value={customer.city}
+                  onChange={(e) => updateCustomer('city', e.target.value)}
+                  className={`inp ${errors.city ? 'border-[#F51F2B] focus:border-[#F51F2B] ring-2 ring-[#F51F2B]/20' : ''}`}
+                />
+                {errors.city && (
+                  <span className="mt-1.5 flex items-center gap-1 text-[11.5px] font-medium text-[#F51F2B]">
+                    <AlertCircle size={12} className="shrink-0" />
+                    <span>{errors.city}</span>
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
 
           {/* Error Banner */}
           {errors.submit && (
-            <div className="rounded-xl bg-red-50 border border-red-200 p-3 text-xs text-[#F51F2B] font-semibold">
-              {errors.submit}
+            <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-[#F51F2B] font-semibold flex items-center gap-2">
+              <AlertCircle size={15} className="shrink-0" />
+              <span>{errors.submit}</span>
             </div>
           )}
 
-          <div className="flex items-center justify-between pt-4 border-t border-[#E5E7EB]">
+          {/* Form Actions */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-[#E5B544]/25">
             <button
               type="button"
-              onClick={() => setStep(2)}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-[#101C38]"
+              onClick={() => setStep(1)}
+              className="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-slate-600 hover:text-[#101C38] w-full sm:w-auto py-2 order-2 sm:order-1"
             >
-              <ArrowLeft size={15} />
-              <span>Back to Contact Info</span>
+              <ArrowLeft size={14} />
+              <span>Back to Specifications</span>
             </button>
 
             <button
-              type="button"
-              onClick={handleSubmitFinal}
-              disabled={!verification.verified || isSubmitting}
-              className={`btn-gold !px-7 !py-3 text-xs sm:text-sm font-bold flex items-center gap-2 ${
-                !verification.verified ? 'opacity-50 cursor-not-allowed' : 'shadow-md'
-              }`}
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-gold !px-7 !py-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs w-full sm:w-auto order-1 sm:order-2 disabled:opacity-50 cursor-pointer"
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 size={16} className="animate-spin text-[#171717]" />
+                  <Loader2 size={16} className="animate-spin text-[#101C38]" />
                   <span>Submitting Application...</span>
                 </>
               ) : (
                 <>
-                  <ShieldCheck size={18} />
-                  <span>Submit Verified Application</span>
+                  <ShieldCheck size={16} />
+                  <span>Submit Application</span>
                 </>
               )}
             </button>
           </div>
-        </div>
+
+          {/* Privacy & Trust Guarantee */}
+          <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 pt-1">
+            <Lock size={12} />
+            <span>100% Confidential • IRDAI Licensed Advisors • Zero Spam Guarantee</span>
+          </div>
+        </form>
       )}
 
-      {/* STEP 4: APPLICATION CONFIRMATION & RECEIPT */}
-      {step === 4 && submissionResult && (
-        <div className="space-y-6 text-center animate-fade-in py-4">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg ring-8 ring-emerald-100">
-            <CheckCircle2 size={36} />
+      {/* ------------------------------------------------------------- */}
+      {/* STEP 3: APPLICATION CONFIRMATION & RECEIPT                     */}
+      {/* ------------------------------------------------------------- */}
+      {step === 3 && submissionResult && (
+        <div className="space-y-6 text-center animate-fade-in py-2">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-md ring-8 ring-emerald-50">
+            <CheckCircle2 size={32} />
           </div>
 
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 mb-2">
-              <ShieldCheck size={14} />
-              <span>Application Verified & Registered</span>
+              <ShieldCheck size={13} />
+              <span>Application Submitted Successfully</span>
             </span>
-            <h3 className="font-display text-2xl sm:text-3xl font-black text-[#101C38] tracking-tight">
+            <h3 className="font-display text-xl sm:text-2xl font-black text-[#101C38] tracking-tight">
               Thank You, {customer.name}!
             </h3>
             <p className="mt-1 text-xs sm:text-sm text-[#53627A] max-w-lg mx-auto">
-              Your <b>{activeCategoryObj.title}</b> application has been successfully verified and sent to our certified insurance underwriting specialists.
+              Your <b>{activeCategoryObj.title}</b> application has been registered and sent to our certified insurance underwriting specialists.
             </p>
           </div>
 
           {/* Application Receipt Card */}
-          <div className="rounded-2xl border-2 border-[#E5B544] bg-[#FAF2DE]/20 p-5 sm:p-6 text-left max-w-lg mx-auto shadow-sm">
+          <div className="rounded-xl border border-[#E5B544] bg-[#FAF2DE]/20 p-4 sm:p-5 text-left max-w-lg mx-auto shadow-xs">
             <div className="flex items-center justify-between border-b border-[#E5B544]/30 pb-3 mb-3">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
                   Unique Application ID
                 </span>
-                <b className="block font-display text-lg font-black text-[#101C38] tracking-wide">
+                <b className="block font-display text-base sm:text-lg font-black text-[#101C38] tracking-wide">
                   {submissionResult.applicationId}
                 </b>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white shadow-xs">
-                <CheckCircle2 size={12} />
-                <span>Mobile Verified</span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2.5 py-0.5 text-[10px] font-bold text-white shadow-xs">
+                <CheckCircle2 size={11} />
+                <span>Registered</span>
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
               <div>
-                <span className="text-slate-500 block">Applicant:</span>
+                <span className="text-slate-500 block text-[11px]">Applicant:</span>
                 <b className="text-[#101C38]">{customer.name}</b>
               </div>
               <div>
-                <span className="text-slate-500 block">Verified Mobile:</span>
+                <span className="text-slate-500 block text-[11px]">Mobile Number:</span>
                 <b className="text-[#101C38]">+91 {customer.mobile}</b>
               </div>
               <div>
-                <span className="text-slate-500 block">Category:</span>
+                <span className="text-slate-500 block text-[11px]">Category:</span>
                 <b className="text-[#101C38]">{activeCategoryObj.title}</b>
               </div>
               <div>
-                <span className="text-slate-500 block">City:</span>
+                <span className="text-slate-500 block text-[11px]">City / Location:</span>
                 <b className="text-[#101C38]">{customer.city}</b>
               </div>
               {details.regNumber && (
                 <div>
-                  <span className="text-slate-500 block">Vehicle Reg No:</span>
+                  <span className="text-slate-500 block text-[11px]">Vehicle Reg No:</span>
                   <b className="text-[#101C38] uppercase">{details.regNumber}</b>
                 </div>
               )}
               {details.model && (
                 <div>
-                  <span className="text-slate-500 block">Make & Model:</span>
+                  <span className="text-slate-500 block text-[11px]">Make & Model:</span>
                   <b className="text-[#101C38]">{details.manufacturer} {details.model}</b>
                 </div>
               )}
               {details.sumInsured && (
                 <div className="col-span-2">
-                  <span className="text-slate-500 block">Sum Insured:</span>
+                  <span className="text-slate-500 block text-[11px]">Health Sum Insured:</span>
                   <b className="text-[#101C38]">{details.sumInsured}</b>
                 </div>
               )}
               {details.sumAssured && (
                 <div className="col-span-2">
-                  <span className="text-slate-500 block">Life Cover:</span>
-                  <b className="text-[#101C38]">{details.sumAssured} ({details.policyDuration})</b>
+                  <span className="text-slate-500 block text-[11px]">Life Cover:</span>
+                  <b className="text-[#101C38]">{details.sumAssured} ({details.policyDuration || 'Standard'})</b>
                 </div>
               )}
             </div>
 
-            <div className="mt-4 pt-3 border-t border-[#E5B544]/30 flex items-center justify-between text-[11px] text-slate-500">
+            <div className="mt-3.5 pt-2.5 border-t border-[#E5B544]/30 flex items-center justify-between text-[11px] text-slate-500">
               <span>Date: {new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
               <span className="font-semibold text-emerald-700">Status: Under Review</span>
             </div>
           </div>
 
           {/* What happens next */}
-          <div className="max-w-md mx-auto rounded-xl bg-slate-50 border border-slate-200 p-4 text-left text-xs text-slate-600 space-y-1.5">
+          <div className="max-w-lg mx-auto rounded-xl bg-slate-50 border border-slate-200 p-4 text-left text-xs text-slate-600 space-y-1.5">
             <b className="text-[#101C38] block mb-1">What Happens Next?</b>
             <p>1. Our underwriting team compares rates across 50+ IRDAI approved insurance partners.</p>
             <p>2. A dedicated advisor will call you at <b>+91 {customer.mobile}</b> within 2 hours with customized quotes.</p>
@@ -650,20 +651,11 @@ export default function InsuranceApplicationSystem({ initialCategory = 'car' }) 
           </div>
 
           {/* Action buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <button
-              type="button"
-              onClick={handlePrint}
-              className="btn-outline !py-2.5 !px-5 text-xs sm:text-sm font-bold flex items-center gap-2"
-            >
-              <Printer size={16} />
-              <span>Print Application Receipt</span>
-            </button>
-
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
             <button
               type="button"
               onClick={handleReset}
-              className="btn-gold !py-2.5 !px-5 text-xs sm:text-sm font-bold"
+              className="btn-gold !py-2.5 !px-6 text-xs sm:text-sm font-bold cursor-pointer"
             >
               <span>Submit Another Application</span>
             </button>

@@ -31,30 +31,39 @@ export default async function handler(req, res) {
 
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body || {};
-    const { category, customer = {}, details = {}, verificationProof } = body;
+    const { category, details = {}, verificationProof } = body;
+    const rawCustomer = body.customer || {};
 
-    const cleanMobile = (customer.mobile || '').toString().trim().replace(/\D/g, '').slice(-10);
+    const name = (rawCustomer.name || body.name || '').toString().trim();
+    const rawMobile = (rawCustomer.mobile || body.mobile || '').toString();
+    const cleanMobile = rawMobile.trim().replace(/\D/g, '').slice(-10);
+    const email = (rawCustomer.email || body.email || '').toString().trim();
+    const city = (rawCustomer.city || body.city || '').toString().trim();
 
-    // 1. Strict Server-Side Mobile Verification Enforcement
-    const isProofValid = validateVerificationProof(verificationProof, cleanMobile);
-    if (!isProofValid) {
-      return res.status(403).json({
-        success: false,
-        error: 'Mobile number verification is required before final submission. Please complete OTP verification.',
-      });
+    const customer = {
+      name,
+      mobile: cleanMobile,
+      email,
+      city,
+    };
+
+    // 1. Mobile verification check (optional proof if OTP provided, otherwise direct submission allowed)
+    let isProofValid = false;
+    if (verificationProof) {
+      isProofValid = validateVerificationProof(verificationProof, cleanMobile);
     }
 
     // 2. Validate Customer Details
-    if (!customer.name || !customer.name.trim()) {
-      return res.status(400).json({ success: false, error: 'Customer full name is required.' });
+    if (!name || name.length < 2) {
+      return res.status(400).json({ success: false, error: 'Customer full name is required (at least 2 characters).' });
     }
     if (!cleanMobile || !/^[6-9]\d{9}$/.test(cleanMobile)) {
       return res.status(400).json({ success: false, error: 'A valid 10-digit mobile number is required.' });
     }
-    if (!customer.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email.trim())) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return res.status(400).json({ success: false, error: 'A valid email address is required.' });
     }
-    if (!customer.city || !customer.city.trim()) {
+    if (!city) {
       return res.status(400).json({ success: false, error: 'City / location is required.' });
     }
 
@@ -80,14 +89,16 @@ export default async function handler(req, res) {
         city: customer.city.trim(),
       },
       details: { ...details },
-      verifiedMobile: true,
+      verifiedMobile: Boolean(isProofValid),
       status: 'Pending',
       createdAt: new Date().toISOString(),
       statusHistory: [
         {
           status: 'Pending',
           timestamp: new Date().toISOString(),
-          note: `Online application submitted with verified mobile +91 ${cleanMobile}`,
+          note: isProofValid
+            ? `Online application submitted with verified mobile +91 ${cleanMobile}`
+            : `Online application submitted for ${categoryLabel}`,
         },
       ],
     };

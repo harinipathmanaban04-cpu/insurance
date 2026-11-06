@@ -9,10 +9,6 @@ import {
   Youtube,
   MessageCircle,
   ArrowUp,
-  Send,
-  Loader2,
-  CheckCircle2,
-  AlertCircle,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Logo } from './Common';
@@ -37,85 +33,12 @@ const FooterLink = ({ to, children }) => (
 
 export default function Footer() {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [emailInput, setEmailInput] = useState('');
-  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const handleScroll = () => setShowScrollTop(window.scrollY > 350);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleCallbackSubmit = async (e) => {
-    e.preventDefault();
-    if (status === 'loading') return;
-
-    const email = emailInput.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
-      setStatus('error');
-      setErrorMessage('Please enter a valid email address.');
-      return;
-    }
-
-    setStatus('loading');
-    setErrorMessage('');
-
-    const accessKey =
-      import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ||
-      '2741f35b-765b-4bd6-b8aa-0b87a7563f2a';
-
-    try {
-      // 1. Submit to Backend API (MongoDB + Brevo email)
-      const res = await fetch('/api/callback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          message: `Customer requested a callback from website footer.\nContact Email: ${email}`,
-        }),
-      });
-
-      if (res.ok) {
-        setStatus('success');
-        setEmailInput('');
-        return;
-      }
-    } catch {
-      // Fallback to direct Web3Forms if backend is offline
-    }
-
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          access_key: accessKey,
-          subject: 'New Callback Request - THE BEST INSURANCE POINT',
-          from_name: 'THE BEST INSURANCE POINT',
-          email: email,
-          message: `New callback request received from website footer.\nCustomer Email: ${email}\nForwarded to: bestinsurance.pmk@gmail.com`,
-          botcheck: false,
-        }),
-      });
-
-      const data = await response.json();
-      if (response.ok && (data.success || data.status === 200)) {
-        setStatus('success');
-        setEmailInput('');
-      } else {
-        setStatus('error');
-        setErrorMessage(data.message || 'Submission failed. Please try again or call us.');
-      }
-    } catch {
-      setStatus('error');
-      setErrorMessage('Unable to connect. Please check your connection or call us directly.');
-    }
-  };
 
   return (
     <>
@@ -196,7 +119,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Contact & Callback */}
+          {/* Column 4: Contact Information */}
           <div className="sm:col-span-2 lg:col-span-1">
             <FooterHeading>Contact Us</FooterHeading>
             <div className="mb-3">
@@ -228,70 +151,6 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-
-            <div className="mt-5 border-t border-white/10 pt-4">
-              <span className="block text-xs font-semibold text-white mb-2">Request Callback</span>
-              {status === 'success' ? (
-                <div className="rounded-xl bg-[#E5B544]/15 border border-[#E5B544]/40 p-3 text-xs text-[#E5B544] space-y-1.5 animate-fade-in">
-                  <div className="flex items-center gap-1.5 font-bold text-white">
-                    <CheckCircle2 size={15} className="text-[#E5B544] shrink-0" />
-                    <span>Callback Request Received!</span>
-                  </div>
-                  <p className="text-[11px] text-[#A7ADB4] leading-relaxed">
-                    Thank you! Our advisor will contact you shortly.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setStatus('idle');
-                      setEmailInput('');
-                      setErrorMessage('');
-                    }}
-                    className="text-[10.5px] text-[#E5B544] hover:underline pt-0.5 inline-block cursor-pointer font-medium"
-                  >
-                    Request another callback →
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleCallbackSubmit} className="space-y-1.5">
-                  <div className="flex gap-1.5">
-                    <input
-                      required
-                      type="email"
-                      value={emailInput}
-                      onChange={(e) => {
-                        setEmailInput(e.target.value);
-                        if (status === 'error') {
-                          setStatus('idle');
-                          setErrorMessage('');
-                        }
-                      }}
-                      placeholder="Your email address"
-                      disabled={status === 'loading'}
-                      className="w-full rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-xs text-white placeholder-slate-400 focus:border-[#E5B544] focus:outline-none focus:ring-1 focus:ring-[#E5B544] disabled:opacity-60"
-                    />
-                    <button
-                      type="submit"
-                      disabled={status === 'loading'}
-                      aria-label="Send callback request"
-                      className="btn-gold !px-3 !py-2 rounded-xl shrink-0 flex items-center justify-center disabled:opacity-60 cursor-pointer"
-                    >
-                      {status === 'loading' ? (
-                        <Loader2 size={14} className="animate-spin text-[#171717]" />
-                      ) : (
-                        <Send size={14} />
-                      )}
-                    </button>
-                  </div>
-                  {status === 'error' && errorMessage && (
-                    <p className="text-[11px] text-[#F51F2B] flex items-center gap-1 pt-0.5">
-                      <AlertCircle size={12} className="shrink-0" />
-                      <span>{errorMessage}</span>
-                    </p>
-                  )}
-                </form>
-              )}
-            </div>
           </div>
         </div>
 

@@ -424,9 +424,7 @@ export const Testimonials = () => {
                 </span>
                 <div className="min-w-0 flex-1">
                   <b className="block text-sm font-bold text-[#101C38] truncate">{name}</b>
-                  <p className="text-xs text-[#53627A] truncate">
-                    {location} • <span className="text-[#8C6D1F] font-medium">Sample Customer Review</span>
-                  </p>
+                  <p className="text-xs text-[#53627A] truncate">{location}</p>
                 </div>
               </div>
             </motion.div>

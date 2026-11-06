@@ -164,31 +164,6 @@ export async function sendCustomerConfirmationEmail(application) {
 }
 
 /**
- * Send admin alert when customer requests callback from footer
- */
-export async function sendCallbackAdminNotification({ email, message }) {
-  const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || 'bestinsurance.pmk@gmail.com';
-
-  const htmlContent = `
-    <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; border: 1px solid #E5B544; border-radius: 10px; padding: 20px;">
-      <h3 style="color: #101C38; margin-top: 0;">New Callback Request - Website Footer</h3>
-      <p style="font-size: 13px; color: #53627A;">A customer submitted their email requesting an insurance callback:</p>
-      <div style="background: #FAF2DE; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: bold; color: #101C38;">
-        Email: <a href="mailto:${email}" style="color: #F51F2B;">${email}</a>
-      </div>
-      <p style="font-size: 12px; color: #6B7280; margin-top: 15px;">Message: ${message || 'No additional note'}</p>
-    </div>
-  `;
-
-  return sendBrevoEmail({
-    to: adminEmail,
-    subject: `New Callback Request - ${email}`,
-    htmlContent,
-    replyTo: email,
-  });
-}
-
-/**
  * Send admin alert when customer submits enquiry from Contact page
  */
 export async function sendEnquiryAdminNotification(enquiry) {
@@ -332,7 +307,6 @@ export default {
   sendBrevoEmail,
   sendApplicationAdminNotification,
   sendCustomerConfirmationEmail,
-  sendCallbackAdminNotification,
   sendEnquiryAdminNotification,
   sendEnquiryCustomerAcknowledgement,
 };

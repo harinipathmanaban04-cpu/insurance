@@ -52,6 +52,12 @@
     @apply font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#171717] tracking-tight;
   }
   .inp {
-    @apply w-full rounded-xl border border-[#E5E7EB] bg-white px-4 py-2.5 text-sm text-[#171717] placeholder-[#53627A] focus:outline-none focus:border-[#E5B544] focus:ring-2 focus:ring-[#E5B544]/20 transition-all;
+    @apply w-full h-[44px] rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm text-[#101C38] font-medium placeholder-slate-400 placeholder:font-normal placeholder:text-[13px] sm:placeholder:text-sm hover:border-[#CF9F30] focus:outline-none focus:border-[#E5B544] focus:ring-2 focus:ring-[#E5B544]/25 transition-colors;
+  }
+  textarea.inp {
+    @apply h-auto min-h-[90px] py-2.5;
+  }
+  input[type="checkbox"], input[type="radio"] {
+    @apply accent-[#E5B544] cursor-pointer;
   }
 }

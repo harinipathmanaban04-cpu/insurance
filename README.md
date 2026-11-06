@@ -29,7 +29,7 @@ best-insurance-point/
 ├── server/                     # Backend (Node.js + Express + Mongoose)
 │   ├── src/
 │   │   ├── config/             # MongoDB connection & constants
-│   │   ├── controllers/        # Application, OTP & Callback controllers
+│   │   ├── controllers/        # Application & OTP controllers
 │   │   ├── middleware/         # Rate limiting, validation & error handler
 │   │   ├── models/             # Mongoose schemas (Customer, Application...)
 │   │   ├── routes/             # Express API routes (/api/*)
@@ -85,9 +85,6 @@ npm run dev
 - `GET /api/applications` — Retrieves all applications with filtering by category and status, plus live dashboard metrics.
 - `PATCH /api/applications/:id/status` — Updates application status (`Pending`, `Under Review`, `Contacted`, `Completed`, `Rejected`).
 
-### Callback Request (`/api/callback`)
-- `POST /api/callback` — Saves customer callback requests from website footer and sends admin email alert.
-
 ---
 
 ## 4. Environment Variables
@@ -97,7 +94,7 @@ npm run dev
 # Leave empty to use local Vite proxy or Vercel serverless routing
 VITE_API_BASE_URL=
 
-# Web3Forms API Key for callback form
+# Web3Forms API Key for email fallback
 VITE_WEB3FORMS_ACCESS_KEY=2741f35b-765b-4bd6-b8aa-0b87a7563f2a
 ```
 

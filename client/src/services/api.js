@@ -63,13 +63,6 @@ export const api = {
       body: JSON.stringify({ status, note }),
     }),
 
-  // Footer Callback Endpoint
-  requestCallback: ({ email, name, message }) =>
-    request('/api/callback', {
-      method: 'POST',
-      body: JSON.stringify({ email, name, message }),
-    }),
-
   // Contact Page Insurance Enquiry Endpoint
   submitEnquiry: (payload) =>
     request('/api/enquiries', {

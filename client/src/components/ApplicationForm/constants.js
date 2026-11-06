@@ -77,6 +77,9 @@ export const POPULAR_BIKE_MODELS = {
   'Bajaj Auto': ['Pulsar 150 / NS200', 'Platina 100 / 110', 'Avenger 160 / 220', 'Dominar 400'],
   'Yamaha': ['YZF-R15 V4', 'MT-15 V2', 'FZ-S FI', 'RayZR 125'],
   'Suzuki 2-Wheelers': ['Access 125', 'Burgman Street', 'Gixxer 150 / 250'],
+  'KTM': ['Duke 200 / 250 / 390', 'RC 200 / 390'],
+  'Ather Energy': ['Ather 450X', 'Ather 450S', 'Ather Rizta'],
+  'Ola Electric': ['Ola S1 Pro', 'Ola S1 Air', 'Ola S1 X'],
 };
 
 export const COMMERCIAL_CATEGORIES = [
@@ -103,6 +106,17 @@ export const COMMERCIAL_MANUFACTURERS = [
   'Bajaj Auto Commercial',
   'Other',
 ];
+
+export const POPULAR_COMMERCIAL_MODELS = {
+  'Tata Motors Commercial': ['Tata Ace Gold', 'Tata Intra V30 / V50', 'Tata 407 Gold', 'Tata Signa (Heavy Truck)', 'Tata Winger', 'Tata Magic', 'Tata LPT 1109'],
+  'Ashok Leyland': ['Dost+', 'Bada Dost', 'Partner', 'Ecomet', 'Captain (Tipper/Truck)', 'Oyster Bus'],
+  'Mahindra Commercial': ['Bolero Maxi Truck Plus', 'Bolero Pik-Up', 'Supro Profit Truck', 'Jeeto', 'Furio', 'Blazo X', 'Alfa Rickshaw'],
+  'Eicher Motors (VECV)': ['Eicher Pro 2049', 'Eicher Pro 3015', 'Eicher Pro 2110', 'Eicher Skyline Bus'],
+  'BharatBenz (Daimler)': ['BharatBenz 1217C', 'BharatBenz 1920R', 'BharatBenz 2823R', 'BharatBenz 3528C'],
+  'Force Motors': ['Force Traveller', 'Force Trax Cruiser', 'Force Shaktiman'],
+  'Piaggio Commercial': ['Ape Xtra LDX', 'Ape Auto DX', 'Ape E-City (EV)'],
+  'Bajaj Auto Commercial': ['Bajaj Compact 4S', 'Bajaj Maxima Z', 'Bajaj Maxima C (Cargo)'],
+};
 
 export const HEALTH_SUM_INSURED = [
   '₹5 Lakhs (Basic Healthcare)',
