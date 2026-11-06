@@ -24,7 +24,7 @@ const FooterLink = ({ to, children }) => (
   <li>
     <Link
       to={to}
-      className="text-xs sm:text-sm text-[#A7ADB4] transition-colors duration-200 hover:text-[#E5B544]"
+      className="inline-block py-0.5 text-xs sm:text-sm text-[#A7ADB4] transition-colors duration-200 hover:text-[#E5B544]"
     >
       {children}
     </Link>
@@ -185,9 +185,9 @@ export default function Footer() {
         target="_blank"
         rel="noreferrer"
         aria-label="Chat on WhatsApp"
-        className="fixed bottom-5 right-3.5 sm:right-5 z-50 flex h-12 w-12 sm:h-13 sm:w-13 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 active:scale-95"
+        className="fixed bottom-3.5 right-3 sm:bottom-5 sm:right-5 z-40 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
       >
-        <MessageCircle size={24} />
+        <MessageCircle size={20} className="sm:size-[22px]" />
       </a>
 
       {/* Back to Top Floating Button in Brand Gold */}
@@ -195,9 +195,9 @@ export default function Footer() {
         <button
           aria-label="Scroll back to top"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-20 right-3.5 sm:right-5 z-50 flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#E5B544] text-[#171717] shadow-lg transition-all hover:bg-[#CF9F30] hover:scale-110 active:scale-95"
+          className="fixed bottom-16 right-3 sm:bottom-19 sm:right-5 z-40 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-[#E5B544] text-[#171717] shadow-lg transition-all hover:bg-[#CF9F30] hover:scale-105 active:scale-95"
         >
-          <ArrowUp size={18} />
+          <ArrowUp size={16} className="sm:size-[18px]" />
         </button>
       )}
     </>

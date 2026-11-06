@@ -141,7 +141,7 @@ export default function AdminEnquiries() {
               Insurance Applications & Enquiries
             </h1>
             <p className="text-xs sm:text-sm text-[#53627A] mt-0.5">
-              Review, contact, and manage customer applications with verified mobile OTP records.
+              Review, contact, and manage customer applications and insurance enquiries.
             </p>
           </div>
 
@@ -174,7 +174,7 @@ export default function AdminEnquiries() {
                 {stats.total || enquiries.length}
               </b>
               <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
-                100% OTP Verified
+                Direct Submission
               </span>
             </div>
           </div>
@@ -323,7 +323,7 @@ export default function AdminEnquiries() {
                           </b>
                           <span className="text-[10.5px] text-emerald-700 font-semibold flex items-center gap-1 mt-0.5">
                             <CheckCircle2 size={11} />
-                            <span>OTP Verified</span>
+                            <span>Submitted</span>
                           </span>
                         </td>
 
@@ -446,7 +446,7 @@ export default function AdminEnquiries() {
               {/* Customer Contact Details */}
               <div className="mt-4 rounded-2xl bg-[#FAF2DE]/30 border border-[#E5B544]/40 p-4">
                 <b className="text-xs font-bold text-[#101C38] uppercase tracking-wider block mb-2">
-                  Applicant Information (Verified via SMS OTP)
+                  Applicant Information
                 </b>
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>

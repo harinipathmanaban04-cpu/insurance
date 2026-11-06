@@ -175,16 +175,16 @@ export const WhyCompare = () => (
     </div>
 
     {/* Compare & Decide */}
-    <div id="compare" className="card scroll-mt-24 border border-[#E5E7EB] p-4 sm:p-6 md:p-7 shadow-card flex flex-col justify-between">
+    <div id="compare" className="card scroll-mt-24 border border-[#E5E7EB] p-3.5 min-[360px]:p-4 sm:p-6 md:p-7 shadow-card flex flex-col justify-between">
       <div>
-        <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-4">
+        <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3 sm:pb-4 gap-2">
           <div>
-            <h3 className="font-display text-lg sm:text-xl font-bold text-[#171717]">Compare & Decide</h3>
+            <h3 className="font-display text-base min-[360px]:text-lg sm:text-xl font-bold text-[#171717]">Compare & Decide</h3>
             <p className="text-xs text-[#53627A] mt-0.5">
               Choose the cover level that gives you complete peace of mind.
             </p>
           </div>
-          <span className="rounded-full bg-[#FAF2DE] px-2.5 py-1 text-[11px] font-bold text-[#171717] border border-[#E5B544]/50 shrink-0">
+          <span className="rounded-full bg-[#FAF2DE] px-2.5 py-1 text-[10px] sm:text-[11px] font-bold text-[#171717] border border-[#E5B544]/50 shrink-0">
             Policy Matrix
           </span>
         </div>
@@ -380,25 +380,25 @@ export const Testimonials = () => {
         </p>
       </div>
 
-      <div className="flex items-center gap-2 sm:gap-4">
+      <div className="flex items-center gap-1.5 min-[360px]:gap-2 sm:gap-4">
         {/* Prev Button: Navigates slide by slide */}
         <button
           aria-label="Previous slide"
           onClick={() => setSlide((slide - 1 + totalSlides) % totalSlides)}
-          className="flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#101C38] shadow-xs transition hover:border-[#E5B544] hover:bg-[#FAF2DE] hover:scale-105 active:scale-95 focus:outline-none cursor-pointer"
+          className="flex h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#101C38] shadow-xs transition hover:border-[#E5B544] hover:bg-[#FAF2DE] hover:scale-105 active:scale-95 focus:outline-none cursor-pointer"
         >
-          <ChevronLeft size={18} />
+          <ChevronLeft size={16} className="sm:size-[18px]" />
         </button>
 
         {/* Testimonials Grid (1 card on mobile, 2 on tablet, 3 on desktop) */}
-        <div className="grid flex-1 gap-3.5 sm:gap-4 lg:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-w-0">
+        <div className="grid flex-1 gap-3 sm:gap-4 lg:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-w-0">
           {visible.map(([name, location, feedback], k) => (
             <motion.div
               key={name + '-' + slide}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35 }}
-              className={`card flex flex-col justify-between bg-white p-5 sm:p-6 shadow-card hover:shadow-card-hover transition-all duration-300 min-w-0 ${
+              className={`card flex flex-col justify-between bg-white p-4 min-[360px]:p-5 sm:p-6 shadow-card hover:shadow-card-hover transition-all duration-300 min-w-0 ${
                 k === 1
                   ? 'border border-[#E5B544] ring-1 ring-[#E5B544]/20 hidden md:flex'
                   : k === 2
@@ -507,7 +507,7 @@ export const Partners = () => {
       </div>
 
       {/* Exactly 4 Functional Filter Buttons: All Partners | General & Motor | Life | Health */}
-      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-8">
+      <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 mb-6 sm:mb-8">
         {filterTabs.map((tab) => {
           const isSelected = filter === tab;
           return (
@@ -517,7 +517,7 @@ export const Partners = () => {
                 setFilter(tab);
                 setShowAll(false);
               }}
-              className={`rounded-full px-4 sm:px-5 py-2 text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
+              className={`rounded-full px-3.5 py-1.5 min-[360px]:px-4 min-[360px]:py-2 text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                 isSelected
                   ? 'bg-[#E5B544] text-[#171717] shadow-xs ring-2 ring-[#E5B544]/40'
                   : 'bg-white border border-[#E5E7EB] text-[#53627A] hover:border-[#E5B544] hover:text-[#171717]'
@@ -533,7 +533,7 @@ export const Partners = () => {
       <div
         className={`min-w-0 ${
           filter === 'Health'
-            ? 'flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 max-w-6xl mx-auto'
+            ? 'flex flex-wrap items-center justify-center gap-2 sm:gap-4 max-w-6xl mx-auto'
             : 'grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 sm:gap-4'
         }`}
       >
@@ -541,9 +541,9 @@ export const Partners = () => {
           <div
             key={partner.id}
             title={partner.name}
-            className={`group flex h-18 sm:h-22 items-center justify-center rounded-2xl border border-[#E5E7EB] bg-white p-2.5 sm:p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5B544] hover:shadow-card min-w-0 ${
+            className={`group flex h-16 min-[360px]:h-18 sm:h-22 items-center justify-center rounded-xl sm:rounded-2xl border border-[#E5E7EB] bg-white p-2 min-[360px]:p-2.5 sm:p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5B544] hover:shadow-card min-w-0 ${
               filter === 'Health'
-                ? 'w-[calc(50%-0.625rem)] sm:w-[calc(33.333%-0.75rem)] md:w-[calc(33.333%-0.75rem)] lg:flex-1 lg:max-w-[175px]'
+                ? 'w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.75rem)] md:w-[calc(33.333%-0.75rem)] lg:flex-1 lg:max-w-[175px]'
                 : ''
             }`}
           >
@@ -552,7 +552,7 @@ export const Partners = () => {
               src={partner.img}
               alt={partner.name}
               loading="lazy"
-              className="max-h-9 sm:max-h-12 w-auto max-w-full object-contain opacity-100 filter contrast-[1.06] saturate-[1.12] transition-transform duration-200 group-hover:scale-105"
+              className="max-h-8 min-[360px]:max-h-9 sm:max-h-12 w-auto max-w-full object-contain opacity-100 filter contrast-[1.06] saturate-[1.12] transition-transform duration-200 group-hover:scale-105"
             />
           </div>
         ))}

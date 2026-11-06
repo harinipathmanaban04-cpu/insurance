@@ -39,21 +39,21 @@ function SelectField({
   const isSelected = Boolean(value);
 
   return (
-    <div className={`flex flex-col ${className}`}>
-      <div className="flex items-center justify-between mb-1.5 min-h-[18px]">
-        <label htmlFor={id} className="text-xs sm:text-[13px] font-semibold text-[#101C38] cursor-pointer select-none">
+    <div className={`flex flex-col w-full ${className}`}>
+      <div className="flex items-center justify-between mb-1 min-h-[18px]">
+        <label htmlFor={id} className="text-xs sm:text-[13px] font-semibold text-[#101C38] cursor-pointer select-none block">
           {label} {required && <span className="text-[#F51F2B] font-bold">*</span>}
         </label>
       </div>
 
-      <div className="relative">
+      <div className="relative w-full">
         <select
           id={id}
           value={value || ''}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
-          className={`w-full h-[44px] rounded-lg border bg-white pl-3.5 pr-10 text-sm appearance-none cursor-pointer focus:outline-none transition-colors duration-150 disabled:bg-slate-50 disabled:cursor-not-allowed ${
-            isSelected ? 'text-[#101C38] font-medium' : 'text-slate-400 font-normal text-[13px] sm:text-sm'
+          className={`w-full h-[42px] sm:h-[44px] rounded-lg border bg-white pl-3 sm:pl-3.5 pr-9 sm:pr-10 text-xs sm:text-sm appearance-none cursor-pointer focus:outline-none transition-colors duration-150 disabled:bg-slate-50 disabled:cursor-not-allowed ${
+            isSelected ? 'text-[#101C38] font-medium' : 'text-slate-400 font-normal text-xs sm:text-[13px]'
           } ${
             error
               ? 'border-[#F51F2B] focus:border-[#F51F2B] focus:ring-2 focus:ring-[#F51F2B]/20'
@@ -69,7 +69,7 @@ function SelectField({
             const optVal = typeof opt === 'string' ? opt : opt.value;
             const optLabel = typeof opt === 'string' ? opt : opt.label;
             return (
-              <option key={optVal} value={optVal} className="text-[#101C38] font-normal bg-white py-1">
+              <option key={optVal} value={optVal} className="text-[#101C38] font-normal bg-white py-1 text-xs sm:text-sm">
                 {optLabel}
               </option>
             );
@@ -77,13 +77,13 @@ function SelectField({
         </select>
 
         {/* Clear, accessible dropdown indicator arrow */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
-          <ChevronDown size={16} strokeWidth={2.2} />
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-3.5 text-slate-400">
+          <ChevronDown size={15} strokeWidth={2.2} />
         </div>
       </div>
 
       {error && (
-        <span className="mt-1.5 flex items-center gap-1 text-[11.5px] font-medium text-[#F51F2B]">
+        <span className="mt-1 flex items-center gap-1 text-[11px] sm:text-xs font-medium text-[#F51F2B]">
           <AlertCircle size={12} className="shrink-0" />
           <span>{error}</span>
         </span>
@@ -109,9 +109,9 @@ function InputField({
   disabled = false,
 }) {
   return (
-    <div className={`flex flex-col ${className}`}>
-      <div className="flex items-center justify-between mb-1.5 min-h-[18px]">
-        <label htmlFor={id} className="text-xs sm:text-[13px] font-semibold text-[#101C38] cursor-pointer select-none">
+    <div className={`flex flex-col w-full ${className}`}>
+      <div className="flex items-center justify-between mb-1 min-h-[18px]">
+        <label htmlFor={id} className="text-xs sm:text-[13px] font-semibold text-[#101C38] cursor-pointer select-none block">
           {label} {required && <span className="text-[#F51F2B] font-bold">*</span>}
         </label>
       </div>
@@ -125,7 +125,7 @@ function InputField({
         placeholder={placeholder}
         value={value || ''}
         onChange={(e) => onChange(uppercase ? e.target.value.toUpperCase() : e.target.value)}
-        className={`w-full h-[44px] rounded-lg border bg-white px-3.5 text-sm text-[#101C38] font-medium placeholder:text-slate-400 placeholder:font-normal placeholder:text-[13px] sm:placeholder:text-sm focus:outline-none transition-colors duration-150 disabled:bg-slate-50 disabled:cursor-not-allowed ${
+        className={`w-full h-[42px] sm:h-[44px] rounded-lg border bg-white px-3 sm:px-3.5 text-xs sm:text-sm text-[#101C38] font-medium placeholder:text-slate-400 placeholder:normal-case placeholder:font-normal placeholder:tracking-normal placeholder:text-xs sm:placeholder:text-[13px] focus:outline-none transition-colors duration-150 disabled:bg-slate-50 disabled:cursor-not-allowed ${
           uppercase ? 'uppercase font-semibold tracking-wider' : ''
         } ${
           error
@@ -137,7 +137,7 @@ function InputField({
       />
 
       {error && (
-        <span className="mt-1.5 flex items-center gap-1 text-[11.5px] font-medium text-[#F51F2B]">
+        <span className="mt-1 flex items-center gap-1 text-[11px] sm:text-xs font-medium text-[#F51F2B]">
           <AlertCircle size={12} className="shrink-0" />
           <span>{error}</span>
         </span>
@@ -149,13 +149,13 @@ function InputField({
 // Section Header with subtle icon and badge
 function SectionHeader({ title, subtitle, icon: Icon }) {
   return (
-    <div className="flex items-center gap-2 pb-2.5 border-b border-[#E5B544]/25 mb-4 pt-1">
+    <div className="flex items-center gap-2 pb-2.5 border-b border-[#E5B544]/25 mb-3.5 pt-0.5">
       <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#FAF2DE] text-[#101C38] shrink-0 border border-[#E5B544]/40">
         <Icon size={14} className="text-[#F51F2B]" />
       </span>
-      <div className="min-w-0">
-        <h5 className="text-xs font-bold uppercase tracking-wider text-[#101C38]">{title}</h5>
-        {subtitle && <p className="text-[11px] text-slate-500 truncate">{subtitle}</p>}
+      <div className="min-w-0 flex-1">
+        <h5 className="text-xs font-bold uppercase tracking-wider text-[#101C38] leading-tight">{title}</h5>
+        {subtitle && <p className="text-[11px] text-slate-500 leading-snug break-words mt-0.5">{subtitle}</p>}
       </div>
     </div>
   );
@@ -181,14 +181,14 @@ export default function CategoryFields({ category, details, onChange, errors = {
     return (
       <div className="space-y-6">
         {/* Section A: Bike Specifications */}
-        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-3.5 sm:p-5 transition-colors">
           <SectionHeader
             title="Two-Wheeler Specifications"
             subtitle="Vehicle registration, manufacturer, model, fuel and manufacturing year"
             icon={Bike}
           />
 
-          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
             <InputField
               id="bike-regNumber"
               label="Registration Number"
@@ -310,14 +310,14 @@ export default function CategoryFields({ category, details, onChange, errors = {
         </div>
 
         {/* Section B: Policy & Coverage Details */}
-        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-3.5 sm:p-5 transition-colors">
           <SectionHeader
             title="Coverage & Policy Details"
             subtitle="Plan preference and previous policy expiration details"
             icon={Shield}
           />
 
-          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
             <SelectField
               id="bike-insuranceType"
               label="Preferred Insurance Type"
@@ -371,14 +371,14 @@ export default function CategoryFields({ category, details, onChange, errors = {
     return (
       <div className="space-y-6">
         {/* Section A: Car Specifications */}
-        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-3.5 sm:p-5 transition-colors">
           <SectionHeader
             title="Four-Wheeler Specifications"
             subtitle="Vehicle registration, brand, model, fuel type and manufacturing year"
             icon={Car}
           />
 
-          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
             <InputField
               id="car-regNumber"
               label="Vehicle Registration Number"
@@ -498,14 +498,14 @@ export default function CategoryFields({ category, details, onChange, errors = {
         </div>
 
         {/* Section B: Policy & Coverage Details */}
-        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-3.5 sm:p-5 transition-colors">
           <SectionHeader
             title="Coverage & Policy Details"
             subtitle="Coverage type, previous claims and No-Claim Bonus savings"
             icon={Shield}
           />
 
-          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
             <SelectField
               id="car-insuranceType"
               label="Preferred Insurance Type"
@@ -574,14 +574,14 @@ export default function CategoryFields({ category, details, onChange, errors = {
     return (
       <div className="space-y-6">
         {/* Section A: Commercial Vehicle Specifications */}
-        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-3.5 sm:p-5 transition-colors">
           <SectionHeader
             title="Commercial Vehicle Specifications"
             subtitle="Vehicle category, manufacturer, payload capacity and commercial permit"
             icon={Truck}
           />
 
-          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
             <InputField
               id="comm-regNumber"
               label="Registration Number"
@@ -724,14 +724,14 @@ export default function CategoryFields({ category, details, onChange, errors = {
         </div>
 
         {/* Section B: Existing Policy & Registration Details */}
-        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-3.5 sm:p-5 transition-colors">
           <SectionHeader
             title="Existing Policy Information"
             subtitle="Previous insurer and policy expiration details"
             icon={Shield}
           />
 
-          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
             <InputField
               id="comm-existingInsurance"
               label="Existing Insurance & Insurer Name"
@@ -760,14 +760,14 @@ export default function CategoryFields({ category, details, onChange, errors = {
     return (
       <div className="space-y-6">
         {/* Section 1: Health Insurance Details */}
-        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-3.5 sm:p-5 transition-colors">
           <SectionHeader
             title="Health Insurance & Hospitalization Details"
             subtitle="Cashless medical coverage, family floater options and hospital network"
             icon={HeartPulse}
           />
 
-          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
             <SelectField
               id="health-planType"
               label="Health Plan Type"
@@ -839,14 +839,14 @@ export default function CategoryFields({ category, details, onChange, errors = {
         </div>
 
         {/* Section 2: Life Insurance & Financial Protection */}
-        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-4 sm:p-5 transition-colors">
+        <div className="rounded-xl border border-[#E5E7EB] hover:border-[#E5B544]/40 bg-[#FDFCFB] p-3.5 sm:p-5 transition-colors">
           <SectionHeader
             title="Life & Term Protection Details"
             subtitle="Pure financial security and milestone income replacement"
             icon={Users}
           />
 
-          <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
             <InputField
               id="life-dob"
               type="date"

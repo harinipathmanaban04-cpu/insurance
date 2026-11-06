@@ -171,14 +171,14 @@ export const Hero = () => {
                 </div>
               </motion.div>
 
-              {/* Trust Indicators: 3 items exactly matching Image 1 */}
+              {/* Trust Indicators: 3 items */}
               <motion.div
                 initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="mt-5 sm:mt-6 grid grid-cols-1 min-[480px]:grid-cols-3 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1 w-full max-w-[520px]"
+                className="mt-5 sm:mt-6 grid grid-cols-1 min-[480px]:grid-cols-3 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1 w-full max-w-[540px]"
               >
-                {/* 1. Talk to an Exp... */}
+                {/* 1. Expert Advisors */}
                 <Link
                   to="/contact"
                   className="flex items-center gap-2.5 p-1 rounded-xl hover:bg-white/80 transition-colors group min-w-0"
@@ -188,22 +188,22 @@ export const Hero = () => {
                   </span>
                   <div className="min-w-0 flex-1">
                     <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
-                      Talk to an Exp...
+                      Expert Advisors
                     </b>
                     <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
-                      24/7 Support
+                      24/7 Guidance
                     </span>
                   </div>
                 </Link>
 
-                {/* 2. 50+ IRDAI Par... */}
+                {/* 2. 50+ IRDAI Partners */}
                 <div className="flex items-center gap-2.5 p-1 rounded-xl min-w-0">
                   <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
                     <ShieldCheck size={17} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
-                      50+ IRDAI Par...
+                      50+ IRDAI Partners
                     </b>
                     <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
                       Trusted Network
@@ -211,17 +211,17 @@ export const Hero = () => {
                   </div>
                 </div>
 
-                {/* 3. 100% Cashle... */}
+                {/* 3. 100% Cashless Claims */}
                 <div className="flex items-center gap-2.5 p-1 rounded-xl min-w-0">
                   <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
                     <CheckCircle2 size={17} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <b className="block text-xs sm:text-[13px] font-bold text-[#101C38] leading-tight truncate">
-                      100% Cashle...
+                      100% Cashless
                     </b>
                     <span className="block text-[11px] text-[#53627A] mt-0.5 truncate">
-                      Hassle-free Proc...
+                      Hassle-free Process
                     </span>
                   </div>
                 </div>
@@ -234,65 +234,65 @@ export const Hero = () => {
         </div>
       </section>
 
-      {/* 2. Floating Statistics Panel (Matching Image 2 exactly) */}
+      {/* 2. Floating Statistics Panel */}
       <div className="wrap relative z-30 -mt-6 sm:-mt-8 lg:-mt-10 pb-6">
-        <div className="w-full rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white p-4 sm:p-6 lg:p-7 shadow-[0_12px_36px_rgba(0,0,0,0.06)] overflow-hidden">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-0 lg:divide-x lg:divide-[#E5E7EB]">
+        <div className="w-full rounded-2xl sm:rounded-3xl border border-[#E5E7EB] bg-white p-3 min-[360px]:p-4 sm:p-6 lg:p-7 shadow-[0_12px_36px_rgba(0,0,0,0.06)] overflow-hidden">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-0 lg:divide-x lg:divide-[#E5E7EB]">
             {/* Stat 1: 20,000+ Happy Customers */}
-            <div className="min-w-0 flex items-center gap-3 sm:gap-4 p-2 sm:p-3 lg:p-0 lg:px-6">
-              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
-                <Users size={20} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-2 sm:gap-4 p-1.5 sm:p-3 lg:p-0 lg:px-6">
+              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF1F2] text-[#F51F2B]">
+                <Users size={18} className="sm:size-[22px]" />
               </span>
               <div className="min-w-0 flex-1">
-                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
+                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block truncate">
                   20,000+
                 </b>
-                <span className="block text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
+                <span className="block text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug truncate">
                   Happy Customers
                 </span>
               </div>
             </div>
 
             {/* Stat 2: 50+ Insurance Partners */}
-            <div className="min-w-0 flex items-center gap-3 sm:gap-4 p-2 sm:p-3 lg:p-0 lg:px-6">
-              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
-                <ShieldCheck size={20} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-2 sm:gap-4 p-1.5 sm:p-3 lg:p-0 lg:px-6">
+              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#FAF2DE] text-[#E5B544]">
+                <ShieldCheck size={18} className="sm:size-[22px]" />
               </span>
               <div className="min-w-0 flex-1">
-                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
+                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block truncate">
                   50+
                 </b>
-                <span className="block text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
+                <span className="block text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug truncate">
                   Insurance Partners
                 </span>
               </div>
             </div>
 
             {/* Stat 3: 98% Claim Settlement Ratio */}
-            <div className="min-w-0 flex items-center gap-3 sm:gap-4 p-2 sm:p-3 lg:p-0 lg:px-6">
-              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F8F5] text-[#10B981]">
-                <FileCheck size={20} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-2 sm:gap-4 p-1.5 sm:p-3 lg:p-0 lg:px-6">
+              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F8F5] text-[#10B981]">
+                <FileCheck size={18} className="sm:size-[22px]" />
               </span>
               <div className="min-w-0 flex-1">
-                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
+                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block truncate">
                   98%
                 </b>
-                <span className="block text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
-                  Claim Settlement Ratio
+                <span className="block text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug truncate">
+                  Claim Ratio
                 </span>
               </div>
             </div>
 
             {/* Stat 4: 24/7 Customer Support */}
-            <div className="min-w-0 flex items-center gap-3 sm:gap-4 p-2 sm:p-3 lg:p-0 lg:px-6">
-              <span className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF6FF] text-[#3B82F6]">
-                <Headphones size={20} className="sm:size-[22px]" />
+            <div className="min-w-0 flex items-center gap-2 sm:gap-4 p-1.5 sm:p-3 lg:p-0 lg:px-6">
+              <span className="flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-[#EFF6FF] text-[#3B82F6]">
+                <Headphones size={18} className="sm:size-[22px]" />
               </span>
               <div className="min-w-0 flex-1">
-                <b className="font-display text-xl sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block">
+                <b className="font-display text-base min-[360px]:text-lg sm:text-2xl lg:text-3xl font-black text-[#101C38] tracking-tight block truncate">
                   24/7
                 </b>
-                <span className="block text-xs font-semibold text-[#53627A] mt-0.5 leading-snug">
+                <span className="block text-[11px] sm:text-xs font-semibold text-[#53627A] mt-0.5 leading-snug truncate">
                   Customer Support
                 </span>
               </div>

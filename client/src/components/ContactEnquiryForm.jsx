@@ -165,7 +165,7 @@ export default function ContactEnquiryForm() {
   };
 
   return (
-    <div id="enquiry-form" className="card border border-[#E5E7EB] bg-white p-5 sm:p-8 shadow-card rounded-2xl">
+    <div id="enquiry-form" className="card border border-[#E5E7EB] bg-white p-3.5 min-[360px]:p-5 sm:p-8 shadow-card rounded-2xl">
       {/* Header */}
       <div className="border-b border-[#E5E7EB] pb-4 mb-6">
         <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#F51F2B]">
@@ -410,7 +410,7 @@ export default function ContactEnquiryForm() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn-red !py-3 !px-6 text-xs sm:text-sm font-bold uppercase tracking-wider inline-flex items-center justify-center gap-2 shadow-xs hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+              className="btn-red w-full sm:w-auto !py-2.5 sm:!py-3 !px-6 text-xs sm:text-sm font-bold uppercase tracking-wider inline-flex items-center justify-center gap-2 shadow-xs hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-all"
             >
               {isSubmitting ? (
                 <>

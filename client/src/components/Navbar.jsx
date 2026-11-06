@@ -102,15 +102,15 @@ export default function Navbar() {
       </div>
 
       {/* Main Navbar */}
-      <div className="wrap flex h-[74px] items-center justify-between gap-3 sm:gap-4">
+      <div className="wrap flex h-[64px] sm:h-[74px] items-center justify-between gap-2 sm:gap-4">
         {/* Brand Shield Logo & Name */}
-        <Link to="/" className="flex shrink-0 items-center gap-2.5 sm:gap-3 group">
-          <Logo className="h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105" />
-          <div className="leading-tight">
-            <span className="block font-display text-base min-[360px]:text-lg sm:text-xl font-black tracking-tight text-[#101C38]">
+        <Link to="/" className="flex shrink-0 items-center gap-2 sm:gap-3 group min-w-0">
+          <Logo className="h-9 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105" />
+          <div className="leading-tight min-w-0">
+            <span className="block font-display text-sm min-[360px]:text-base sm:text-xl font-black tracking-tight text-[#101C38] whitespace-nowrap">
               THE BEST
             </span>
-            <span className="block text-[9px] min-[360px]:text-[10px] sm:text-[11px] font-black tracking-[0.16em] text-[#F51F2B]">
+            <span className="block text-[8px] min-[360px]:text-[9px] sm:text-[11px] font-black tracking-[0.14em] min-[360px]:tracking-[0.16em] text-[#F51F2B] whitespace-nowrap">
               INSURANCE POINT
             </span>
             <span className="hidden text-[10px] font-medium text-[#53627A] sm:block">
@@ -237,12 +237,12 @@ export default function Navbar() {
           </Link>
 
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#E5E7EB] text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B] lg:hidden focus:outline-none transition-colors shrink-0"
+            className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-[#E5E7EB] text-[#101C38] hover:bg-[#F7F8FA] hover:text-[#F51F2B] lg:hidden focus:outline-none transition-colors shrink-0"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileMenuOpen ? <X size={19} /> : <Menu size={19} />}
           </button>
         </div>
       </div>
@@ -255,9 +255,9 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.22, ease: 'easeInOut' }}
-            className="overflow-hidden border-t border-[#E5E7EB] bg-white lg:hidden max-h-[calc(100vh-70px)] sm:max-h-[calc(100vh-74px)] overflow-y-auto overscroll-contain"
+            className="overflow-hidden border-t border-[#E5E7EB] bg-white lg:hidden max-h-[calc(100dvh-64px)] sm:max-h-[calc(100dvh-74px)] overflow-y-auto overscroll-contain shadow-lg"
           >
-            <div className="wrap space-y-1.5 py-4">
+            <div className="wrap space-y-1 py-3 sm:py-4">
               <Link
                 to="/"
                 onClick={() => setMobileMenuOpen(false)}

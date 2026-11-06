@@ -28,10 +28,10 @@ export default function InsurancePage({ id }) {
               {p.lead}
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3.5">
+            <div className="mt-6 flex flex-col min-[480px]:flex-row items-stretch min-[480px]:items-center gap-3">
               <Link
                 to={`/contact?type=${encodeURIComponent(c.type)}#quote`}
-                className="btn-gold text-xs sm:text-sm px-5 py-2.5 font-bold shadow-xs justify-center text-center"
+                className="btn-gold text-xs sm:text-sm px-5 py-2.5 sm:py-3 font-bold shadow-xs justify-center text-center w-full min-[480px]:w-auto"
               >
                 <span>Get a Free {c.title.replace(' Vehicle', '')} Quote</span>
                 <ArrowRight size={15} />
@@ -39,7 +39,7 @@ export default function InsurancePage({ id }) {
 
               <a
                 href={`tel:${PHONE.replace(/\s+/g, '')}`}
-                className="btn-outline text-xs sm:text-sm px-4.5 py-2.5 font-semibold justify-center text-center"
+                className="btn-outline text-xs sm:text-sm px-4.5 py-2.5 sm:py-3 font-semibold justify-center text-center w-full min-[480px]:w-auto"
               >
                 <PhoneCall size={15} className="text-[#F51F2B]" />
                 <span>Call Advisor</span>
